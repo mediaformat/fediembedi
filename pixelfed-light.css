@@ -1,0 +1,300 @@
+/* .scrollable {
+    contain: strict;
+} */
+.scrollable {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex: 1 1 auto;
+    -webkit-overflow-scrolling: touch;
+    will-change: transform;
+}
+
+.status {
+    padding: 8px 10px 8px 68px;
+    position: relative;
+    min-height: 54px;
+    border-bottom: 1px solid #c0cdd9;
+    cursor: default;
+    opacity: 1;
+    -webkit-animation: fade .15s linear;
+    animation: fade .15s linear;
+}
+.status__prepend {
+    margin-left: 68px;
+    color: #444b5d;
+    padding: 8px 0 2px;
+    font-size: 14px;
+    position: relative;
+}
+.status__prepend-icon-wrapper {
+    left: -26px;
+    position: absolute;
+}
+.fa-fw {
+    width: 1.28571429em;
+    text-align: center;
+}
+.fa {
+    display: inline-block;
+
+}
+.account__header {
+    overflow: hidden;
+}
+.account__header__image {
+    overflow: hidden;
+    height: 145px;
+    position: relative;
+    background: #e6ebf0;
+}
+.account__header__info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.account__header__image img {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    ;
+}
+.account__header__bar {
+    position: relative;
+    background: #fff;
+    padding: 5px;
+    border-bottom: 1px solid #b3c3d1;
+}
+.account__header__tabs {
+    display: flex;
+    align-items: flex-start;
+    padding: 7px 5px;
+    margin-top: -55px;
+}
+.account__header__bar .avatar {
+    display: block;
+    flex: 0 0 auto;
+    width: 94px;
+    margin-left: -2px;
+    border-radius: 50%
+}
+.account__header__tabs .spacer {
+    flex: 1 1 auto;
+}
+.account__header__tabs__buttons .button {
+    margin: 0 8px;
+    color: #fff;
+}
+.account__header__tabs__name {
+    padding: 5px;
+}
+.account__header__tabs__name h1 {
+    font-size: 16px;
+    line-height: 24px;
+    color: #000;
+    font-weight: 500;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.account__header__tabs__name h1 small {
+    display: block;
+    font-size: 14px;
+    color: #282c37;
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.account__header__extra {
+    margin-top: 4px;
+}
+.account__header__bio {
+    overflow: hidden;
+    margin: 0 -5px;
+}
+.account__header__bio .account__header__content {
+    padding: 20px 15px 5px;
+    color: #000;
+}
+.account__header__content {
+    color: #282c37;
+    font-size: 14px;
+    font-weight: 400;
+    overflow: hidden;
+    word-break: normal;
+    word-wrap: break-word;
+}
+.account__display-name,
+.detailed-status__application,
+.detailed-status__datetime,
+.detailed-status__display-name,
+.status__display-name,
+.status__relative-time {
+    text-decoration: none;
+}
+.status__display-name {
+    color: #444b5d;
+}
+.status__expand {
+    width: 68px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    cursor: pointer;
+}
+.status__info {
+    font-size: 15px;
+}
+.status__info .status__display-name {
+    display: block;
+    max-width: 100%;
+    padding-right: 25px;
+}
+.status__avatar {
+    height: 48px;
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    width: 48px;
+}
+.account__avatar {
+    border-radius: 4px;
+    background: transparent no-repeat;
+    background-position: 50%;
+    background-clip: padding-box;
+    position: relative;
+    border-radius: 50%
+}
+.account__avatar-overlay {
+    width: 48px;
+    height: 48px;
+    background-size: 48px 48px;
+}
+.account__avatar-overlay-base {
+    border-radius: 4px;
+    background: transparent no-repeat;
+    background-position: 50%;
+    background-clip: padding-box;
+    width: 36px;
+    height: 36px;
+    background-size: 36px 36px;
+}
+.account__avatar-overlay-overlay {
+    border-radius: 4px;
+    background: transparent no-repeat;
+    background-position: 50%;
+    background-clip: padding-box;
+    width: 24px;
+    height: 24px;
+    background-size: 24px 24px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+.display-name {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.display-name__account {
+    font-size: 14px;
+}
+.account__display-name strong, .status__display-name strong {
+    color: #000;
+}
+.display-name__html {
+    font-weight: 500;
+}
+.notification__relative_time, .status__relative-time {
+    color: #444b5d;
+    float: right;
+    font-size: 14px;
+}
+.status-card.compact {
+    border-color: #ccd7e0;
+}
+.status-card {
+    display: flex;
+    font-size: 14px;
+    border: 1px solid #c0cdd9;
+    border-radius: 4px;
+    color: #444b5d;
+    margin-top: 14px;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+.status-card.compact .status-card__image {
+    flex: 0 0 60px;
+}
+.status-card__image {
+    flex: 0 0 100px;
+    background: #c0cdd9;
+    position: relative;
+}
+.status-card__image-image {
+    border-radius: 4px 0 0 4px;
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-size: cover;
+    background-position: 50%;
+}
+.status-card.compact .status-card__content {
+    padding: 10px 8px 8px;
+}
+.status-card__content {
+    flex: 1 1 auto;
+    overflow: hidden;
+    padding: 14px 14px 14px 8px;
+}
+.status-card__title {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #282c37;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.status-card__description {
+    color: #282c37;
+}
+.status-card__host {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.status__content summary {
+  background: #eee;
+    border-radius: 5px;
+    padding: 2px 8px;
+    cursor: pointer;
+    display: inline-block;
+}
+.status__content .media-gallery__item{
+  margin: 1em 0;
+}
+i.fa-retweet {
+    background-image: url('img/retoot.svg');
+    background-position: 0 0;
+    height: 19px;
+    vertical-align: middle;
+    width: 22px;
+    color: #ccc;
+    opacity: .75;
+    z-index: 10;
+    position: relative;
+}
