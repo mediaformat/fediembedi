@@ -59,6 +59,11 @@ and redirected to your site with a secure token. Similar to how apps connect to 
 
 == Changelog ==
 
+= 0.3.0 =
+* Updated readme.txt
+* Fixed reame.md formatting.
+* Cleaned up settings form
+
 = 0.2.0 =
 * Make an actual release.
 
