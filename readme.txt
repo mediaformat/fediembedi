@@ -15,6 +15,8 @@ Display your Fediverse timeline in a widget
 
 > FediEmbedi is beta software.
 
+FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
+
 = Currently supported software =
 * Mastodon
 * Pleroma
@@ -30,8 +32,8 @@ For the time being development will happen on [git.feneas.org](https://git.fenea
 
 = Updates =
 
-I will be making frequent updates in the coming days, weeks, and won't be tagging releases,
-so if you want to benefit from easy updates, I suggest installing [Github Updater](https://github.com/afragen/github-updater)
+I will be making frequent updates in the coming days,
+if you want updates from within Wordpress admin, I suggest installing [Github Updater](https://github.com/afragen/github-updater)
 as a companion plugin.
 
 == Installation ==
@@ -44,6 +46,10 @@ e.g.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Connect to your fediverse instance by visiting the configuration page in Settings -> FediEmbedi
 
+or using Github Updater
+1. Settings -> Github Updater
+1. Install plugin tab -> Plugin URI = `https://git.feneas.org/mediaformat/fediembedi`
+
 == Frequently Asked Questions ==
 
 = Does this plugin store my login info? =
@@ -53,13 +59,16 @@ and redirected to your site with a secure token. Similar to how apps connect to 
 
 == Changelog ==
 
+= 0.2.0 =
+* Make an actual release.
+
 = 0.1.0 =
 * Initial commit.
 
 == Credits ==
 
 = Mastodon Autopost =
-The App registration, oAuth connection and portions of the Mastodon API code is based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
+The App registration, oAuth connection and portions of the Mastodon API code are based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
 
 = Mastodon =
 The CSS and SVG icon come from the Mastodon project
