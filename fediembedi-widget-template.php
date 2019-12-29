@@ -47,7 +47,7 @@ if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Debug</summary><pre>'; va
           <div class="account__header__tabs__name">
             <h1>
               <span><?php echo $status[0]->account->display_name; ?></span>
-              <small><a href="" target="_blank" rel="noreferrer noopener"><?php echo $status[0]->account->url; ?></small>
+              <small><a href="" target="_blank" rel="noreferrer noopener"><?php echo $status[0]->account->url; ?></a></small>
             </h1>
           </div>
           <div class="account__header__extra">
