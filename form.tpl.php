@@ -13,6 +13,10 @@ define("ADVANCED_VIEW",false);
 		<?php wp_nonce_field( 'fediembedi-configuration' ); ?>
 		<div style="display:<?php echo !ACCOUNT_CONNECTED ? "block":"none"?>">
 				<input type="text" id="instance" name="instance" size="80" value="<?php esc_attr_e( $instance ); ?>" list="mInstances">
+				<select class="" id="instance_type" name="instance_type" value="<?php esc_attr_e( $instance_type ); ?>">
+					<option value="Mastodon">Mastodon/Pleroma</option>
+					<option value="Pixelfed">Pixelfed</option>
+				</select>
 				<input class="button button-primary" type="submit" value="<?php esc_attr_e( 'Connect to your instance', 'fediembedi' ); ?>" name="save" id="save">
 				<br><small>The currently supported software are Mastodon, Pleroma, Pixelfed.</small>
 		</div>
@@ -36,7 +40,4 @@ define("ADVANCED_VIEW",false);
 		<div class="clear"></div>
 
 	</form>
-<?php
-	//require("instanceList.php")
-?>
 </div>

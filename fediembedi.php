@@ -20,15 +20,10 @@ class FediConfig
     {
         add_action('plugins_loaded', array($this, 'init'));
         add_action('widgets_init', array($this, 'fediembedi_widget'));
-        //add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
         add_action('admin_menu', array($this, 'configuration_page'));
-        //add_action('save_post', array($this, 'toot_post'));
         add_action('admin_notices', array($this, 'admin_notices'));
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'fediembedi_add_plugin_page_settings_link'));
-        //add_action('add_meta_boxes', array($this, 'add_metabox'));
-        //add_action('publish_future_post', array($this, 'toot_scheduled_post'));
-        //add_action('wp_ajax_get_toot_preview', array($this, 'get_toot_preview_ajax_handler'));
 
     }
 
@@ -57,7 +52,7 @@ class FediConfig
                 $instance = get_option('fediembedi-instance');
                 $client = new \Client($instance);
                 $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url());
-                $instance_info = $client->getInstance();
+                //$instance_info = $client->getInstance();
 
                 if (isset($token->error)) {
                     //print_r($token);
@@ -78,7 +73,7 @@ class FediConfig
                     update_option('fediembedi-client-id', '');
                     update_option('fediembedi-client-secret', '');
                     update_option('fediembedi-token', $token->access_token);
-                    update_option('fediembedi-instance-info', $instance_info);
+                    //update_option('fediembedi-instance-type', $instance_type);
 
                 }
                 $redirect_url = get_admin_url() . 'options-general.php?page=fediembedi';
@@ -117,14 +112,12 @@ class FediConfig
     public function enqueue_styles($hook)
     {
         if( is_active_widget( false, false, 'fediembedi') ) {
-          $instance = get_option('fediembedi-instance');
-          $client = new \Client($instance);
-          $instance_info = $client->getInstance();
-          if (strpos($instance_info->version, 'Pixelfed') === false) {
-            wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'mastodon-light.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon-light.css') );
+          $instance_type = get_option('fediembedi-instance-type');
+          if ($instance_type === 'Mastodon') {
+            wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon.css') );
           } else {
             //https://css-tricks.com/lozad-js-performant-lazy-loading-images/ lazyloading for background images
-            wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'pixelfed-light.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed-light.css') );
+            wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed.css') );
           }
         }
     }
@@ -172,6 +165,7 @@ class FediConfig
 
             if ($is_valid_nonce) {
                 $instance = esc_url($_POST['instance']);
+                $instance_type = esc_attr($_POST['instance_type']);
 
                 $client = new \Client($instance);
                 $redirect_url = get_admin_url();
@@ -206,6 +200,7 @@ class FediConfig
                         update_option('fediembedi-client-id', $client->get_client_id());
                         update_option('fediembedi-client-secret', $client->get_client_secret());
                         update_option('fediembedi-instance', $instance);
+                        update_option('fediembedi-instance-type', $instance_type);
 
                         $account = $client->verify_credentials($token);
 
@@ -234,6 +229,7 @@ class FediConfig
         }
 
         $instance = get_option('fediembedi-instance');
+        $instance_type = get_option('fediembedi-instance-type');
 
         if (!empty($token)) {
             $client = new \Client($instance);

@@ -44,71 +44,80 @@ class WP_Widget_fediembedi extends WP_Widget {
 		$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : NULL;
 		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : NULL;
 		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : NULL;
-		$remote_instance = get_option('fediembedi-instance');
-		$client = new \Client($remote_instance);
-		$instance_info = $client->getInstance();
+		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '';
 
-		$pixelfed = '';
-		if (strpos($instance_info->version, 'Pixelfed') !== false) {
-		    $pixelfed = true;
-		}
+		$instance_type = get_option('fediembedi-instance-type');
+
 		?>
-		<p>
+	<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'fediembedi'); ?>
 				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']); ?>" />
 			</label>
-		</p>
-    <p>
-        <label>
-            <input
-                type="checkbox"
-                <?php checked( $instance[ 'show_header' ], '1' ); ?>
-                id="<?php echo $this->get_field_id( '1' ); ?>"
-                name="<?php echo $this->get_field_name('show_header'); ?>"
-                value="1"
-            /><?php _e( 'Show header', 'fediembedi' ); ?>
-        </label>
-        <br>
-        <label>
-            <input
-                type="checkbox"
-                <?php checked( $instance[ 'only_media' ], '1' ); ?>
-                id="<?php echo $this->get_field_id( '1' ); ?>"
-                name="<?php echo $this->get_field_name('only_media'); ?>"
-                value="1"
-            /><?php _e( 'Only media', 'fediembedi' ); ?>
-        </label>
-        <br>
-        <label>
-            <input
-                type="checkbox"
-                <?php checked( $instance[ 'pinned' ], '1' ); ?>
-                id="<?php echo $this->get_field_id( '1' ); ?>"
-                name="<?php echo $this->get_field_name('pinned'); ?>"
-                value="1"
-            /><?php _e( 'Show pinned statuses', 'fediembedi' ); ?>
-        </label>
-        <br>
-        <label>
-            <input
-                type="checkbox"
-                <?php checked( $instance[ 'exclude_replies' ], '1' ); ?>
-                id="<?php echo $this->get_field_id( '1' ); ?>"
-                name="<?php echo $this->get_field_name('exclude_replies'); ?>"
-                value="1"
-            /><?php _e( 'Hide replies', 'fediembedi' ); ?>
-        </label>
-        <br>
-        <label>
-            <input
-                type="checkbox"
-                <?php checked( $instance[ 'exclude_reblogs' ], '1' ); ?>
-                id="<?php echo $this->get_field_id( '1' ); ?>"
-                name="<?php echo $this->get_field_name('exclude_reblogs'); ?>"
-                value="1"
-            /><?php _e( 'Hide reblogs', 'fediembedi' ); ?>
-        </label>
+	</p>
+	<p>
+      <label>
+          <input
+              type="checkbox"
+              <?php checked( $instance[ 'show_header' ], '1' ); ?>
+              id="<?php echo $this->get_field_id( '1' ); ?>"
+              name="<?php echo $this->get_field_name('show_header'); ?>"
+              value="1"
+          /><?php _e( 'Show header', 'fediembedi' ); ?>
+      </label>
+	</p>
+	<p style="<?php if($instance_type === 'Pixelfed'){ echo 'display: none;'; } ?>">
+      <label>
+          <input
+              type="checkbox"
+              <?php checked( $instance[ 'only_media' ], '1' ); ?>
+              id="<?php echo $this->get_field_id( '1' ); ?>"
+              name="<?php echo $this->get_field_name('only_media'); ?>"
+              value="1"
+          /><?php _e( 'Only show media', 'fediembedi' ); ?>
+      </label>
+	</p>
+	<p>
+      <label>
+          <input
+              type="checkbox"
+              <?php checked( $instance[ 'pinned' ], '1' ); ?>
+              id="<?php echo $this->get_field_id( '1' ); ?>"
+              name="<?php echo $this->get_field_name('pinned'); ?>"
+              value="1"
+          /><?php _e( 'Only show pinned statuses', 'fediembedi' ); ?>
+      </label>
+	</p>
+	<p>
+      <label>
+          <input
+              type="checkbox"
+              <?php checked( $instance[ 'exclude_replies' ], '1' ); ?>
+              id="<?php echo $this->get_field_id( '1' ); ?>"
+              name="<?php echo $this->get_field_name('exclude_replies'); ?>"
+              value="1"
+          /><?php _e( 'Hide replies', 'fediembedi' ); ?>
+      </label>
+	</p>
+	<p style="<?php if($instance_type === 'Pixelfed'){ echo 'display: none;'; } ?>">
+      <label>
+          <input
+              type="checkbox"
+              <?php checked( $instance[ 'exclude_reblogs' ], '1' ); ?>
+              id="<?php echo $this->get_field_id( '1' ); ?>"
+              name="<?php echo $this->get_field_name('exclude_reblogs'); ?>"
+              value="1"
+          /><?php _e( 'Hide reblogs', 'fediembedi' ); ?>
+      </label>
     </p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of items to show:' ); ?></label>
+			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:' ); ?></label>
+			<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo $height; ?>" placeholder="500px" size="5" />
+		</p>
 		<?php
 	}
 
@@ -131,6 +140,8 @@ class WP_Widget_fediembedi extends WP_Widget {
 		$instance['pinned'] = $new_instance['pinned'];
 		$instance['exclude_replies'] = $new_instance['exclude_replies'];
 		$instance['exclude_reblogs'] = $new_instance['exclude_reblogs'];
+		$instance['number']    = (int) $new_instance['number'];
+		$instance['height']     = sanitize_text_field( $new_instance['height'] );
 		return $instance;
 	}
 
