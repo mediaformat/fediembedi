@@ -7,6 +7,7 @@ Display your Fediverse timeline in a widget
 
 > FediEmbedi is beta software.
 
+FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
 
 ### Currently supported software
 * Mastodon
@@ -21,14 +22,12 @@ Display your Fediverse timeline in a widget
 
 ### Development
 
-For the time being development will happen on [git.feneas.org](https://git.feneas.org/mediaformat/fediembedi "FediEmbedi").
+For the time being development will happen on [git.feneas.org](https://git.feneas.org/mediaformat/fediembedi) .
 
 
 ### Updates
 
-The plugin is under active development, and will keep be tagging releases. 
-I will be setting up a Github mirror, to facilitate updates using [Github Updater](https://github.com/afragen/github-updater)
-as a companion plugin.
+The plugin is under active development, to keep FediEmbedi updated install [Github Updater](https://github.com/afragen/github-updater) as a companion plugin, and it will manage updates from within your Wordpress installation.
 
 
 ## Installation
@@ -47,11 +46,14 @@ e.g.
 
 ### Does this plugin store my login info?
 
-No, this plugin uses oAuth 2.0. You will be sent to login to your Instance
-and redirected to your site with a secure token. Similar to how apps connect to your account
+No, this plugin uses [OAuth 2.0](https://oauth.net/). You will be sent to login to your Instance
+and redirected to your site with a secure token. Similar to how you would connect a mobile app to your account
 
 
 ## Changelog
+
+### 0.5.0
+* Mirror plugin on Github for use with [Github Updater](https://github.com/afragen/github-updater)
 
 ### 0.4.1
 * Readme updates
