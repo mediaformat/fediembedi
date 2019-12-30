@@ -53,9 +53,13 @@ and redirected to your site with a secure token. Similar to how apps connect to 
 
 ## Changelog
 
+### 0.4.0
+* Fix for Github updates
+
 ### 0.3.0
+* Refactor Instance selection and logic
 * Updated readme.txt
-* Fixed reame.md formatting.
+* Fixed reame.md formatting
 * Cleaned up settings form
 
 ### 0.2.0
