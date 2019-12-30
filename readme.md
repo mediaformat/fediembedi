@@ -26,8 +26,8 @@ For the time being development will happen on [git.feneas.org](https://git.fenea
 
 ### Updates
 
-I will be making frequent updates in the coming days, weeks, and won't be tagging releases,
-so if you want to benefit from easy updates, I suggest installing [Github Updater](https://github.com/afragen/github-updater)
+The plugin is under active development, and will keep be tagging releases. 
+I will be setting up a Github mirror, to facilitate updates using [Github Updater](https://github.com/afragen/github-updater)
 as a companion plugin.
 
 
@@ -52,6 +52,9 @@ and redirected to your site with a secure token. Similar to how apps connect to 
 
 
 ## Changelog
+
+### 0.4.1
+* Readme updates
 
 ### 0.4.0
 * Fix for Github updates

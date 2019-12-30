@@ -32,8 +32,8 @@ For the time being development will happen on [git.feneas.org](https://git.fenea
 
 = Updates =
 
-I will be making frequent updates in the coming days,
-if you want updates from within Wordpress admin, I suggest installing [Github Updater](https://github.com/afragen/github-updater)
+The plugin is under active development, and will keep be tagging releases.
+I will be setting up a Github mirror, to facilitate updates using [Github Updater](https://github.com/afragen/github-updater)
 as a companion plugin.
 
 == Installation ==

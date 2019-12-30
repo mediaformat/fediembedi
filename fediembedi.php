@@ -4,7 +4,7 @@
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * GitLab Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Description: A widget to show your Mastodon profile timeline
- * Version: 0.4.0
+ * Version: 0.4.1
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPL2
