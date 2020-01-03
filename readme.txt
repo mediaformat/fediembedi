@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: dj_angola
 Donate link: https://paypal.me/MediaFormat
-Tags: mastodon, pixelfed, fediverse
+Tags: mastodon, pixelfed, fediverse, activitypub, widget
 Requires at least: 5.1
 Tested up to: 5.3.2
 Requires PHP: 7.2
@@ -58,6 +58,12 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 == Changelog ==
 
+= 0.6.0 =
+* TODO: Copy Changelog to readme.md
+* TODO: Style/Script for Pixelfed
+* Updated settings page, with links for finding an instance to join/register
+* Clarify widget options
+
 = 0.5.0 =
 * Mirror plugin on Github for use with [Github Updater](https://github.com/afragen/github-updater)
 
@@ -79,7 +85,7 @@ and redirected to your site with a secure token. Similar to how you would connec
 == Credits ==
 
 = Mastodon Autopost =
-The App registration, oAuth connection and portions of the Mastodon API code are based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
+The client connection code is based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
 
-= Mastodon =
-The CSS and SVG icon come from the Mastodon project
+= FediEmbedi =
+The name FediEmbedi was contributed by [@liaizon@wake.st](https://social.wake.st/@liaizon).

@@ -194,3 +194,31 @@ html > body .liberapay-btn{
 	background-color:#FFF !important;
 	margin-bottom:-0px !important;
 }
+.pixelfed {
+	background: url('img/pixelfed.svg') no-repeat 0 0;
+	background-size: 30px;
+	border: none;
+	border-radius: 50%;
+	color: transparent;
+	display: inline-block;
+	height: 32px;
+	width: 36px;
+	vertical-align: middle;
+}
+.mastodon {
+	background: url('img/mastodon.svg') no-repeat 3px 4px;
+	background-size: 28px;
+	border: none;
+	color: transparent;
+	display: inline-block;
+	height: 36px;
+	width: 36px;
+	vertical-align: middle;
+}
+.instance_url {
+	max-width: 500px;
+}
+.instance_type.widefat {
+	max-width: 160px;
+	vertical-align: baseline;
+}

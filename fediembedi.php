@@ -4,10 +4,11 @@
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Github Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Description: A widget to show your Mastodon profile timeline
- * Version: 0.5.0
+ * Version: 0.6.0
  * Author: mediaformat
  * Author URI: https://mediaformat.org
- * License: GPL2
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  * Text Domain: fediembedi
  * Domain Path: /languages
  */
@@ -55,8 +56,7 @@ class FediConfig
                 //$instance_info = $client->getInstance();
 
                 if (isset($token->error)) {
-                    //print_r($token);
-                    //TODO: Propper error message
+                    //TODO: Proper error message
                     update_option(
                         'fediembedi-notice',
                         serialize(
@@ -87,17 +87,6 @@ class FediConfig
         }
 
         $token = get_option('fediembedi-token');
-        // if (empty($token)) {
-        //     update_option(
-        //         'fediembedi-notice',
-        //         serialize(
-        //             array(
-        //                 'message' => '<strong>FediEmbedi</strong> : ' . __('Please login to your account!', 'fediembedi') . '<a href="' . get_admin_url() . 'options-general.php?page=fediembedi"> ' . __('Go to FediEmbedi configuration', 'fediembedi') . '</a>',
-        //                 'class' => 'error',
-        //             )
-        //         )
-        //     );
-        // }
 
     }
 
@@ -113,12 +102,18 @@ class FediConfig
     {
         if( is_active_widget( false, false, 'fediembedi') ) {
           $instance_type = get_option('fediembedi-instance-type');
-          if ($instance_type === 'Mastodon') {
-            wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon.css') );
-          } else {
-            //https://css-tricks.com/lozad-js-performant-lazy-loading-images/ lazyloading for background images
-            wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed.css') );
-          }
+          switch ($instance_type) {
+    		      case 'Mastodon':
+    		        wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'mastodon/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon/mastodon.css') );
+    		        break;
+    		      case 'Pixelfed':
+                wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'pixelfed/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed/pixelfed.css') );
+                //https://css-tricks.com/lozad-js-performant-lazy-loading-images/ lazyloading for background images
+    		        break;
+    		      default:
+    		        wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'mastodon/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon/mastodon.css') );
+    		        break;
+    		    }
         }
     }
 
@@ -166,10 +161,12 @@ class FediConfig
             if ($is_valid_nonce) {
                 $instance = esc_url($_POST['instance']);
                 $instance_type = esc_attr($_POST['instance_type']);
+                //TODO switch($instance_type) case() return $scopes
 
                 $client = new \Client($instance);
                 $redirect_url = get_admin_url();
                 $auth_url = $client->register_app($redirect_url);
+                //$auth_url = $client->register_app($redirect_url, $scopes);
 
                 if ($auth_url == "ERROR") {
                     //var_dump('$auth_url = ERROR'); //die;
@@ -236,7 +233,7 @@ class FediConfig
             $account = $client->verify_credentials($token);
         }
 
-        include 'form.tpl.php';
+        include 'fediembedi-settings-form.tpl.php';
     }
 
     /**

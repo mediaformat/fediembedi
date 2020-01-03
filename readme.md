@@ -1,11 +1,6 @@
 # FediEmbedi
 
-Display your Fediverse timeline in a widget
-
-
-## Description
-
-> FediEmbedi is beta software.
+TLDR; Display your Fediverse timeline in a widget
 
 FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
 
@@ -22,7 +17,7 @@ FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget
 
 ### Development
 
-For the time being development will happen on [git.feneas.org](https://git.feneas.org/mediaformat/fediembedi) .
+For the time being development will happen on [git.feneas.org](https://git.feneas.org/mediaformat/fediembedi).
 
 
 ### Updates
@@ -78,8 +73,7 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 
 ### Mastodon Autopost
-The App registration, oAuth connection and portions of the Mastodon API code is based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
+The client connection code is based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
 
-
-### Mastodon
-The CSS and SVG icon come from the Mastodon project
+### FediEmbedi
+The name FediEmbedi was contributed by [@liaizon@wake.st](https://social.wake.st/@liaizon)

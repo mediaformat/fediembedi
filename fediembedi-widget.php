@@ -3,7 +3,7 @@
 class WP_Widget_fediembedi extends WP_Widget {
 
 	/**
-	 * Sets up a new Search widget instance.
+	 * Sets up a new FediEmbedi widget instance.
 	 *
 	 * @since 2.8.0
 	 */
@@ -26,7 +26,44 @@ class WP_Widget_fediembedi extends WP_Widget {
 	 * @param array $instance Settings for the current Search widget instance.
 	 */
 	public function widget( $args, $instance ) {
-		include(plugin_dir_path(__FILE__) . 'fediembedi-widget-template.php' );//fediembedi_widget_template
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+
+		//fedi instance
+		$fedi_instance = get_option('fediembedi-instance');
+		$access_token = get_option('fediembedi-token');
+		$client = new \Client($fedi_instance, $access_token);
+		$cred = $client->verify_credentials($access_token);
+		//$profile = $client->getAccount();
+
+		//widget options
+		$show_header = (!empty($instance['show_header'])) ? $instance['show_header'] : '';
+		$only_media = (!empty($instance['only_media'])) ? $instance['only_media'] : '';
+		$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : '';
+		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : '';
+		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : '';
+		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
+
+		//getStatus from remote instance
+		$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+		$instance_type = get_option('fediembedi-instance-type');
+
+		echo $args['before_widget'];
+		if ( $title ) {
+			echo $args['before_title'] . $title . $args['after_title'];
+		};
+	  switch ($instance_type) {
+	      case 'Mastodon':
+	        include(plugin_dir_path(__FILE__) . 'mastodon/fediembedi-mastodon.tpl.php' );
+	        break;
+	      case 'Pixelfed':
+	        include(plugin_dir_path(__FILE__) . 'pixelfed/fediembedi-pixelfed.tpl.php' );
+	        break;
+	      default:
+	        include(plugin_dir_path(__FILE__) . 'mastodon/fediembedi-mastodon.tpl.php' );
+	        break;
+	    }
+		echo $args['after_widget'];
 	}
 
 	/**
@@ -111,12 +148,16 @@ class WP_Widget_fediembedi extends WP_Widget {
       </label>
     </p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of items to show:' ); ?></label>
-			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to display:' ); ?><br>
+				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+				<small>Max: 20</small>
+			</label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:' ); ?></label>
-			<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo $height; ?>" placeholder="500px" size="5" />
+			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:' ); ?><br>
+				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo $height; ?>" placeholder="500px" size="5" />
+				<small>Default: 100%</small>
+			</label>
 		</p>
 		<?php
 	}

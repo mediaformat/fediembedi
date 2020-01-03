@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * The Client class contains all the methods to
+ * connect to your fediverse instance
+ */
 class Client
 {
 	private $instance_url;
@@ -20,12 +23,12 @@ class Client
        return self::$acct_id;
    }
 
-	public function register_app($redirect_uri) {
+	public function register_app($redirect_uri, $scopes = 'read') {
 
 		$response = $this->_post('/api/v1/apps', array(
 			'client_name' => 'FediEmbedi for WordPress',
 			'redirect_uris' => $redirect_uri,
-			'scopes' => 'read',
+			'scopes' => $scopes,
 			'website' => get_site_url()
 		));
 
@@ -38,7 +41,7 @@ class Client
 		$params = http_build_query(array(
 			'response_type' => 'code',
 			'redirect_uri' => $redirect_uri,
-			'scope' => 'read',
+			'scope' => $scopes,
 			'client_id' =>$this->app->client_id
 		));
 
@@ -127,47 +130,6 @@ class Client
 		$account_id = self::$acct_id;
 
 		$response = $this->_get("/api/v1/instance", null, $headers);
-
-		return $response;
-	}
-
-	public function postStatus($status, $mode, $media = '', $spoiler_text = '') {
-
-		$headers = array(
-			'Authorization'=> 'Bearer '.$this->access_token
-		);
-
-		$response = $this->_post('/api/v1/statuses', array(
-			'status' => $status,
-			'visibility' => $mode,
-			'spoiler_text' => $spoiler_text,
-			'media_ids[]' => $media
-		), $headers);
-
-		return $response;
-	}
-
-	public function create_attachment($media_path) {
-
-		$filename =basename($media_path);
-		$mime_type = mime_content_type($media_path);
-
-		$boundary ='hlx'.time();
-
-		$headers = array (
-			'Authorization'=> 'Bearer '.$this->access_token,
-			'Content-Type' => 'multipart/form-data; boundary='. $boundary,
-		);
-
-		$nl = "\r\n";
-
-		$data = '--'.$boundary.$nl;
-		$data .= 'Content-Disposition: form-data; name="file"; filename="'.$filename.'"'.$nl;
-		$data .= 'Content-Type: '. $mime_type .$nl.$nl;
-		$data .= file_get_contents($media_path) .$nl;
-		$data .= '--'.$boundary.'--';
-
-		$response = $this->_post('/api/v1/media', $data, $headers);
 
 		return $response;
 	}

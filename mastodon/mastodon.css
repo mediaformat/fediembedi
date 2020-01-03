@@ -58,7 +58,6 @@
     width: 100%;
     height: 100%;
     margin: 0;
-    ;
 }
 .account__header__bar {
     position: relative;
@@ -70,13 +69,13 @@
     display: flex;
     align-items: flex-start;
     padding: 7px 5px;
+    margin-top: -55px;
 }
 .account__header__bar .avatar {
     display: block;
     flex: 0 0 auto;
     width: 94px;
     margin-left: -2px;
-    border-radius: 50%
 }
 .account__header__tabs .spacer {
     flex: 1 1 auto;
@@ -169,7 +168,6 @@
     background-position: 50%;
     background-clip: padding-box;
     position: relative;
-    border-radius: 50%
 }
 .account__avatar-overlay {
     width: 48px;
@@ -291,7 +289,7 @@
   margin: 1em 0;
 }
 i.fa-retweet {
-    background-image: url('img/retoot.svg');
+    background-image: url('../img/retoot.svg');
     background-position: 0 0;
     height: 19px;
     vertical-align: middle;
