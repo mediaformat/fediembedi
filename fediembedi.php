@@ -104,10 +104,11 @@ class FediConfig
           $instance_type = get_option('fediembedi-instance-type');
           switch ($instance_type) {
     		      case 'Mastodon':
-    		        wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'mastodon/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon/mastodon.css') );
+    		        wp_enqueue_style( 'mastodon', plugin_dir_url( __FILE__ ) . 'mastodon/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon/mastodon.css') );
     		        break;
     		      case 'Pixelfed':
-                wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'pixelfed/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed/pixelfed.css') );
+                wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'bootstrap/css/bootstrap.min.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'bootstrap/css/bootstrap.min.css') );
+                wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'pixelfed/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed/pixelfed.css') );
                 //https://css-tricks.com/lozad-js-performant-lazy-loading-images/ lazyloading for background images
     		        break;
     		      default:

@@ -1,6 +1,6 @@
 # FediEmbedi
 
-TLDR; Display your Fediverse timeline in a widget
+>TLDR; Display your Fediverse timeline in a widget
 
 FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
 
@@ -42,10 +42,18 @@ e.g.
 ### Does this plugin store my login info?
 
 No, this plugin uses [OAuth 2.0](https://oauth.net/). You will be sent to login to your Instance
-and redirected to your site with a secure token. Similar to how you would connect a mobile app to your account
+and redirected to your site with a secure token. Similar to how you would connect a mobile app to your account.
 
 
 ## Changelog
+
+### 0.7.0
+* Added Pixelfed /embed styles
+* Added i18n support to template strings
+
+### 0.6.0
+* Updated settings page, with links for finding an instance to join/register
+* Clarify widget options
 
 ### 0.5.0
 * Mirror plugin on Github for use with [Github Updater](https://github.com/afragen/github-updater)

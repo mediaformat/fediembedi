@@ -18,8 +18,8 @@ define("ADVANCED_VIEW",false);
 					<option value="Pixelfed">Pixelfed</option>
 				</select>
 				<input class="button button-primary" type="submit" value="<?php esc_attr_e( 'Connect to your instance', 'fediembedi' ); ?>" name="save" id="save">
-				<br><small>The currently supported software are Mastodon, Pleroma, Pixelfed.</small><br>
-				<p>Don't have an account?</p>
+				<br><small><?php _e( 'The currently supported software are Mastodon, Pleroma, Pixelfed.', 'fediembedi' ); ?></small><br>
+				<p><?php _e( "Don't have an account?", 'fediembedi' ); ?></p>
 				<p><span class="mastodon"></span> Visit <a href="https://joinmastodon.org/" rel="noreferrer noopener" target="_blank" class="">joinmastodon.org</a> to find an instance.</p>
 				<p><span class="pixelfed"></span> Visit <a href="https://pixelfed.org/join" rel="noreferrer noopener" target="_blank" class="">pixelfed.org/join</a> to find an instance.</p>
 		</div>

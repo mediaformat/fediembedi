@@ -1,57 +1,62 @@
 <!-- pixelfed -->
+<?php $instance_url = get_option('fediembedi-instance'); ?>
 <div class="scrollable" style="height: <?php echo $height; ?>;">
-  <div role="feed">
-    <?php if($show_header): ?>
-    <div class="account-timeline__header">
-      <div class="account__header">
-        <div class="account__header__bar">
-          <div class="account__header__tabs">
-            <a href="<?php echo $status[0]->account->url; ?>" class="avatar" rel="noreferrer noopener" target="_blank">
-              <div class="account__avatar" style="margin-top: 50px; width:90px; height: 90px; background-image: url('<?php echo $status[0]->account->avatar; ?>'); background-size: cover;"></div>
-            </a>
-            <div class="spacer"></div>
-            <div class="account__header__tabs__buttons">
-              <a href="<?php echo $status[0]->account->url; ?>" rel="noreferrer noopener" class="button logo-button">Follow</a>
-            </div>
-          </div>
-          <div class="account__header__tabs__name">
-            <h1>
-              <span><?php echo $status[0]->account->display_name; ?></span>
-              <small><a href="" target="_blank" rel="noreferrer noopener"><?php echo $status[0]->account->url; ?></a></small>
-            </h1>
-          </div>
-          <div class="account__header__extra">
-            <div class="account__header__bio">
-              <div class="account__header__content">
-                <?php echo $status[0]->account->note; ?>
-              </div>
-            </div>
-          </div>
+  <div role="feed" class="embed-card pixelfed">
+    <div class="pixelfed-inner card status-card-embed card-md-rounded-0 border">
+      <?php if($show_header): ?>
+      <div class="pixelfed-header card-header d-inline-flex align-items-center justify-content-between bg-white">
+        <div>
+          <img src="<?php echo $status[0]->account->avatar; ?>" height="32px" width="32px" style="border-radius: 32px;">
+          <a href="<?php echo $status[0]->account->url; ?>" class="username font-weight-bold pl-2 text-dark" rel="noreferrer noopener" target="_blank"><?php echo $status[0]->account->username; ?></a>
+        </div>
+        <div>
+          <a class="small font-weight-bold text-muted pr-1" href="<?php echo $instance_url; ?>"><?php echo parse_url($instance_url, PHP_URL_HOST); ?></a>
+          <img src="<?php echo plugin_dir_url( __FILE__ ) . '../img/pixelfed.svg';?>" width="26px" loading="lazy">
         </div>
       </div>
-    </div>
-    <?php endif; ?>
-    <?php foreach ($status as $statut) { ?>
-      <article>
-        <div tabindex="-1">
-          <div class="status__wrapper status__wrapper-public focusable" tabindex="0">
-            <div class="status__content"><?php
-
-              if(!empty($statut->media_attachments)):
-                foreach ($statut->media_attachments as $attachment) {
-                  if (!empty($attachment->preview_url) && $attachment->type === 'image'): ?>
-                    <a href="<?php echo $statut->url; ?>" class="" target="_blank" rel="noopener">
-                      <img src='<?php echo $attachment->preview_url; ?>' class='media-gallery__item' alt='<?php $attachment->description; ?>' loading='lazy'>
-                    </a><?php
-                  elseif($attachment->type === 'video'):
-                    echo "<video src=" . $attachment->url . " controls poster='" . $attachment->preview_url . "' class='media-gallery__item' alt=" . $attachment->description . ">";
-                  endif;
-                }
-              endif;
-             ?></div>
+      <?php endif; ?>
+      <div class="pixelfed-body card-body pb-1">
+        <div class="pixelfed-meta d-flex justify-content-between align-items-center">
+          <div class="text-center">
+            <p class="mb-0 font-weight-bold prettyCount"><?php echo $status[0]->account->statuses_count; ?></p>
+            <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Posts', 'fediembedi'); ?></p>
+          </div>
+          <div class="text-center">
+            <p class="mb-0 font-weight-bold prettyCount"><?php echo $status[0]->account->followers_count; ?></p>
+            <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Followers', 'fediembedi'); ?></p>
+          </div>
+          <div class="text-center">
+            <p class="mb-0 font-weight-bold prettyCount"><?php echo $status[0]->account->following_count; ?></p>
+            <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Following', 'fediembedi'); ?></p>
+          </div>
+          <div class="text-center">
+            <p class="mb-0">
+              <a href="<?php echo $instance_url . '/i/intent/follow?user='. $status[0]->account->acct; ?>" class="pixelfed-follow btn btn-primary btn-sm py-1 px-4 text-uppercase font-weight-bold" target="_blank"><?php _e('Follow', 'fediembedi'); ?></a>
+            </p>
           </div>
         </div>
-      </article>
-    <?php } ?>
+        <div class="pixelfed-images row mt-4 mb-1 px-1">
+          <?php foreach ($status as $statut) { ?>
+            <article class="col-4 mt-2 px-0"><?php
+                if (!empty($statut->media_attachments[0]->preview_url) && $statut->media_attachments[0]->type === 'image'): ?>
+                  <a href="<?php echo $statut->url; ?>" class="card info-overlay card-md-border-0 px-1 shadow-none" target="_blank" rel="noopener">
+                    <div class="square">
+                      <div style='background-image: url(<?php echo $statut->media_attachments[0]->preview_url; ?>);' class='square-content' alt='<?php $statut->media_attachments[0]->description; ?>'></div>
+                      <div class="info-text-overlay"></div>
+                    </div>
+                  </a><?php
+                elseif($statut->media_attachments[0]->type === 'video'):
+                  echo "<video src=" . $attachment->url . " controls poster='" . $statut->media_attachments[0]->preview_url . "' class='media-gallery__item' alt=" . $statut->media_attachments[0]->description . ">";
+                endif; ?>
+            </article>
+          <?php } ?>
+        </div>
+      </div>
+      <div class="pixelfed-footer card-footer bg-white">
+        <p class="text-center mb-0">
+          <a href="<?php echo $status[0]->account->url; ?>" class="font-weight-bold" target="_blank" rel="noreferrer noopener"><?php _e('View More Posts', 'fediembedi'); ?></a>
+        </p>
+      </div>
+    </div>
   </div>
 </div>
