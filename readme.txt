@@ -58,6 +58,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 == Changelog ==
 
+= 0.7.1 =
+* Fix version info
+
 = 0.7.0 =
 * Added Pixelfed /embed styles
 * Added i18n support to template strings
