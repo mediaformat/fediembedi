@@ -13,8 +13,8 @@ define("FEDI_CONNECTED",isset($account) && $account !== null);
 		<div style="display:<?php echo !FEDI_CONNECTED ? "block":"none"?>">
 				<input type="text" class="widefat instance_url" id="instance" name="instance" size="80" value="<?php esc_url_raw( $instance, 'https' ); ?>" list="mInstances">
 				<select class="widefat instance_type" id="instance_type" name="instance_type" value="<?php sanitize_key( $instance_type ); ?>">
-					<option value="mastodon">Mastodon/Pleroma</option>
-					<option value="pixelfed">Pixelfed</option>
+					<option value="Mastodon">Mastodon/Pleroma</option>
+					<option value="Pixelfed">Pixelfed</option>
 				</select>
 				<input class="button button-primary" type="submit" value="<?php esc_attr_e( 'Connect to your instance', 'fediembedi' ); ?>" name="save" id="save">
 				<br><small><?php _e( 'The currently supported software are Mastodon, Pleroma, Pixelfed.', 'fediembedi' ); ?></small><br>

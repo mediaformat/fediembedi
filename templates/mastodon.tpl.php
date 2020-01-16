@@ -15,7 +15,7 @@
             </a>
             <div class="spacer"></div>
             <div class="account__header__tabs__buttons">
-              <a href="<?php echo $status[0]->account->url; ?>" rel="noreferrer noopener" class="button logo-button"><?php _e('Follow', 'fediembedi')</a>
+              <a href="<?php echo $status[0]->account->url; ?>" rel="noreferrer noopener" class="button logo-button"><?php _e('Follow', 'fediembedi'); ?></a>
             </div>
           </div>
           <div class="account__header__tabs__name">

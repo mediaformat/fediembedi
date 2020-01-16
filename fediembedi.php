@@ -108,7 +108,7 @@ class FediConfig
     		        break;
     		      case 'Pixelfed':
                 wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'assets/bootstrap/css/bootstrap.min.css', array(), '4.4.1' );
-                wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'assets/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed/pixelfed.css') );
+                wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'assets/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/pixelfed.css') );
                 //https://css-tricks.com/lozad-js-performant-lazy-loading-images/ lazyloading for background images
     		        break;
     		      default:
@@ -167,7 +167,6 @@ class FediConfig
                 $client = new \FediClient($instance);
                 $redirect_url = get_admin_url();
 
-                $instance_type = get_option('fediembedi-instance-type');
                 switch ($instance_type) {
                     case 'Mastodon':
                       $auth_url = $client->register_app($redirect_url);
