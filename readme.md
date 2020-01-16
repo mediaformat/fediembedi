@@ -1,6 +1,6 @@
 # FediEmbedi
 
->TLDR; Display your Fediverse timeline in a widget
+>Display your Fediverse timeline in a widget
 
 FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
 
@@ -87,4 +87,4 @@ and redirected to your site with a secure token. Similar to how you would connec
 The client connection code is based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
 
 ### FediEmbedi
-The name FediEmbedi was contributed by [@liaizon@wake.st](https://social.wake.st/@liaizon)
+The name FediEmbedi was contributed by [wake.st](https://wake.st/@liaizon)

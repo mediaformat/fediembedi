@@ -31,7 +31,7 @@ class WP_Widget_fediembedi extends WP_Widget {
 		//fedi instance
 		$fedi_instance = get_option('fediembedi-instance');
 		$access_token = get_option('fediembedi-token');
-		$client = new \Client($fedi_instance, $access_token);
+		$client = new \FediClient($fedi_instance, $access_token);
 		$cred = $client->verify_credentials($access_token);
 		//$profile = $client->getAccount();
 
@@ -44,9 +44,10 @@ class WP_Widget_fediembedi extends WP_Widget {
 		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
 
-		//getStatus from remote instance
-		$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+		//Instance type (Matodon / Pixelfed / PeerTube)
 		$instance_type = get_option('fediembedi-instance-type');
+
+		//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>'. $instance_type .'</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
 
 		echo $args['before_widget'];
 		if ( $title ) {
@@ -54,13 +55,24 @@ class WP_Widget_fediembedi extends WP_Widget {
 		};
 	  switch ($instance_type) {
 	      case 'Mastodon':
-	        include(plugin_dir_path(__FILE__) . 'mastodon/fediembedi-mastodon.tpl.php' );
+					//getStatus from remote instance
+					$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+	        include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
 	        break;
 	      case 'Pixelfed':
-	        include(plugin_dir_path(__FILE__) . 'pixelfed/fediembedi-pixelfed.tpl.php' );
+					//getStatus from remote instance
+					$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+					//$status = $client->getTimelineHome();
+	        include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
+	        break;
+	      case 'PeerTube':
+					//getVideos from remote instance
+					$status = $client->getVideos();
+					if(WP_DEBUG_DISPLAY === true): echo '<details><summary>'. $instance_type .'</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+	        include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
 	        break;
 	      default:
-	        include(plugin_dir_path(__FILE__) . 'mastodon/fediembedi-mastodon.tpl.php' );
+	        include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
 	        break;
 	    }
 		echo $args['after_widget'];
@@ -156,7 +168,7 @@ class WP_Widget_fediembedi extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:' ); ?><br>
 				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo $height; ?>" placeholder="500px" size="5" />
-				<small>Default: 100%</small>
+				<small><?php _e( 'Default: 100%', 'fediembedi' ); ?></small>
 			</label>
 		</p>
 		<?php

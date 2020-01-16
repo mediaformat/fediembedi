@@ -4,7 +4,7 @@
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Github Plugin URI: https://github.com/mediaformat/fediembedi
  * Description: A widget to show your Mastodon profile timeline
- * Version: 0.7.1
+ * Version: 0.7.2
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
@@ -51,7 +51,7 @@ class FediConfig
                 update_option('fediembedi-token', 'nada');
 
                 $instance = get_option('fediembedi-instance');
-                $client = new \Client($instance);
+                $client = new \FediClient($instance);
                 $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url());
                 //$instance_info = $client->getInstance();
 
@@ -104,15 +104,15 @@ class FediConfig
           $instance_type = get_option('fediembedi-instance-type');
           switch ($instance_type) {
     		      case 'Mastodon':
-    		        wp_enqueue_style( 'mastodon', plugin_dir_url( __FILE__ ) . 'mastodon/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon/mastodon.css') );
+    		        wp_enqueue_style( 'mastodon', plugin_dir_url( __FILE__ ) . 'assets/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
     		        break;
     		      case 'Pixelfed':
-                wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'bootstrap/css/bootstrap.min.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'bootstrap/css/bootstrap.min.css') );
-                wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'pixelfed/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed/pixelfed.css') );
+                wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'assets/bootstrap/css/bootstrap.min.css', array(), '4.4.1' );
+                wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'assets/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'pixelfed/pixelfed.css') );
                 //https://css-tricks.com/lozad-js-performant-lazy-loading-images/ lazyloading for background images
     		        break;
     		      default:
-    		        wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'mastodon/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'mastodon/mastodon.css') );
+    		        wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'assets/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
     		        break;
     		    }
         }
@@ -164,9 +164,21 @@ class FediConfig
                 $instance_type = esc_attr($_POST['instance_type']);
                 //TODO switch($instance_type) case() return $scopes
 
-                $client = new \Client($instance);
+                $client = new \FediClient($instance);
                 $redirect_url = get_admin_url();
-                $auth_url = $client->register_app($redirect_url);
+
+                $instance_type = get_option('fediembedi-instance-type');
+                switch ($instance_type) {
+                    case 'Mastodon':
+                      $auth_url = $client->register_app($redirect_url);
+                      break;
+                    case 'Pixelfed':
+                      $auth_url = $client->register_app($redirect_url);
+                      break;
+                    case 'PeerTube':
+                      $auth_url = $client->register_client($redirect_url, 'user');
+                      break;
+                }
                 //$auth_url = $client->register_app($redirect_url, $scopes);
 
                 if ($auth_url == "ERROR") {
@@ -230,7 +242,7 @@ class FediConfig
         $instance_type = get_option('fediembedi-instance-type');
 
         if (!empty($token)) {
-            $client = new \Client($instance);
+            $client = new \FediClient($instance);
             $account = $client->verify_credentials($token);
         }
 

@@ -206,8 +206,18 @@ html > body .liberapay-btn{
 	vertical-align: middle;
 }
 .mastodon {
-	background: url('img/mastodon.svg') no-repeat 3px 4px;
+	background: url('img/mastodon.svg') no-repeat 1px 4px;
 	background-size: 28px;
+	border: none;
+	color: transparent;
+	display: inline-block;
+	height: 36px;
+	width: 36px;
+	vertical-align: middle;
+}
+.peertube {
+	background: url('img/peertube.svg') no-repeat 7px 4px;
+	background-size: 24px;
 	border: none;
 	color: transparent;
 	display: inline-block;

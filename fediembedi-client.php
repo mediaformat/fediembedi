@@ -3,7 +3,7 @@
  * The Client class contains all the methods to
  * connect to your fediverse instance
  */
-class Client
+class FediClient
 {
 	private $instance_url;
 	private $access_token;
@@ -48,6 +48,26 @@ class Client
 		return $this->instance_url.'/oauth/authorize?'.$params;
 	}
 
+	public function register_client($redirect_uri, $scopes = 'read') {
+
+		$response = $this->_get('/api/v1/oauth-clients/local');
+
+		if (!isset($response->client_id)){
+			return "ERROR";
+		}
+
+		$this->app = $response;
+
+		$params = http_build_query(array(
+			'scope' => $scopes,
+			'client_id' =>$this->app->client_id,
+			'client_secret' =>$this->app->client_secret
+		));
+
+		$access_token = $this->_post('/api/v1/oauth-clients/local');
+//		return $this->instance_url.'/users/token?'.$params;
+	}
+
 	public function verify_credentials($access_token){
 
 		$headers = array(
@@ -71,6 +91,16 @@ class Client
 			'client_id' => $client_id,
 			'client_secret' => $client_secret,
 			'code' => $code
+		));
+
+		return $response;
+	}
+
+	public function get_user_token($client_id, $client_secret) {
+
+		$response = $this->_post('/oauth/token',array(
+			'client_id' => $client_id,
+			'client_secret' => $client_secret,
 		));
 
 		return $response;
@@ -104,6 +134,44 @@ class Client
 		));
 
 		$response = $this->_get("/api/v1/accounts/{$account_id}/statuses?{$query}", null, $headers);
+
+		return $response;
+	}
+
+	public function getVideos($media = 'false', $pinned = 'false', $replies = 'false', $max_id = null, $since_id = null, $min_id = null, $limit = 10, $reblogs = 'false') {
+
+		$headers = array(
+			'Authorization'=> 'Bearer '.$this->access_token
+		);
+
+		$account_id = self::$acct_id;
+
+		// $query = http_build_query(array(
+		// 	'only_media' => $media,
+		// 	'pinned' => $pinned,
+		// 	'exclude_replies' => $replies,
+		// 	'max_id' => $max_id,
+		// 	'since_id' => $since_id,
+		// 	'min_id' => $min_id,
+		// 	'limit' => $limit,
+		// 	'exclude_reblogs' => $reblogs
+		// ));
+
+		$response = $this->_get("/api/v1/accounts/{$account_id}/videos", null, $headers);
+
+		return $response;
+	}
+
+	public function getTimelineHome() {
+
+		$headers = array(
+			'Authorization'=> 'Bearer '.$this->access_token
+		);
+
+		$account_id = self::$acct_id;
+
+		$response = $this->_get("/api/v1/accounts/{$account_id}/lists", null, $headers);
+		//$response = $this->_get("/api/v1/timelines/home?limit=20", null, $headers);
 
 		return $response;
 	}

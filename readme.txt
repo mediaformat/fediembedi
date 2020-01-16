@@ -89,8 +89,8 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 == Credits ==
 
-= Mastodon Autopost =
+* Mastodon Autopost
 The client connection code is based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
 
-= FediEmbedi =
-The name FediEmbedi was contributed by [@liaizon@wake.st](https://social.wake.st/@liaizon).
+* FediEmbedi
+The name FediEmbedi was contributed by [wake.st](https://wake.st/).
