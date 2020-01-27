@@ -48,25 +48,25 @@ class FediClient
 		return $this->instance_url.'/oauth/authorize?'.$params;
 	}
 
-	public function register_client($redirect_uri, $scopes = 'read') {
-
-		$response = $this->_get('/api/v1/oauth-clients/local');
-
-		if (!isset($response->client_id)){
-			return "ERROR";
-		}
-
-		$this->app = $response;
-
-		$params = http_build_query(array(
-			'scope' => $scopes,
-			'client_id' =>$this->app->client_id,
-			'client_secret' =>$this->app->client_secret
-		));
-
-		$access_token = $this->_post('/api/v1/oauth-clients/local');
-//		return $this->instance_url.'/users/token?'.$params;
-	}
+// 	public function register_client($redirect_uri, $scopes = 'read') {
+//
+// 		$response = $this->_get('/api/v1/oauth-clients/local');
+//
+// 		if (!isset($response->client_id)){
+// 			return "ERROR";
+// 		}
+//
+// 		$this->app = $response;
+//
+// 		$params = http_build_query(array(
+// 			'scope' => $scopes,
+// 			'client_id' =>$this->app->client_id,
+// 			'client_secret' =>$this->app->client_secret
+// 		));
+//
+// 		$access_token = $this->_post('/api/v1/oauth-clients/local');
+// //		return $this->instance_url.'/users/token?'.$params;
+// 	}
 
 	public function verify_credentials($access_token){
 
@@ -138,26 +138,15 @@ class FediClient
 		return $response;
 	}
 
-	public function getVideos($media = 'false', $pinned = 'false', $replies = 'false', $max_id = null, $since_id = null, $min_id = null, $limit = 10, $reblogs = 'false') {
+	public function getVideos($account_id, $is_channel) {
 
-		$headers = array(
-			'Authorization'=> 'Bearer '.$this->access_token
-		);
+		$headers = array();
 
-		$account_id = self::$acct_id;
-
-		// $query = http_build_query(array(
-		// 	'only_media' => $media,
-		// 	'pinned' => $pinned,
-		// 	'exclude_replies' => $replies,
-		// 	'max_id' => $max_id,
-		// 	'since_id' => $since_id,
-		// 	'min_id' => $min_id,
-		// 	'limit' => $limit,
-		// 	'exclude_reblogs' => $reblogs
-		// ));
-
-		$response = $this->_get("/api/v1/accounts/{$account_id}/videos", null, $headers);
+		if(!is_null($is_channel)){
+				$response = $this->_get("/api/v1/video-channels/{$account_id}/videos", null, $headers);
+		} else {
+				$response = $this->_get("/api/v1/accounts/{$account_id}/videos", null, $headers);
+		}
 
 		return $response;
 	}
