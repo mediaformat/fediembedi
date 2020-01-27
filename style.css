@@ -1,47 +1,5 @@
-/* .wrap{
-	padding:10px;
-	border-radius:10px;
-	min-height:100%;
-}
-.wrap h1, .wrap label, .wrap form  p{
-	color: #000;
-}
-
-.wrap .button{
-	color:#2b90d9 !important;
-	border-color:#2b90d9 !important;
-	box-shadow:none !important;
-	text-shadow:none !important;
-	font-weight:bold;
-}
-
-.wrap .button:hover{
-	background-color:transparent;
-}
-
-.wrap input, .wrap textarea{
-	background-color:transparent !important;
-	color:#000 !important;
-	border-color:#000;
-	border-radius:4px;
-}
-
-.wrap > form{
-	border:solid 1px #2b90d9;
-	padding:1%;
-	background-color:#FFF;
-} */
-
 .spacer{
 	margin-top: 20px;
-}
-
-.account{
-	border: 1px solid #000;
-	padding: 15px;
-	border-radius:4px;
-	float:left;
-
 }
 
 .m-avatar{
@@ -55,13 +13,8 @@
 	float:left;
 }
 
-.details .link{
-	color:#000;
-	text-decoration: none;
-}
-
 .connected{
-	color: #2b90d9;
+	color: #000;
 	font-size: 16px;
 	font-weight:bold;
 	margin-bottom: 10px;
@@ -72,25 +25,6 @@
 	font-size: 16px;
 	text-align: center;
 	width: 100%;
-}
-
-.advanced_setting{
-	display:none;
-}
-
-
-/* .wrap .button:hover{
-	background-color:transparent;
-}
-
-.wrap input, .wrap textarea{
-	background-color:transparent !important;
-	color:#000 !important;
-	border-color:#000;
-	border-radius:4px;
-} */
-.spacer{
-	margin-top: 20px;
 }
 
 .account{
@@ -99,42 +33,8 @@
 	border-radius:4px;
 	float:left;
   margin: 0 0 1em;
+	width: 300px;
 }
-
-.m-avatar{
-	float:left;
-	border-radius: 100px;
-	margin-right: 20px;
-	width: 60px;
-}
-
-.details{
-	float:left;
-}
-
-.details .link{
-	color:#000;
-	text-decoration: none;
-}
-
-.connected{
-	color: #2b90d9;
-	font-size: 16px;
-	font-weight:bold;
-	margin-bottom: 10px;
-}
-
-.disconnected{
-	color: #FF0000;
-	font-size: 16px;
-	text-align: center;
-	width: 100%;
-}
-
-.advanced_setting{
-	display:none;
-}
-
 
 label{
 	display:inline-block;
@@ -142,58 +42,6 @@ label{
 	text-align:center;
 }
 
-.messageRadioButtons label{
-	padding:10px;
-	border:dashed 2px #000;
-	opacity:0.5;
-}
-
-.scopeRadioButtons label{
-	opacity:0.5;
-	margin-right:1em;
-}
-
-input[type="radio"]{
-	display:none;
-}
-
-.github-icon{
-	margin-right: 10px;
-	text-decoration: none;
-	position: relative;
-}
-
-html > body .liberapay-btn{
-	margin-top: 3px;
-    position: absolute;
-}
-
-.github-icon{
-	margin-right: 10px;
-	text-decoration: none;
-	position: relative;
-}
-
-.modeIcon{
-	height:1em;
-}
-
-html > body .liberapay-btn{
-	margin-top: 3px;
-    position: absolute;
-}
-
-.tab-button{
-	text-align:center;
-	margin-bottom:-1px !important;
-	border-bottom:none !important;
-	border-radius:0 !important;
-}
-
-.tab-button.active{
-	background-color:#FFF !important;
-	margin-bottom:-0px !important;
-}
 .pixelfed {
 	background: url('img/pixelfed.svg') no-repeat 0 0;
 	background-size: 30px;
@@ -205,6 +53,14 @@ html > body .liberapay-btn{
 	width: 36px;
 	vertical-align: middle;
 }
+
+.account span.pixelfed {
+    float: left;
+    margin-left: -41px;
+    background-size: 30px;
+    margin-top: 41px;
+}
+
 .mastodon {
 	background: url('img/mastodon.svg') no-repeat 1px 4px;
 	background-size: 28px;
@@ -215,6 +71,14 @@ html > body .liberapay-btn{
 	width: 36px;
 	vertical-align: middle;
 }
+
+.account span.mastodon {
+    float: left;
+    margin-left: -41px;
+    background-size: 30px;
+    margin-top: 41px;
+}
+
 .peertube {
 	background: url('img/peertube.svg') no-repeat 7px 4px;
 	background-size: 24px;
@@ -225,9 +89,11 @@ html > body .liberapay-btn{
 	width: 36px;
 	vertical-align: middle;
 }
+
 .instance_url {
 	max-width: 500px;
 }
+
 .instance_type.widefat {
 	max-width: 160px;
 	vertical-align: baseline;

@@ -21,10 +21,11 @@ FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget
 * Mastodon
 * Pleroma
 * Pixelfed
+* PeerTube
 
 = Planned supported software =
-* PeerTube
-* *Suggestions?*
+* See the [board](https://git.feneas.org/mediaformat/fediembedi/-/boards)
+* [Suggestions](https://git.feneas.org/mediaformat/fediembedi/issues)?
 
 = Development =
 
@@ -57,6 +58,13 @@ No, this plugin uses [OAuth 2.0](https://oauth.net/). You will be sent to login 
 and redirected to your site with a secure token. Similar to how you would connect a mobile app to your account.
 
 == Changelog ==
+
+= 0.8.0 =
+* Support PeerTube
+* Support separate Mastodon, Pixelfed and PeerTube widgets.
+
+= 0.7.2 =
+* Renamed some classes and constants, and reorganized file structure
 
 = 0.7.1 =
 * Fix version info

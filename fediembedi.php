@@ -4,7 +4,7 @@
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Github Plugin URI: https://github.com/mediaformat/fediembedi
  * Description: A widget to show your Mastodon profile timeline
- * Version: 0.7.2
+ * Version: 0.8.0
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
@@ -21,6 +21,7 @@ class FediConfig
     {
         add_action('plugins_loaded', array($this, 'init'));
         add_action('widgets_init', array($this, 'fediembedi_widget'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
         add_action('admin_menu', array($this, 'configuration_page'));
         add_action('admin_notices', array($this, 'admin_notices'));
@@ -41,19 +42,39 @@ class FediConfig
         //load_plugin_textdomain('fediembedi', false, $plugin_dir . '/languages');
 
         if (isset($_GET['code'])) {
+        //if (isset($_GET['code']) && isset($GET['instance_type'])) {
+
+            $instance_type = $_REQUEST['instance_type'];
             $code = $_GET['code'];
-            $client_id = get_option('fediembedi-client-id');
-            $client_secret = get_option('fediembedi-client-secret');
+
+            switch ($instance_type) {
+              case 'mastodon':
+                $client_id = get_option('fediembedi-mastodon-client-id');
+                $client_secret = get_option('fediembedi-mastodon-client-secret');
+                break;
+              case 'pixelfed':
+                $client_id = get_option('fediembedi-pixelfed-client-id');
+                $client_secret = get_option('fediembedi-pixelfed-client-secret');
+                break;
+            }
 
             if (!empty($code) && !empty($client_id) && !empty($client_secret)) {
                 //echo __('Authentification, please wait', 'fediembedi') . '...';
 
-                update_option('fediembedi-token', 'nada');
-
-                $instance = get_option('fediembedi-instance');
-                $client = new \FediClient($instance);
-                $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url());
-                //$instance_info = $client->getInstance();
+                switch ($instance_type) {
+                  case 'mastodon':
+                    update_option('fediembedi-mastodon-token', 'nada');
+                    $instance = get_option('fediembedi-mastodon-instance');
+                    $client = new \FediClient($instance);
+                    $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url() . '?instance_type=' . $instance_type);
+                    break;
+                  case 'pixelfed':
+                    update_option('fediembedi-pixelfed-token', 'nada');
+                    $instance = get_option('fediembedi-pixelfed-instance');
+                    $client = new \FediClient($instance);
+                    $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url() . '?instance_type=' . $instance_type);
+                    break;
+                }
 
                 if (isset($token->error)) {
                     //TODO: Proper error message
@@ -68,12 +89,27 @@ class FediConfig
                         )
                     );
                     unset($token);
-                    update_option('fediembedi-token', '');
+                    switch ($instance_type) {
+                      case 'mastodon':
+                        update_option('fediembedi-mastodon-token', '');
+                        break;
+                      case 'pixelfed':
+                        update_option('fediembedi-pixelfed-token', '');
+                        break;
+                    }
                 } else {
-                    update_option('fediembedi-client-id', '');
-                    update_option('fediembedi-client-secret', '');
-                    update_option('fediembedi-token', $token->access_token);
-                    //update_option('fediembedi-instance-type', $instance_type);
+                    switch ($instance_type) {
+                      case 'mastodon':
+                        update_option('fediembedi-mastodon-client-id', '');
+                        update_option('fediembedi-mastodon-client-secret', '');
+                        update_option('fediembedi-mastodon-token', $token->access_token);
+                        break;
+                      case 'pixelfed':
+                        update_option('fediembedi-pixelfed-client-id', '');
+                        update_option('fediembedi-pixelfed-client-secret', '');
+                        update_option('fediembedi-pixelfed-token', $token->access_token);
+                        break;
+                    }
 
                 }
                 $redirect_url = get_admin_url() . 'options-general.php?page=fediembedi';
@@ -86,7 +122,8 @@ class FediConfig
             exit;
         }
 
-        $token = get_option('fediembedi-token');
+        $mastodon_token = get_option('fediembedi-mastodon-token');
+        $pixelfed_token = get_option('fediembedi-pixelfed-token');
 
     }
 
@@ -94,28 +131,43 @@ class FediConfig
      *  Widget
      */
     public function fediembedi_widget() {
-    	include(plugin_dir_path(__FILE__) . 'fediembedi-widget.php' );//
-    	register_widget( 'WP_Widget_fediembedi' );
+      //Mastodon
+      include(plugin_dir_path(__FILE__) . 'fediembedi-mastodon-widget.php' );//
+      register_widget( 'FediEmbedi_Mastodon' );
+
+      //Pixelfed
+      include(plugin_dir_path(__FILE__) . 'fediembedi-pixelfed-widget.php' );//
+      register_widget( 'FediEmbedi_Pixelfed' );
+
+      //PeerTube
+      include(plugin_dir_path(__FILE__) . 'fediembedi-peertube-widget.php' );//
+    	register_widget( 'FediEmbedi_PeerTube' );
     }
 
     public function enqueue_styles($hook)
     {
-        if( is_active_widget( false, false, 'fediembedi') ) {
-          $instance_type = get_option('fediembedi-instance-type');
-          switch ($instance_type) {
-    		      case 'Mastodon':
-    		        wp_enqueue_style( 'mastodon', plugin_dir_url( __FILE__ ) . 'assets/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
-    		        break;
-    		      case 'Pixelfed':
-                wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'assets/bootstrap/css/bootstrap.min.css', array(), '4.4.1' );
-                wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'assets/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/pixelfed.css') );
-                //https://css-tricks.com/lozad-js-performant-lazy-loading-images/ lazyloading for background images
-    		        break;
-    		      default:
-    		        wp_enqueue_style( 'fediembedi', plugin_dir_url( __FILE__ ) . 'assets/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
-    		        break;
-    		    }
+        if( is_active_widget( false, false, 'mastodon') ) {
+            wp_enqueue_style( 'mastodon', plugin_dir_url( __FILE__ ) . 'assets/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
         }
+        if( is_active_widget( false, false, 'pixelfed') ) {
+            wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'assets/bootstrap/css/bootstrap.min.css', array(), '4.4.1' );
+            wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'assets/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/pixelfed.css') );
+        }
+        if( is_active_widget( false, false, 'peertube') ) {
+            wp_enqueue_style( 'peertube', plugin_dir_url( __FILE__ ) . 'assets/peertube.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
+        }
+    }
+
+    public function enqueue_scripts($hook)
+    {
+      global $pagenow;
+      $infos = get_plugin_data(__FILE__);
+      if ($pagenow == "options-general.php") {
+          //We might be on settings page <-- Do you know a bette solution to get if we are in our own settings page?
+          $plugin_url = plugin_dir_url(__FILE__);
+          //wp_enqueue_script('settings_page', $plugin_url . 'assets/settings_page.js', array('jquery'), $infos['Version'], true);
+
+      }
     }
 
     /**
@@ -149,39 +201,36 @@ class FediConfig
 
         wp_enqueue_style('fediembedi-configuration', plugin_dir_url(__FILE__) . 'style.css');
 
-        if (isset($_GET['disconnect'])) {
-            update_option('fediembedi-token', '');
-        }
+        if (isset($_GET['fediembedi-disconnect'])) {
+          switch ($_GET['fediembedi-disconnect']) {
+            case 'mastodon':
+              update_option('fediembedi-mastodon-token', '');
+              break;
+            case 'pixelfed':
+              update_option('fediembedi-pixelfed-token', '');
+              break;
+          }
 
-        $token = get_option('fediembedi-token');
+        }
+        $mastodon_instance = null;
+        $mastodon_token = get_option('fediembedi-mastodon-token');
+        $pixelfed_instance = null;
+        $pixelfed_token = get_option('fediembedi-pixelfed-token');
 
         if (isset($_POST['save'])) {
 
             $is_valid_nonce = wp_verify_nonce($_POST['_wpnonce'], 'fediembedi-configuration');
 
             if ($is_valid_nonce) {
+
                 $instance = esc_url($_POST['instance']);
                 $instance_type = esc_attr($_POST['instance_type']);
-                //TODO switch($instance_type) case() return $scopes
 
                 $client = new \FediClient($instance);
-                $redirect_url = get_admin_url();
-
-                switch ($instance_type) {
-                    case 'Mastodon':
-                      $auth_url = $client->register_app($redirect_url);
-                      break;
-                    case 'Pixelfed':
-                      $auth_url = $client->register_app($redirect_url);
-                      break;
-                    case 'PeerTube':
-                      $auth_url = $client->register_client($redirect_url, 'user');
-                      break;
-                }
-                //$auth_url = $client->register_app($redirect_url, $scopes);
+                $redirect_url = get_admin_url() . '?instance_type=' . $instance_type;
+                $auth_url = $client->register_app($redirect_url);
 
                 if ($auth_url == "ERROR") {
-                    //var_dump('$auth_url = ERROR'); //die;
                     update_option(
                         'fediembedi-notice',
                         serialize(
@@ -193,9 +242,7 @@ class FediConfig
                     );
 
                 } else {
-                  //var_dump($auth_url); //die;
                     if (empty($instance)) {
-                      //var_dump($instance); //die;
                         update_option(
                             'fediembedi-notice',
                             serialize(
@@ -206,12 +253,25 @@ class FediConfig
                             )
                         );
                     } else {
-                        update_option('fediembedi-client-id', $client->get_client_id());
-                        update_option('fediembedi-client-secret', $client->get_client_secret());
-                        update_option('fediembedi-instance', $instance);
-                        update_option('fediembedi-instance-type', $instance_type);
 
-                        $account = $client->verify_credentials($token);
+                        switch ($instance_type) {
+                          case 'mastodon':
+                            update_option('fediembedi-mastodon-client-id', $client->get_client_id());
+                            update_option('fediembedi-mastodon-client-secret', $client->get_client_secret());
+                            update_option('fediembedi-mastodon-instance', $instance);
+                            $mastodon_account = $client->verify_credentials($mastodon_token);
+                            $account = $mastodon_account;
+                            break;
+                          case 'pixelfed':
+                            update_option('fediembedi-pixelfed-client-id', $client->get_client_id());
+                            update_option('fediembedi-pixelfed-client-secret', $client->get_client_secret());
+                            update_option('fediembedi-pixelfed-instance', $instance);
+                            $pixelfed_account = $client->verify_credentials($pixelfed_token);
+                            $account = $pixelfed_account;
+                            break;
+                        }
+
+                        //$account = $client->verify_credentials($token);
 
                         if (is_null($account) || isset($account->error)) {
                             echo '<meta http-equiv="refresh" content="0; url=' . $auth_url . '" />';
@@ -237,12 +297,15 @@ class FediConfig
             }
         }
 
-        $instance = get_option('fediembedi-instance');
-        $instance_type = get_option('fediembedi-instance-type');
-
-        if (!empty($token)) {
-            $client = new \FediClient($instance);
-            $account = $client->verify_credentials($token);
+        if (!empty($mastodon_token)) {
+            $mastodon_instance = get_option('fediembedi-mastodon-instance');
+            $client = new \FediClient($mastodon_instance);
+            $mastodon_account = $client->verify_credentials($mastodon_token);
+        }
+        if (!empty($pixelfed_token)) {
+            $pixelfed_instance = get_option('fediembedi-pixelfed-instance');
+            $client = new \FediClient($pixelfed_instance);
+            $pixelfed_account = $client->verify_credentials($pixelfed_token);
         }
 
         include 'fediembedi-settings-form.tpl.php';

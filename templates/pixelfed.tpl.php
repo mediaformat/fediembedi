@@ -1,5 +1,4 @@
 <!-- pixelfed -->
-<?php $instance_url = get_option('fediembedi-instance'); ?>
 <div class="scrollable" style="height: <?php echo $height; ?>;">
   <div role="feed" class="embed-card pixelfed">
     <div class="pixelfed-inner card status-card-embed card-md-rounded-0 border">

@@ -1,2 +1,7 @@
 #ignore system files
 .DS_Store
+
+#bootstrap slim
+assets/bootstrap/*
+!assets/bootstrap/css/bootstrap.min.css
+!assets/bootstrap/css/bootstrap.min.css.map
