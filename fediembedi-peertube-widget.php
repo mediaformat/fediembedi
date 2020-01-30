@@ -52,7 +52,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		} else {
 			$account = $status->data[0]->account;
 		}
-		if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+		
     include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
 
 		echo $args['after_widget'];
