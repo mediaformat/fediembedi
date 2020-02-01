@@ -341,6 +341,7 @@ class FediConfig
      */
     function fediembedi_add_plugin_page_settings_link( $links ) {
       $links[] = '<a href="' . admin_url( 'options-general.php?page=fediembedi' ) . '">' . __('Configuration', 'fediembedi') . '</a>';
+      $links[] = '<a href="https://git.feneas.org/mediaformat/fediembedi/issues" target="_blank">' . __('Support', 'fediembedi') . '</a>';
     	return $links;
     }
 

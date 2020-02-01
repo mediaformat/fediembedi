@@ -65,6 +65,8 @@ define("FEDI_PXLFD_CONNECTED",isset($pixelfed_account) && $pixelfed_account !== 
 					 Visit <a href="https://joinpeertube.org" rel="noreferrer noopener" target="_blank" class="">joinpeertube.org</a> to find an instance.</p>
 		</div>
 		<div class="clear"></div>
-
 	</form>
+	<div>
+		<p>For news and updates follow <a href="https://mastodon.social/@MediaFormat" target="_blank">@MediaFormat</a>.</p>
+	</div>
 </div>
