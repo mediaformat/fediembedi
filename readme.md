@@ -48,6 +48,18 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 ## Changelog
 
+### 0.8.4
+* Fix large video player
+
+### 0.8.3
+* version bump
+
+### 0.8.2
+* Add Support links
+
+### 0.8.1
+* CSS fix
+
 ### 0.8.0
 * Support PeerTube
 * Support separate Mastodon, Pixelfed and PeerTube widgets.
