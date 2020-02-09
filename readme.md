@@ -5,10 +5,10 @@
 FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
 
 ### Currently supported software
-* Mastodon
-* Pleroma
-* Pixelfed
-* PeerTube
+* [Mastodon](http://joinmastodon.org/)
+* [Pleroma](https://git.pleroma.social/pleroma)
+* [Pixelfed](https://pixelfed.org/)
+* [PeerTube](https://joinpeertube.org/)
 
 
 ### Planned supported software
@@ -47,6 +47,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 
 ## Changelog
+
+### 0.8.5
+* CSS for small columns
 
 ### 0.8.4
 * Fix large video player

@@ -18,10 +18,10 @@ Display your Fediverse timeline in a widget
 FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
 
 = Currently supported software =
-* Mastodon
-* Pleroma
-* Pixelfed
-* PeerTube
+* [Mastodon](http://joinmastodon.org/)
+* [Pleroma](https://git.pleroma.social/pleroma)
+* [Pixelfed](https://pixelfed.org/)
+* [PeerTube](https://joinpeertube.org/)
 
 = Planned supported software =
 * See the [board](https://git.feneas.org/mediaformat/fediembedi/-/boards)
@@ -59,6 +59,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 == Changelog ==
 
+= 0.8.5 =
+* CSS for small columns
+
 = 0.8.4 =
 * Fix large video player
 
@@ -68,7 +71,7 @@ and redirected to your site with a secure token. Similar to how you would connec
 = 0.8.2 =
 * Add Support links
 
-= 0.8.1 = 
+= 0.8.1 =
 * CSS fix
 
 = 0.8.0 =

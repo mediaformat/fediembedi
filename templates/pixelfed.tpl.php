@@ -4,11 +4,11 @@
     <div class="pixelfed-inner card status-card-embed card-md-rounded-0 border">
       <?php if($show_header): ?>
       <div class="pixelfed-header card-header d-inline-flex align-items-center justify-content-between bg-white">
-        <div>
+        <div class="pixelfed-account">
           <img src="<?php echo $status[0]->account->avatar; ?>" height="32px" width="32px" style="border-radius: 32px;">
           <a href="<?php echo $status[0]->account->url; ?>" class="username font-weight-bold pl-2 text-dark" rel="noreferrer noopener" target="_blank"><?php echo $status[0]->account->username; ?></a>
         </div>
-        <div>
+        <div class="pixelfed-instance">
           <a class="small font-weight-bold text-muted pr-1" href="<?php echo $instance_url; ?>"><?php echo parse_url($instance_url, PHP_URL_HOST); ?></a>
           <img src="<?php echo plugin_dir_url( __FILE__ ) . '../img/pixelfed.svg';?>" width="26px" loading="lazy">
         </div>

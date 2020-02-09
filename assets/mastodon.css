@@ -271,6 +271,9 @@
 .status-card__description {
     color: #282c37;
 }
+.status__wrapper[max-width~="350px"] .status-card__description {
+    display: none;
+}
 .status-card__host {
     display: block;
     margin-top: 5px;
@@ -278,6 +281,23 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.status__wrapper[max-width~="350px"] .status.status-public {
+    padding: 8px 10px 8px 10px;
+}
+.status__wrapper[max-width~="350px"] .status__info {
+    font-size: 1.8rem;
+    margin-left: 60px;
+    position: initial;
+}
+.status__wrapper[max-width~="350px"] .status__content {
+    margin-top: 2rem;
+}
+.status__content .invisible {
+  display: none;
+}
+.status__content .ellipsis:after {
+  content: '\2026';
 }
 .status__content summary {
   background: #eee;

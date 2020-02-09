@@ -6,28 +6,28 @@
       <div class="account__header">
         <div class="account__header__image">
           <div class="account__header__info"></div>
-          <?php if ($status[0]->account->header): echo "<img src=" . $status[0]->account->header . " loading='lazy'>"; endif; ?>
+          <?php if ($account->header): echo "<img src=" . $account->header . " loading='lazy'>"; endif; ?>
         </div>
         <div class="account__header__bar">
           <div class="account__header__tabs">
-            <a href="<?php echo $status[0]->account->url; ?>" class="avatar" rel="noreferrer noopener" target="_blank">
-              <div class="account__avatar" style="width:90px; height: 90px; background-image: url('<?php echo $status[0]->account->avatar; ?>'); background-size: cover;"></div>
+            <a href="<?php echo $account->url; ?>" class="avatar" rel="noreferrer noopener" target="_blank">
+              <div class="account__avatar" style="width:90px; height: 90px; background-image: url('<?php echo $account->avatar; ?>'); background-size: cover;"></div>
             </a>
             <div class="spacer"></div>
             <div class="account__header__tabs__buttons">
-              <a href="<?php echo $status[0]->account->url; ?>" rel="noreferrer noopener" class="button logo-button"><?php _e('Follow', 'fediembedi'); ?></a>
+              <a href="<?php echo $account->url; ?>" rel="noreferrer noopener" class="button logo-button"><?php _e('Follow', 'fediembedi'); ?></a>
             </div>
           </div>
           <div class="account__header__tabs__name">
             <h1>
-              <span><?php echo $status[0]->account->display_name; ?></span>
-              <small><a href="" target="_blank" rel="noreferrer noopener"><?php echo $status[0]->account->url; ?></a></small>
+              <span><?php echo $account->display_name; ?></span>
+              <small><a href="" target="_blank" rel="noreferrer noopener"><?php echo $account->url; ?></a></small>
             </h1>
           </div>
           <div class="account__header__extra">
             <div class="account__header__bio">
               <div class="account__header__content">
-                <?php echo $status[0]->account->note; ?>
+                <?php echo $account->note; ?>
               </div>
             </div>
           </div>
@@ -76,7 +76,7 @@
                         <div class="status-card__image"><div class="status-card__image-image" style="background-image: url(<?php echo $statut->card->image; ?>);"></div></div>
                         <div class="status-card__content">
                           <strong class="status-card__title" title="<?php echo $statut->card->title; ?>"><?php echo htmlentities($statut->card->title); ?></strong>
-                          <p class="status-card__description"><?php echo wp_trim_words(htmlentities($statut->card->description)); ?></p>
+                          <p class="status-card__description"><?php echo wp_trim_words(htmlentities($statut->card->description), 10); ?></p>
                           <span class="status-card__host"><?php echo $statut->card->url; ?></span>
                         </div>
                       </a>

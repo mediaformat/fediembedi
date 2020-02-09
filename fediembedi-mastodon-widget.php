@@ -52,6 +52,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 
 			//getStatus from remote instance
 			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+			$account = $status[0]->account;
       include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
 
 		echo $args['after_widget'];

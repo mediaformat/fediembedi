@@ -3,8 +3,8 @@
  * Plugin Name: FediEmbedi
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Github Plugin URI: https://github.com/mediaformat/fediembedi
- * Description: A widget to show your Mastodon profile timeline
- * Version: 0.8.4
+ * Description: A widget to show your Fediverse profile timeline
+ * Version: 0.8.5
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
@@ -152,6 +152,11 @@ class FediConfig
 
     public function enqueue_styles($hook)
     {
+        if( is_active_widget( false, false, 'mastodon') || is_active_widget( false, false, 'pixelfed') ) {
+            wp_enqueue_script( 'resize-sensor', plugin_dir_url( __FILE__ ) . 'assets/ResizeSensor.js', array(), 'css-element-queries-1.2.2' );
+            wp_enqueue_script( 'element-queries', plugin_dir_url( __FILE__ ) . 'assets/ElementQueries.js', array('resize-sensor'), 'css-element-queries-1.2.2' );
+
+        }
         if( is_active_widget( false, false, 'mastodon') ) {
             wp_enqueue_style( 'mastodon', plugin_dir_url( __FILE__ ) . 'assets/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
         }
