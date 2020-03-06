@@ -4,7 +4,7 @@
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Github Plugin URI: https://github.com/mediaformat/fediembedi
  * Description: A widget to show your Fediverse profile timeline
- * Version: 0.8.6
+ * Version: 0.9.1
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3

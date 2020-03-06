@@ -4,7 +4,7 @@
     <div class="pixelfed-inner card status-card-embed card-md-rounded-0 border">
       <?php if($show_header): ?>
       <div class="pixelfed-header card-header d-inline-flex align-items-center justify-content-between bg-white">
-        <div>
+        <div class="pixelfed-account">
           <img src="<?php echo $account->avatar; ?>" height="32px" width="32px" style="border-radius: 32px;">
           <a href="<?php echo $account->url; ?>" class="username font-weight-bold pl-2 text-dark" rel="noreferrer noopener" target="_blank"><?php echo $account->username; ?></a>
         </div>

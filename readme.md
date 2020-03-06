@@ -48,6 +48,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 ## Changelog
 
+### 0.9.0
+* Emoji support
+
 ### 0.8.5
 * CSS for small columns
 
