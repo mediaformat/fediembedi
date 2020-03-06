@@ -25,6 +25,7 @@ class FediConfig
         add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
         add_action('admin_menu', array($this, 'configuration_page'));
         add_action('admin_notices', array($this, 'admin_notices'));
+        add_filter('fedi_emoji', array($this, 'convert_emoji'), 10, 2);
         add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($this, 'fediembedi_add_plugin_page_settings_link'));
 
     }
@@ -142,6 +143,17 @@ class FediConfig
       //PeerTube
       include(plugin_dir_path(__FILE__) . 'fediembedi-peertube-widget.php' );//
     	register_widget( 'FediEmbedi_PeerTube' );
+    }
+
+    public function convert_emoji($string, $emojis){
+      if(is_null($emojis) || !is_array($emojis)){
+        return $string;
+      }
+      foreach($emojis as $emoji){
+           $match = '/:' . $emoji->shortcode .':/';
+           $string = preg_replace($match, "<img draggable=\"false\" role=\"img\" class=\"emoji\" src=\"{$emoji->static_url}\">", $string);
+      }
+      return $string;
     }
 
     public function enqueue_styles($hook)

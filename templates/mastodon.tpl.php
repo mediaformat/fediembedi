@@ -6,28 +6,28 @@
       <div class="account__header">
         <div class="account__header__image">
           <div class="account__header__info"></div>
-          <?php if ($status[0]->account->header): echo "<img src=" . $status[0]->account->header . " loading='lazy'>"; endif; ?>
+          <?php if ($account->header): echo "<img src=" . $account->header . " loading='lazy'>"; endif; ?>
         </div>
         <div class="account__header__bar">
           <div class="account__header__tabs">
-            <a href="<?php echo $status[0]->account->url; ?>" class="avatar" rel="noreferrer noopener" target="_blank">
-              <div class="account__avatar" style="width:90px; height: 90px; background-image: url('<?php echo $status[0]->account->avatar; ?>'); background-size: cover;"></div>
+            <a href="<?php echo $account->url; ?>" class="avatar" rel="noreferrer noopener" target="_blank">
+              <div class="account__avatar" style="width:90px; height: 90px; background-image: url('<?php echo $account->avatar; ?>'); background-size: cover;"></div>
             </a>
             <div class="spacer"></div>
             <div class="account__header__tabs__buttons">
-              <a href="<?php echo $status[0]->account->url; ?>" rel="noreferrer noopener" class="button logo-button"><?php _e('Follow', 'fediembedi'); ?></a>
+              <a href="<?php echo $account->url; ?>" rel="noreferrer noopener" class="button logo-button"><?php _e('Follow', 'fediembedi'); ?></a>
             </div>
           </div>
           <div class="account__header__tabs__name">
             <h1>
-              <span><?php echo $status[0]->account->display_name; ?></span>
-              <small><a href="" target="_blank" rel="noreferrer noopener"><?php echo $status[0]->account->url; ?></a></small>
+              <span><?php echo apply_filters('fedi_emoji', $account->display_name, $account->emojis); ?></span>
+              <small><a href="<?php echo $account->url; ?>" target="_blank" rel="noreferrer noopener"><?php echo $account->url; ?></a></small>
             </h1>
           </div>
           <div class="account__header__extra">
             <div class="account__header__bio">
               <div class="account__header__content">
-                <?php echo $status[0]->account->note; ?>
+                <?php echo apply_filters('fedi_emoji', $account->note, $account->emojis); ?>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@
                     <div class="status__avatar">
                       <div class="account__avatar" style="background-image: url(<?php if(is_null($statut->reblog)): echo $statut->account->avatar; else: echo $statut->reblog->account->avatar; endif; ?>); background-size: 40px; width: 40px; height: 40px;"></div>
                     </div>
-                    <span class="display-name"><?php if(is_null($statut->reblog)): echo $statut->account->display_name; else: echo $statut->reblog->account->display_name; endif; ?></span>
+                    <span class="display-name"><?php if(is_null($statut->reblog)): echo apply_filters('fedi_emoji', $statut->account->display_name, $statut->account->emojis); else: echo apply_filters('fedi_emoji', $statut->reblog->account->display_name, $statut->reblog->account->emojis); endif; ?></span>
                   </a>
                 </div>
                 <div class="status__content"><?php
@@ -70,7 +70,7 @@
                   $statut = $statut->reblog;
                 endif;
                   if(empty($statut->spoiler_text)):
-                    echo $statut->content;
+                    echo apply_filters('fedi_emoji', $statut->content, $statut->emojis);
                     if(!is_null($statut->card)): ?>
                       <a href="<?php echo $statut->card->url; ?>" class="status-card compact" target="_blank" rel="noopener noreferrer">
                         <div class="status-card__image"><div class="status-card__image-image" style="background-image: url(<?php echo $statut->card->image; ?>);"></div></div>
@@ -82,7 +82,7 @@
                       </a>
                       <?php
                     endif;
-                  else: echo '<details><summary>' . $statut->spoiler_text . '</summary>'. $statut->content . '</details>';
+                  else: echo '<details><summary>' . apply_filters('fedi_emoji', $statut->spoiler_text, $statut->emojis) . '</summary>'. apply_filters('fedi_emoji', $statut->content, $statut->emojis) . '</details>';
                   endif;
                   if(!empty($statut->media_attachments)):
                     foreach ($statut->media_attachments as $attachment) {

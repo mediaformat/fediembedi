@@ -285,6 +285,12 @@
     cursor: pointer;
     display: inline-block;
 }
+.status__content span.invisible{
+  display: none;
+}
+.status__content span.ellipsis:after{
+  content: '\2026';
+}
 .status__content .media-gallery__item{
   margin: 1em 0;
 }

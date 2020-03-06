@@ -43,8 +43,6 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
 
-		//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>'. $instance_type .'</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
-
 		echo $args['before_widget'];
 		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'];
@@ -52,7 +50,9 @@ class FediEmbedi_Mastodon extends WP_Widget {
 
 			//getStatus from remote instance
 			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
-      include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
+			//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+			$account = $status[0]->account;
+			include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
 
 		echo $args['after_widget'];
 	}
