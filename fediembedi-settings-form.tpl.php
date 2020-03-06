@@ -12,7 +12,7 @@ define("FEDI_PXLFD_CONNECTED",isset($pixelfed_account) && $pixelfed_account !== 
 		<div style="display:<?php echo !FEDI_MSTDN_CONNECTED ? "block":"none"?>">
 				<p><span class="mastodon"></span>
 					<input type="hidden" name="instance_type" value="mastodon">
-					<input type="text" class="widefat instance_url" id="mastodon_instance" name="instance" size="60" value="<?php esc_url_raw( $mastodon_instance, 'https' ); ?>">
+					<input type="text" class="widefat instance_url" id="mastodon_instance" name="instance" size="60" value="<?php !isset($mastodon_instance)?: esc_url_raw( $mastodon_instance, 'https' ); ?>">
 					<input class="button button-primary" type="submit" value="<?php _e( 'Connect to your instance to enable the widget', 'fediembedi' ); ?>" name="save" id="save_mastodon"><br></p>
 					<p><?php _e( "Don't have an account?", 'fediembedi' ); ?> Visit <a href="https://joinmastodon.org/" rel="noreferrer noopener" target="_blank" class="">joinmastodon.org</a> to find an instance.</p>
 		</div>
@@ -39,7 +39,7 @@ define("FEDI_PXLFD_CONNECTED",isset($pixelfed_account) && $pixelfed_account !== 
 		<div style="display:<?php echo !FEDI_PXLFD_CONNECTED ? "block":"none"?>">
 				<p><span class="pixelfed"></span>
 					<input type="hidden" name="instance_type" value="pixelfed">
-					<input type="text" class="widefat instance_url" id="pixlefed_instance" name="instance" size="60" value="<?php esc_url_raw( $pixlefed_instance, 'https' ); ?>">
+					<input type="text" class="widefat instance_url" id="pixlefed_instance" name="instance" size="60" value="<?php !isset($pixlefed_instance)?: esc_url_raw( $pixlefed_instance, 'https' ); ?>">
 					<input class="button button-primary" type="submit" value="<?php _e( 'Connect to your instance to enable the widget', 'fediembedi' ); ?>" name="save" id="save_pixelfed"></p>
 					<p><?php _e( "Don't have an account?", 'fediembedi' ); ?> Visit <a href="https://pixelfed.org/join" rel="noreferrer noopener" target="_blank" class="">pixelfed.org/join</a> to find an instance.</p>
 		</div>

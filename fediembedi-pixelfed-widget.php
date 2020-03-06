@@ -33,6 +33,9 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		$access_token = get_option('fediembedi-pixelfed-token');
 		$client = new \FediClient($instance_url, $access_token);
 		$cred = $client->verify_credentials($access_token);
+		if (!$cred){
+			return;
+		}
 
 		//widget options
 		$show_header = (!empty($instance['show_header'])) ? $instance['show_header'] : '';
@@ -51,6 +54,7 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		};
 
 			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+			$account = $status[0]->account;
       include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
 
 		echo $args['after_widget'];
