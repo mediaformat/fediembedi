@@ -5,8 +5,8 @@
       <?php if($show_header): ?>
       <div class="pixelfed-header card-header d-inline-flex align-items-center justify-content-between bg-white">
         <div>
-          <img src="<?php echo $status[0]->account->avatar; ?>" height="32px" width="32px" style="border-radius: 32px;">
-          <a href="<?php echo $status[0]->account->url; ?>" class="username font-weight-bold pl-2 text-dark" rel="noreferrer noopener" target="_blank"><?php echo $status[0]->account->username; ?></a>
+          <img src="<?php echo $account->avatar; ?>" height="32px" width="32px" style="border-radius: 32px;">
+          <a href="<?php echo $account->url; ?>" class="username font-weight-bold pl-2 text-dark" rel="noreferrer noopener" target="_blank"><?php echo $account->username; ?></a>
         </div>
         <div>
           <a class="small font-weight-bold text-muted pr-1" href="<?php echo $instance_url; ?>"><?php echo parse_url($instance_url, PHP_URL_HOST); ?></a>
@@ -17,20 +17,20 @@
       <div class="pixelfed-body card-body pb-1">
         <div class="pixelfed-meta d-flex justify-content-between align-items-center">
           <div class="text-center">
-            <p class="mb-0 font-weight-bold prettyCount"><?php echo $status[0]->account->statuses_count; ?></p>
+            <p class="mb-0 font-weight-bold prettyCount"><?php echo $account->statuses_count; ?></p>
             <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Posts', 'fediembedi'); ?></p>
           </div>
           <div class="text-center">
-            <p class="mb-0 font-weight-bold prettyCount"><?php echo $status[0]->account->followers_count; ?></p>
+            <p class="mb-0 font-weight-bold prettyCount"><?php echo $account->followers_count; ?></p>
             <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Followers', 'fediembedi'); ?></p>
           </div>
           <div class="text-center">
-            <p class="mb-0 font-weight-bold prettyCount"><?php echo $status[0]->account->following_count; ?></p>
+            <p class="mb-0 font-weight-bold prettyCount"><?php echo $account->following_count; ?></p>
             <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Following', 'fediembedi'); ?></p>
           </div>
           <div class="text-center">
             <p class="mb-0">
-              <a href="<?php echo $instance_url . '/i/intent/follow?user='. $status[0]->account->acct; ?>" class="pixelfed-follow btn btn-primary btn-sm py-1 px-4 text-uppercase font-weight-bold" target="_blank"><?php _e('Follow', 'fediembedi'); ?></a>
+              <a href="<?php echo $instance_url . '/i/intent/follow?user='. $account->acct; ?>" class="pixelfed-follow btn btn-primary btn-sm py-1 px-4 text-uppercase font-weight-bold" target="_blank"><?php _e('Follow', 'fediembedi'); ?></a>
             </p>
           </div>
         </div>
