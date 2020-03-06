@@ -2,15 +2,15 @@
 /**
  * Plugin Name: FediEmbedi
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
- * Github Plugin URI: https://github.com/mediaformat/fediembedi
  * Description: A widget to show your Fediverse profile timeline
- * Version: 0.9.2
+ * Version: 0.9.3
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  * Text Domain: fediembedi
  * Domain Path: /languages
+ * Github Plugin URI: https://github.com/mediaformat/fediembedi
  */
 namespace FediEmbedi;
 require_once 'fediembedi-client.php';
