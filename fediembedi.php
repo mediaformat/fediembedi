@@ -3,7 +3,7 @@
  * Plugin Name: FediEmbedi
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Description: Widgets and shortcodes to show your Fediverse profile timeline
- * Version: 0.10.0
+ * Version: 0.10.1
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
