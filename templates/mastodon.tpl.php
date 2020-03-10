@@ -62,7 +62,16 @@
                     <div class="status__avatar">
                       <div class="account__avatar" style="background-image: url(<?php if(is_null($statut->reblog)): echo $statut->account->avatar; else: echo $statut->reblog->account->avatar; endif; ?>); background-size: 40px; width: 40px; height: 40px;"></div>
                     </div>
-                    <span class="display-name"><?php if(is_null($statut->reblog)): echo apply_filters('fedi_emoji', $statut->account->display_name, $statut->account->emojis); else: echo apply_filters('fedi_emoji', $statut->reblog->account->display_name, $statut->reblog->account->emojis); endif; ?></span>
+                    <span class="display-name"><?php
+                    if(is_null($statut->reblog)):
+                      echo apply_filters('fedi_emoji', $statut->account->display_name, $statut->account->emojis);
+                    else:
+                      if(empty($statut->reblog->account->display_name)):
+                        echo $statut->reblog->account->username;
+                      else:
+                        echo apply_filters('fedi_emoji', $statut->reblog->account->display_name, $statut->reblog->account->emojis);
+                      endif;
+                    endif; ?></span>
                   </a>
                 </div>
                 <div class="status__content"><?php
