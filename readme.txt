@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: dj_angola
 Donate link: https://paypal.me/MediaFormat
-Tags: mastodon, pixelfed, fediverse, activitypub, widget
+Tags: mastodon, pixelfed, fediverse, activitypub, widget, shortcode
 Requires at least: 5.1
 Tested up to: 5.3.2
 Requires PHP: 7.2
@@ -15,7 +15,12 @@ Display your Fediverse timeline in a widget
 
 > FediEmbedi is beta software.
 
-FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
+FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget or with a shortcode, with various display options.
+
+= How to use shortcodes =
+* `[mastodon exclude_reblogs="true"]`
+* `[pixelfed limit="6"]`
+* `[peertube instance="https://peertube.social" actor="channel_name" is_channel="true"]`
 
 = Currently supported software =
 * [Mastodon](http://joinmastodon.org/)
@@ -58,6 +63,9 @@ No, this plugin uses [OAuth 2.0](https://oauth.net/). You will be sent to login 
 and redirected to your site with a secure token. Similar to how you would connect a mobile app to your account.
 
 == Changelog ==
+
+= 0.10.0 =
+* Service shortcodes
 
 = 0.9.0 =
 * Emoji support

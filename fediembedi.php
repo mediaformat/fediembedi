@@ -2,8 +2,8 @@
 /**
  * Plugin Name: FediEmbedi
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
- * Description: A widget to show your Fediverse profile timeline
- * Version: 0.9.3
+ * Description: Widgets and shortcodes to show your Fediverse profile timeline
+ * Version: 0.10.0
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
@@ -21,6 +21,9 @@ class FediConfig
     {
         add_action('plugins_loaded', array($this, 'init'));
         add_action('widgets_init', array($this, 'fediembedi_widget'));
+        add_shortcode('mastodon', array($this, 'mastodon_shortcode'));
+        add_shortcode('pixelfed', array($this, 'pixelfed_shortcode'));
+        add_shortcode('peertube', array($this, 'peertube_shortcode'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
         add_action('admin_menu', array($this, 'configuration_page'));
@@ -125,7 +128,6 @@ class FediConfig
 
         $mastodon_token = get_option('fediembedi-mastodon-token');
         $pixelfed_token = get_option('fediembedi-pixelfed-token');
-
     }
 
     /*
@@ -151,6 +153,89 @@ class FediConfig
     	register_widget( 'FediEmbedi_PeerTube' );
     }
 
+    public function mastodon_shortcode($atts){
+      //fedi instance
+  		$fedi_instance = get_option('fediembedi-mastodon-instance');
+  		$access_token = get_option('fediembedi-mastodon-token');
+  		$client = new \FediClient($fedi_instance, $access_token);
+  		$cred = $client->verify_credentials($access_token);
+
+      $atts = shortcode_atts( array(
+        'only_media' => false,
+        'pinned' => false,
+        'exclude_replies' => false,
+        'max_id' => null,
+        'since_id' => null,
+        'min_id' => null,
+        'limit' => 5,
+        'exclude_reblogs' => false,
+        'show_header' => true,
+      ), $atts, 'mastodon' );
+
+      //getStatus from remote instance
+      $status = $client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs']);
+      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($client->getStatus($atts)); echo '</pre></details>'; endif;
+      $show_header = $atts['show_header'];
+      $account = $status[0]->account;
+      include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
+    }
+
+    public function pixelfed_shortcode($atts){
+      //fedi instance
+      $fedi_instance = get_option('fediembedi-pixelfed-instance');
+      $access_token = get_option('fediembedi-pixelfed-token');
+      $client = new \FediClient($fedi_instance, $access_token);
+      $cred = $client->verify_credentials($access_token);
+
+      $atts = shortcode_atts( array(
+        'only_media' => false,
+        'pinned' => false,
+        'exclude_replies' => false,
+        'max_id' => null,
+        'since_id' => null,
+        'min_id' => null,
+        'limit' => 9,
+        'exclude_reblogs' => false,
+        'show_header' => true,
+      ), $atts, 'pixelfed' );
+
+      //getStatus from remote instance
+      $status = $client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs']);
+      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($client->getStatus($atts)); echo '</pre></details>'; endif;
+      $show_header = $atts['show_header'];
+      $account = $status[0]->account;
+      include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
+    }
+
+    public function peertube_shortcode($atts){
+
+      $atts = shortcode_atts( array(
+        'instance' => null,
+        'actor' => null,
+        'is_channel' => null,
+        'limit' => 9,
+        'show_header' => true,
+      ), $atts, 'peertube' );
+
+      $client = new \FediClient($atts['instance']);
+
+      //getVideos from remote instance
+      $status = $client->getVideos($atts['actor'], $atts['is_channel']);
+      if(!is_null($atts['is_channel'])){
+        $account = $status->data[0]->channel;
+      } else {
+        $account = $status->data[0]->account;
+      }
+
+      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+      $show_header = $atts['show_header'];
+      include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
+
+    }
+
+    /*
+     * convert_emoji
+     */
     public function convert_emoji($string, $emojis){
       if(is_null($emojis) || !is_array($emojis)){
         return $string;
@@ -164,19 +249,19 @@ class FediConfig
 
     public function enqueue_styles($hook)
     {
-        if( is_active_widget( false, false, 'mastodon') || is_active_widget( false, false, 'pixelfed') ) {
+        global $post;
+        if( is_active_widget( false, false, 'mastodon') || is_active_widget( false, false, 'pixelfed') || ( is_a( $post, 'WP_Post' ) && ( has_shortcode( $post->post_content, 'mastodon') || has_shortcode( $post->post_content, 'pixelfed') ) ) ) {
             wp_enqueue_script( 'resize-sensor', plugin_dir_url( __FILE__ ) . 'assets/ResizeSensor.js', array(), 'css-element-queries-1.2.2' );
             wp_enqueue_script( 'element-queries', plugin_dir_url( __FILE__ ) . 'assets/ElementQueries.js', array('resize-sensor'), 'css-element-queries-1.2.2' );
-
         }
-        if( is_active_widget( false, false, 'mastodon') ) {
+        if( is_active_widget( false, false, 'mastodon')  || ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'mastodon') ) ) {
             wp_enqueue_style( 'mastodon', plugin_dir_url( __FILE__ ) . 'assets/mastodon.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
         }
-        if( is_active_widget( false, false, 'pixelfed') ) {
+        if( is_active_widget( false, false, 'pixelfed')  || ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'pixelfed') )  ) {
             wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'assets/bootstrap/css/bootstrap.min.css', array(), '4.4.1' );
             wp_enqueue_style( 'pixelfed', plugin_dir_url( __FILE__ ) . 'assets/pixelfed.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/pixelfed.css') );
         }
-        if( is_active_widget( false, false, 'peertube') ) {
+        if( is_active_widget( false, false, 'peertube')  || ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'peertube') ) ) {
             wp_enqueue_style( 'peertube', plugin_dir_url( __FILE__ ) . 'assets/peertube.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
         }
     }

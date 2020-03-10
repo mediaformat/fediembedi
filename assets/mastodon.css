@@ -20,6 +20,9 @@
     -webkit-animation: fade .15s linear;
     animation: fade .15s linear;
 }
+.status .status__content p {
+    font-family: inherit;
+}
 .status__prepend {
     margin-left: 68px;
     color: #444b5d;

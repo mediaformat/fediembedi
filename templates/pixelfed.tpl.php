@@ -17,21 +17,21 @@
       <div class="pixelfed-body card-body pb-1">
         <div class="pixelfed-meta d-flex justify-content-between align-items-center">
           <div class="text-center">
-            <p class="mb-0 font-weight-bold prettyCount"><?php echo $account->statuses_count; ?></p>
-            <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Posts', 'fediembedi'); ?></p>
+            <div class="mb-0 font-weight-bold prettyCount"><?php echo $account->statuses_count; ?></div>
+            <div class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Posts', 'fediembedi'); ?></div>
           </div>
           <div class="text-center">
-            <p class="mb-0 font-weight-bold prettyCount"><?php echo $account->followers_count; ?></p>
-            <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Followers', 'fediembedi'); ?></p>
+            <div class="mb-0 font-weight-bold prettyCount"><?php echo $account->followers_count; ?></div>
+            <div class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Followers', 'fediembedi'); ?></div>
           </div>
           <div class="text-center">
-            <p class="mb-0 font-weight-bold prettyCount"><?php echo $account->following_count; ?></p>
-            <p class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Following', 'fediembedi'); ?></p>
+            <div class="mb-0 font-weight-bold prettyCount"><?php echo $account->following_count; ?></div>
+            <div class="mb-0 text-muted text-uppercase small font-weight-bold"><?php _e('Following', 'fediembedi'); ?></div>
           </div>
           <div class="text-center">
-            <p class="mb-0">
+            <div class="mb-0">
               <a href="<?php echo $instance_url . '/i/intent/follow?user='. $account->acct; ?>" class="pixelfed-follow btn btn-primary btn-sm py-1 px-4 text-uppercase font-weight-bold" target="_blank"><?php _e('Follow', 'fediembedi'); ?></a>
-            </p>
+            </div>
           </div>
         </div>
         <div class="pixelfed-images row mt-4 mb-1 px-1">
@@ -52,9 +52,9 @@
         </div>
       </div>
       <div class="pixelfed-footer card-footer bg-white">
-        <p class="text-center mb-0">
+        <div class="text-center mb-0">
           <a href="<?php echo $status[0]->account->url; ?>" class="font-weight-bold" target="_blank" rel="noreferrer noopener"><?php _e('View More Posts', 'fediembedi'); ?></a>
-        </p>
+        </div>
       </div>
     </div>
   </div>
