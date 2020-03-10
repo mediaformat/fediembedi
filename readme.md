@@ -4,6 +4,11 @@
 
 FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
 
+### How to use shortcodes
+* `[mastodon exclude_reblogs="true"]`
+* `[pixelfed limit="6"]`
+* `[peertube instance="https://peertube.social" actor="channel_name" is_channel="true"]`
+
 ### Currently supported software
 * [Mastodon](http://joinmastodon.org/)
 * [Pleroma](https://git.pleroma.social/pleroma)
@@ -47,6 +52,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 
 ## Changelog
+
+### 0.10.0
+* Service shortcodes
 
 ### 0.9.0
 * Emoji support
