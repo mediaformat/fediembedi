@@ -2,7 +2,7 @@
 
 >Display your Fediverse timeline in a widget
 
-FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget, with various display options.
+FediEmbedi will display your Mastodon, Pleroma, Pixelfed, PeerTube timeline with various display options.
 
 ### How to use shortcodes
 * `[mastodon exclude_reblogs="true"]`
@@ -52,6 +52,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 
 ## Changelog
+
+### 0.10.2
+* Security fix: statuses with visibility marked unlisted, private, and direct could be displayed publicly
 
 ### 0.10.0
 * Service shortcodes
