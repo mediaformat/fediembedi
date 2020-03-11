@@ -3,7 +3,7 @@
  * Plugin Name: FediEmbedi
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Description: Widgets and shortcodes to show your Fediverse profile timeline
- * Version: 0.10.3
+ * Version: 0.10.4
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
@@ -177,7 +177,9 @@ class FediConfig
       //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
       $show_header = $atts['show_header'];
       $account = $status[0]->account;
+      ob_start();
       include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
+      return ob_get_clean();
     }
 
     public function pixelfed_shortcode($atts){
@@ -204,7 +206,9 @@ class FediConfig
       //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($client->getStatus($atts)); echo '</pre></details>'; endif;
       $show_header = $atts['show_header'];
       $account = $status[0]->account;
+      ob_start();
       include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
+      return ob_get_clean();
     }
 
     public function peertube_shortcode($atts){
@@ -229,8 +233,9 @@ class FediConfig
 
       //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
       $show_header = $atts['show_header'];
+      ob_start();
       include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
-
+      return ob_get_clean();
     }
 
     /*
