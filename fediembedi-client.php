@@ -133,7 +133,7 @@ class FediClient
 			'exclude_reblogs' => $reblogs
 		));
 
-		$response = $this->_get("/api/v1/accounts/{$account_id}/statuses?{$query}", null, $headers);
+		$response = $this->_get("/api/v1/accounts/{$account_id}/statuses?{$query}", null, null);
 
 		return $response;
 	}
@@ -173,7 +173,7 @@ class FediClient
 
 		$account_id = self::$acct_id;
 
-		$response = $this->_get("/api/v1/accounts/{$account_id}", null, null);
+		$response = $this->_get("/api/v1/accounts/{$account_id}", null, $headers);
 
 		return $response;
 	}
