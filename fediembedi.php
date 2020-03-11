@@ -174,7 +174,7 @@ class FediConfig
 
       //getStatus from remote instance
       $status = $client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs']);
-      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs'])); echo '</pre></details>'; endif;
+      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
       $show_header = $atts['show_header'];
       $account = $status[0]->account;
       include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
