@@ -15,7 +15,7 @@ Display your Fediverse timeline in a widget
 
 > FediEmbedi is beta software.
 
-FediEmbedi will display your Mastodon, Pleroma, or Pixelfed timeline in a widget or with a shortcode, with various display options.
+FediEmbedi will display your Mastodon, Pleroma, Pixelfed, PeerTube timeline with various display options.
 
 = How to use shortcodes =
 * `[mastodon exclude_reblogs="true"]`
@@ -63,6 +63,9 @@ No, this plugin uses [OAuth 2.0](https://oauth.net/). You will be sent to login 
 and redirected to your site with a secure token. Similar to how you would connect a mobile app to your account.
 
 == Changelog ==
+
+= 0.10.2 =
+* Security fix: statuses with visibility marked unlisted, private, and direct could be displayed publicly
 
 = 0.10.0 =
 * Service shortcodes
