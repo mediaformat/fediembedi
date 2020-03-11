@@ -53,7 +53,7 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 ## Changelog
 
-### 0.10.2
+### 0.10.3
 * Security fix: statuses with visibility marked unlisted, private, and direct could be displayed publicly
 
 ### 0.10.0
