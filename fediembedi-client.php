@@ -173,7 +173,7 @@ class FediClient
 
 		$account_id = self::$acct_id;
 
-		$response = $this->_get("/api/v1/accounts/{$account_id}", null, $headers);
+		$response = $this->_get("/api/v1/accounts/{$account_id}", null, null);
 
 		return $response;
 	}
