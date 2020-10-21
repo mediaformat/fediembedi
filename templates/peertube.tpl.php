@@ -1,5 +1,5 @@
 <!-- peertube -->
-<div class="scrollable" style="height: <?php echo $height; ?>;">
+<div class="scrollable" <?php if ($height) : echo 'style="height: $height;"'; ?>>
   <div role="feed">
     <?php if($show_header): ?>
     <div class="peertube-timeline__header">

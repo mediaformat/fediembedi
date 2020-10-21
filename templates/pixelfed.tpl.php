@@ -1,5 +1,5 @@
 <!-- pixelfed -->
-<div class="scrollable" style="height: <?php echo $height; ?>;">
+<div class="scrollable" <?php if ($height) : echo 'style="height: $height;"'; ?>>
   <div role="feed" class="embed-card pixelfed">
     <div class="pixelfed-inner card status-card-embed card-md-rounded-0 border">
       <?php if($show_header): ?>
@@ -37,15 +37,16 @@
         <div class="pixelfed-images row mt-4 mb-1 px-1">
           <?php foreach ($status as $statut) { ?>
             <article class="col-4 mt-2 px-0"><?php
-                if (!empty($statut->media_attachments[0]->preview_url) && $statut->media_attachments[0]->type === 'image'): ?>
+              $attachment = $statut->media_attachments[0];
+                if (!empty($attachment->preview_url) && $attachment->type === 'image'): ?>
                   <a href="<?php echo $statut->url; ?>" class="card info-overlay card-md-border-0 px-1 shadow-none" target="_blank" rel="noopener">
                     <div class="square">
-                      <div style='background-image: url(<?php echo $statut->media_attachments[0]->preview_url; ?>);' class='square-content' alt='<?php $statut->media_attachments[0]->description; ?>'></div>
+                      <div style='background-image: url(<?php echo $attachment->preview_url; ?>);' class='square-content' alt='<?php $attachment->description; ?>'></div>
                       <div class="info-text-overlay"></div>
                     </div>
                   </a><?php
-                elseif($statut->media_attachments[0]->type === 'video'):
-                  echo "<video src=" . $attachment->url . " controls poster='" . $statut->media_attachments[0]->preview_url . "' class='media-gallery__item' alt=" . $statut->media_attachments[0]->description . ">";
+                elseif($attachment->type === 'video'): ?>
+                  <video src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">;
                 endif; ?>
             </article>
           <?php } ?>
@@ -53,7 +54,7 @@
       </div>
       <div class="pixelfed-footer card-footer bg-white">
         <div class="text-center mb-0">
-          <a href="<?php echo $status[0]->account->url; ?>" class="font-weight-bold" target="_blank" rel="noreferrer noopener"><?php _e('View More Posts', 'fediembedi'); ?></a>
+          <a href="<?php echo $account->url; ?>" class="font-weight-bold" target="_blank" rel="noreferrer noopener"><?php _e('View More Posts', 'fediembedi'); ?></a>
         </div>
       </div>
     </div>

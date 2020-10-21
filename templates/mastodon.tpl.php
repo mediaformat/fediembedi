@@ -1,5 +1,5 @@
 <!-- mastodon -->
-<div class="scrollable" style="height: <?php echo $height; ?>;">
+<div class="scrollable" <?php if ($height) : echo 'style="height: $height;"'; ?>>
   <div role="feed">
     <?php if($show_header): ?>
     <div class="account-timeline__header">
@@ -95,13 +95,13 @@
                   endif;
                   if(!empty($statut->media_attachments)):
                     foreach ($statut->media_attachments as $attachment) {
-                      if (!empty($attachment->preview_url) && $attachment->type === 'image'):
-                        echo "<img src='" . $attachment->preview_url . "' class='media-gallery__item' alt='" . $attachment->description . "' loading='lazy'>";
-                      elseif($attachment->type === 'video'):
-                        echo "<video src=" . $attachment->url . " controls poster='" . $attachment->preview_url . "' class='media-gallery__item' alt=" . $attachment->description . ">";
-                      elseif($attachment->type === 'audio'):
-                        echo "<audio src=" . $attachment->url . " controls poster='" . $attachment->preview_url . "' class='media-gallery__item' alt=" . $attachment->description . ">";
-                      endif;
+                      if (!empty($attachment->preview_url) && $attachment->type === 'image'): ?>
+                        <img src="<?php echo $attachment->preview_url; ?>" class="media-gallery__item" alt="<?php echo $attachment->description; ?>" loading="lazy">;
+                      <?php elseif($attachment->type === 'video'): ?>
+                        <video src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">;
+                      <?php elseif($attachment->type === 'audio'): ?>
+                        <audio src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">;
+                      <?php endif;
                     }
                   endif;
                  ?></div>

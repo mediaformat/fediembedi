@@ -53,6 +53,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 ## Changelog
 
+### 0.10.5
+* Bug fix: Template issues.
+
 ### 0.10.4
 * Bug fix: Embed included in post edit screen, causing post save issues.
 

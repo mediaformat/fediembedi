@@ -3,7 +3,7 @@
  * Plugin Name: FediEmbedi
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Description: Widgets and shortcodes to show your Fediverse profile timeline
- * Version: 0.10.4
+ * Version: 0.10.5
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
@@ -104,13 +104,13 @@ class FediConfig
                 } else {
                     switch ($instance_type) {
                       case 'mastodon':
-                        update_option('fediembedi-mastodon-client-id', '');
-                        update_option('fediembedi-mastodon-client-secret', '');
+                        update_option('fediembedi-mastodon-client-id', $client_id);//
+                        update_option('fediembedi-mastodon-client-secret', $client_secret);//
                         update_option('fediembedi-mastodon-token', $token->access_token);
                         break;
                       case 'pixelfed':
-                        update_option('fediembedi-pixelfed-client-id', '');
-                        update_option('fediembedi-pixelfed-client-secret', '');
+                        update_option('fediembedi-pixelfed-client-id', $client_id);//
+                        update_option('fediembedi-pixelfed-client-secret', $client_secret);//
                         update_option('fediembedi-pixelfed-token', $token->access_token);
                         break;
                     }
@@ -205,10 +205,13 @@ class FediConfig
       $status = $client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs']);
       //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($client->getStatus($atts)); echo '</pre></details>'; endif;
       $show_header = $atts['show_header'];
-      $account = $status[0]->account;
-      ob_start();
-      include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
-      return ob_get_clean();
+      if($account = $status[0]->account){
+        ob_start();
+        include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
+        return ob_get_clean();
+      } else {
+        return;
+      }
     }
 
     public function peertube_shortcode($atts){
@@ -224,7 +227,7 @@ class FediConfig
       $client = new \FediClient($atts['instance']);
 
       //getVideos from remote instance
-      $status = $client->getVideos($atts['actor'], $atts['is_channel']);
+      $status = $client->getVideos($atts['actor'], $atts['is_channel'], $atts['limit'], $atts['nsfw'] );
       if(!is_null($atts['is_channel'])){
         $account = $status->data[0]->channel;
       } else {

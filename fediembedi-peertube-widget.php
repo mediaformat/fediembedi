@@ -37,7 +37,8 @@ class FediEmbedi_PeerTube extends WP_Widget {
 
 		//widget options
 		$show_header = (!empty($instance['show_header'])) ? $instance['show_header'] : null;
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$count    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$nsfw    = isset( $instance['nsfw'] ) ? $instance['nsfw'] : false;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
 
 		echo $args['before_widget'];
@@ -46,13 +47,13 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		};
 
 		//getVideos from remote instance
-		$status = $client->getVideos($actor, $is_channel);
+		$status = $client->getVideos($actor, $is_channel, $count, $nsfw);
 		if(!is_null($is_channel)){
 			$account = $status->data[0]->channel;
 		} else {
 			$account = $status->data[0]->account;
 		}
-		
+
     include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
 
 		echo $args['after_widget'];
@@ -79,6 +80,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : NULL;
 		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : NULL;
 		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$nsfw    = isset( $instance['nsfw'] ) ? $instance['nsfw'] : false;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '';
 
 		?>
@@ -126,6 +128,17 @@ class FediEmbedi_PeerTube extends WP_Widget {
 			</label>
 		</p>
 		<p>
+      <label>
+          <input
+              type="checkbox"
+              <?php checked( $instance[ 'nsfw' ], '0' ); ?>
+              id="<?php echo $this->get_field_id( 'nsfw' ); ?>"
+              name="<?php echo $this->get_field_name('nsfw'); ?>"
+              value="0"
+          /><?php _e( 'Show NSFW videos?', 'fediembedi' ); ?>
+      </label>
+		</p>
+		<p>
 			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:' ); ?><br>
 				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo $height; ?>" placeholder="500px" size="5" />
 				<small><?php _e( 'Default: 100%', 'fediembedi' ); ?></small>
@@ -157,6 +170,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$instance['exclude_replies'] = $new_instance['exclude_replies'];
 		$instance['exclude_reblogs'] = $new_instance['exclude_reblogs'];
 		$instance['number']    = (int) $new_instance['number'];
+		$instance['nsfw']    = $new_instance['nsfw'];
 		$instance['height']     = sanitize_text_field( $new_instance['height'] );
 		return $instance;
 	}

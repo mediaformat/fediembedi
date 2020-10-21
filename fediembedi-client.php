@@ -138,14 +138,28 @@ class FediClient
 		return $response;
 	}
 
-	public function getVideos($account_id, $is_channel) {
-
+	public function getVideos($account_id, $is_channel, $count, $nsfw = false) {
+		//https://docs.joinpeertube.org/api-rest-reference.html#tag/Video
 		$headers = array();
 
+		$query = http_build_query(array(
+			//'categoryOneOf' => $categoryID,
+			'count' => $count,
+			//'filter' => $filter,
+			//'languageOneOf' => $lang,
+			//'licenceOneOf' => $licence,
+			'nsfw' => $nsfw,
+			//'skipCount' => $skipCount,
+			//'sort' => $sort,
+			//'start' => $offset,
+			//'tagsAllOf' => $tagsAllOf,//videos where all tags are present
+			//'tagsOneOf' => $tags
+		));
+
 		if(!is_null($is_channel)){
-				$response = $this->_get("/api/v1/video-channels/{$account_id}/videos", null, $headers);
+				$response = $this->_get("/api/v1/video-channels/{$account_id}/videos?{$query}", null, $headers);
 		} else {
-				$response = $this->_get("/api/v1/accounts/{$account_id}/videos", null, $headers);
+				$response = $this->_get("/api/v1/accounts/{$account_id}/videos?{$query}", null, $headers);
 		}
 
 		return $response;
