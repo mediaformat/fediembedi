@@ -1,5 +1,5 @@
 <!-- mastodon -->
-<div class="scrollable" <?php if ($height) : echo 'style="height: $height;"'; ?>>
+<div class="scrollable" <?php if ($height) : echo 'style="height: $height;"'; endif; ?>>
   <div role="feed">
     <?php if($show_header): ?>
     <div class="account-timeline__header">
@@ -112,3 +112,4 @@
     <?php } ?>
   </div>
 </div>
+<?php 

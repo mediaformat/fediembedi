@@ -1,5 +1,5 @@
 <!-- pixelfed -->
-<div class="scrollable" <?php if ($height) : echo 'style="height: $height;"'; ?>>
+<div class="scrollable" <?php if ($height) : echo 'style="height: $height;"'; endif; ?>>
   <div role="feed" class="embed-card pixelfed">
     <div class="pixelfed-inner card status-card-embed card-md-rounded-0 border">
       <?php if($show_header): ?>
@@ -47,7 +47,7 @@
                   </a><?php
                 elseif($attachment->type === 'video'): ?>
                   <video src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">;
-                endif; ?>
+                <?php endif; ?>
             </article>
           <?php } ?>
         </div>
@@ -60,3 +60,4 @@
     </div>
   </div>
 </div>
+<?php 
