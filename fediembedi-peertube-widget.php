@@ -38,7 +38,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		//widget options
 		$show_header = (!empty($instance['show_header'])) ? $instance['show_header'] : null;
 		$count    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-		$nsfw    = isset( $instance['nsfw'] ) ? $instance['nsfw'] : false;
+		$nsfw    = isset( $instance['nsfw'] ) ? $instance['nsfw'] : null;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
 
 		echo $args['before_widget'];
@@ -48,6 +48,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 
 		//getVideos from remote instance
 		$status = $client->getVideos($actor, $is_channel, $count, $nsfw);
+		if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
 		if(!is_null($is_channel)){
 			$account = $status->data[0]->channel;
 		} else {
@@ -103,22 +104,22 @@ class FediEmbedi_PeerTube extends WP_Widget {
       <label>
           <input
               type="checkbox"
-              <?php checked( $instance[ 'show_header' ], '1' ); ?>
-              id="<?php echo $this->get_field_id( 'show_header' ); ?>"
-              name="<?php echo $this->get_field_name('show_header'); ?>"
+              <?php checked( $instance[ 'channel' ], '1' ); ?>
+              id="<?php echo $this->get_field_id( 'channel' ); ?>"
+              name="<?php echo $this->get_field_name('channel'); ?>"
               value="1"
-          /><?php _e( 'Show header', 'fediembedi' ); ?>
+          /><?php _e( 'This account is a Channel (not a user)', 'fediembedi' ); ?>
       </label>
 		</p>
 		<p>
       <label>
           <input
               type="checkbox"
-              <?php checked( $instance[ 'channel' ], '1' ); ?>
-              id="<?php echo $this->get_field_id( 'channel' ); ?>"
-              name="<?php echo $this->get_field_name('channel'); ?>"
+              <?php checked( $instance[ 'show_header' ], '1' ); ?>
+              id="<?php echo $this->get_field_id( 'show_header' ); ?>"
+              name="<?php echo $this->get_field_name('show_header'); ?>"
               value="1"
-          /><?php _e( 'Is this account a Channel?', 'fediembedi' ); ?>
+          /><?php _e( 'Show header', 'fediembedi' ); ?>
       </label>
 		</p>
 		<p>

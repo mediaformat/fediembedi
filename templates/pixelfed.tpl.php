@@ -46,7 +46,7 @@
                     </div>
                   </a><?php
                 elseif($attachment->type === 'video'): ?>
-                  <video src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">;
+                  <video src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">
                 <?php endif; ?>
             </article>
           <?php } ?>

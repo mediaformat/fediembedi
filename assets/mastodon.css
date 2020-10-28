@@ -86,8 +86,9 @@
 }
 .account__header__tabs__buttons .button {
     margin: 0 8px;
-    color: #fff;
+    border: 1px solid;
     border-radius: 4px;
+    color: #fff;
     padding: 0px 16px;
     height: 36px;
     line-height: 36px;

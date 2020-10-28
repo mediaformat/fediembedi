@@ -96,11 +96,11 @@
                   if(!empty($statut->media_attachments)):
                     foreach ($statut->media_attachments as $attachment) {
                       if (!empty($attachment->preview_url) && $attachment->type === 'image'): ?>
-                        <img src="<?php echo $attachment->preview_url; ?>" class="media-gallery__item" alt="<?php echo $attachment->description; ?>" loading="lazy">;
+                        <img src="<?php echo $attachment->preview_url; ?>" class="media-gallery__item" alt="<?php echo $attachment->description; ?>" loading="lazy">
                       <?php elseif($attachment->type === 'video'): ?>
-                        <video src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">;
+                        <video src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">
                       <?php elseif($attachment->type === 'audio'): ?>
-                        <audio src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">;
+                        <audio src="<?php echo $attachment->url; ?>" controls poster="<?php echo $attachment->preview_url; ?>" class='media-gallery__item' alt="<?php echo $attachment->description; ?>">
                       <?php endif;
                     }
                   endif;

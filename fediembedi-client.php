@@ -76,7 +76,7 @@ class FediClient
 
 		$response = $this->_get('/api/v1/accounts/verify_credentials', null, $headers);
 
-		if(property_exists($response, 'id')){
+		if(isset($response->id)){
 				$this->setStatic($response->id);
 		}
 

@@ -64,6 +64,12 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 == Changelog ==
 
+= 0.11.0 =
+* Feature: PeerTube widget NSFW option.
+* Fix: PeerTube number of posts to display.
+* Fix: connection issues.
+* Fix: Template issues.
+
 = 0.10.5 =
 * Bug fix: Template issues.
 
