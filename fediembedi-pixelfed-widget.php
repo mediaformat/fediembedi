@@ -17,13 +17,13 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	}
 
 	/**
-	 * Outputs the content for the current Search widget instance.
+	 * Outputs the content for the current Pixelfed widget instance.
 	 *
 	 * @since 2.8.0
 	 *
 	 * @param array $args     Display arguments including 'before_title', 'after_title',
 	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance Settings for the current Search widget instance.
+	 * @param array $instance Settings for the current Pixelfed widget instance.
 	 */
 	public function widget( $args, $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
@@ -61,7 +61,7 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	}
 
 	/**
-	 * Outputs the settings form for the Search widget.
+	 * Outputs the settings form for the Pixelfed widget.
 	 *
 	 * @since 2.8.0
 	 *
@@ -155,7 +155,7 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	}
 
 	/**
-	 * Handles updating settings for the current Search widget instance.
+	 * Handles updating settings for the current Pixelfed widget instance.
 	 *
 	 * @since 2.8.0
 	 *
@@ -177,5 +177,4 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		$instance['height']     = sanitize_text_field( $new_instance['height'] );
 		return $instance;
 	}
-
 }

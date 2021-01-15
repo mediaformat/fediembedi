@@ -17,13 +17,13 @@ class FediEmbedi_Mastodon extends WP_Widget {
 	}
 
 	/**
-	 * Outputs the content for the current Search widget instance.
+	 * Outputs the content for the current Mastodon widget instance.
 	 *
 	 * @since 2.8.0
 	 *
 	 * @param array $args     Display arguments including 'before_title', 'after_title',
 	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance Settings for the current Search widget instance.
+	 * @param array $instance Settings for the current Mastodon widget instance.
 	 */
 	public function widget( $args, $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
@@ -40,7 +40,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : '';
 		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : '';
 		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : '';
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$limit    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
 
 		echo $args['before_widget'];
@@ -49,7 +49,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		};
 
 			//getStatus from remote instance
-			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $limit, $exclude_reblogs);
 			//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
 			$account = $status[0]->account;
 			include(plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
@@ -58,7 +58,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 	}
 
 	/**
-	 * Outputs the settings form for the Search widget.
+	 * Outputs the settings form for the Mastodon widget.
 	 *
 	 * @since 2.8.0
 	 *
@@ -72,7 +72,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : NULL;
 		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : NULL;
 		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : NULL;
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$limit    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '';
 
 		?>
@@ -138,7 +138,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
     </p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to display:' ); ?><br>
-				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $limit; ?>" size="3" />
 				<small>Max: 20</small>
 			</label>
 		</p>
@@ -152,7 +152,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 	}
 
 	/**
-	 * Handles updating settings for the current Search widget instance.
+	 * Handles updating settings for the current Mastodon widget instance.
 	 *
 	 * @since 2.8.0
 	 *
@@ -174,5 +174,4 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		$instance['height']     = sanitize_text_field( $new_instance['height'] );
 		return $instance;
 	}
-
 }

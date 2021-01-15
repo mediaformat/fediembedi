@@ -64,6 +64,10 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 == Changelog ==
 
+= 0.11.1 =
+* Bug fix: Shortcode limit attribute.
+* Document: Shortcodes on options page.
+
 = 0.11.0 =
 * Feature: PeerTube widget NSFW option.
 * Fix: PeerTube number of posts to display.
