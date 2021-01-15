@@ -245,9 +245,8 @@ class FediConfig
       $show_header = $atts['show_header'];
       $height = $atts['height'];
       ob_start();
-      include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
+      include( plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
       return ob_get_clean();
-      echo 'yoohoo';
     }
 
     /*
