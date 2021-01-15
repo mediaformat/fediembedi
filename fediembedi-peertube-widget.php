@@ -17,13 +17,13 @@ class FediEmbedi_PeerTube extends WP_Widget {
 	}
 
 	/**
-	 * Outputs the content for the current Search widget instance.
+	 * Outputs the content for the current PeerTube widget instance.
 	 *
 	 * @since 2.8.0
 	 *
 	 * @param array $args     Display arguments including 'before_title', 'after_title',
 	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance Settings for the current Search widget instance.
+	 * @param array $instance Settings for the current PeerTube widget instance.
 	 */
 	public function widget( $args, $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
@@ -48,7 +48,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 
 		//getVideos from remote instance
 		$status = $client->getVideos($actor, $is_channel, $count, $nsfw);
-		if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+		//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
 		if(!is_null($is_channel)){
 			$account = $status->data[0]->channel;
 		} else {
@@ -61,7 +61,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 	}
 
 	/**
-	 * Outputs the settings form for the Search widget.
+	 * Outputs the settings form for the PeerTube widget.
 	 *
 	 * @since 2.8.0
 	 *
@@ -149,7 +149,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 	}
 
 	/**
-	 * Handles updating settings for the current Search widget instance.
+	 * Handles updating settings for the current PeerTube widget instance.
 	 *
 	 * @since 2.8.0
 	 *
@@ -175,5 +175,4 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$instance['height']     = sanitize_text_field( $new_instance['height'] );
 		return $instance;
 	}
-
 }

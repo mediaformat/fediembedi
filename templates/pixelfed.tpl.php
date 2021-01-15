@@ -1,5 +1,5 @@
 <!-- pixelfed -->
-<div class="scrollable fediembedi-pixelfed" <?php if (!empty($height)) : echo 'style="height: $height;"'; endif; ?>>
+<div class="fediembedi fediembedi-pixelfed scrollable" <?php if (!empty($height)) : echo "style='height: $height;'"; endif; ?>>
   <div role="feed" class="embed-card pixelfed">
     <div class="pixelfed-inner card status-card-embed card-md-rounded-0 border">
       <?php if($show_header): ?>

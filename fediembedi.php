@@ -4,7 +4,7 @@
  * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * GitLab Plugin URI: https://git.feneas.org/mediaformat/fediembedi
  * Description: Widgets and shortcodes to show your Fediverse profile timeline
- * Version: 0.11.0
+ * Version: 0.11.1
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
@@ -170,6 +170,7 @@ class FediConfig
         'limit' => 5,
         'exclude_reblogs' => false,
         'show_header' => true,
+        'height' => '100%',
       ), $atts, 'mastodon' );
 
       //getStatus from remote instance
@@ -199,11 +200,12 @@ class FediConfig
         'limit' => 9,
         'exclude_reblogs' => false,
         'show_header' => true,
+        'height' => '100%',
       ), $atts, 'pixelfed' );
 
       //getStatus from remote instance
       $status = $client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs']);
-      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($client->getStatus($atts)); echo '</pre></details>'; endif;
+      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Pixelfed</summary><pre>'; var_dump($client->getStatus($atts)); echo '</pre></details>'; endif;
       $show_header = $atts['show_header'];
       if($account = $status[0]->account){
         ob_start();
@@ -221,8 +223,13 @@ class FediConfig
         'actor' => null,
         'is_channel' => null,
         'limit' => 9,
+        'nsfw' => null,
         'show_header' => true,
+        'height' => '100%',
       ), $atts, 'peertube' );
+
+
+      $atts['instance'] = \esc_attr( $atts['instance'], 'https' );
 
       $client = new \FediClient($atts['instance']);
 
@@ -234,10 +241,11 @@ class FediConfig
         $account = $status->data[0]->account;
       }
 
-      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+      if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
       $show_header = $atts['show_header'];
+      $height = $atts['height'];
       ob_start();
-      include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
+      include( plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
       return ob_get_clean();
     }
 

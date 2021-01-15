@@ -68,7 +68,7 @@ class WP_Widget_fediembedi extends WP_Widget {
 	      case 'PeerTube':
 					//getVideos from remote instance
 					$status = $client->getVideos();
-					if(WP_DEBUG_DISPLAY === true): echo '<details><summary>'. $instance_type .'</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+					//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>'. $instance_type .'</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
 	        include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
 	        break;
 	      default:
