@@ -3,8 +3,7 @@
  * The Client class contains all the methods to
  * connect to your fediverse instance
  */
-class FediClient
-{
+class FediClient{
 	private $instance_url;
 	private $access_token;
 	private $app;
@@ -48,26 +47,6 @@ class FediClient
 		return $this->instance_url.'/oauth/authorize?'.$params;
 	}
 
-// 	public function register_client($redirect_uri, $scopes = 'read') {
-//
-// 		$response = $this->_get('/api/v1/oauth-clients/local');
-//
-// 		if (!isset($response->client_id)){
-// 			return "ERROR";
-// 		}
-//
-// 		$this->app = $response;
-//
-// 		$params = http_build_query(array(
-// 			'scope' => $scopes,
-// 			'client_id' =>$this->app->client_id,
-// 			'client_secret' =>$this->app->client_secret
-// 		));
-//
-// 		$access_token = $this->_post('/api/v1/oauth-clients/local');
-// //		return $this->instance_url.'/users/token?'.$params;
-// 	}
-
 	public function verify_credentials($access_token){
 
 		$headers = array(
@@ -76,8 +55,8 @@ class FediClient
 
 		$response = $this->_get('/api/v1/accounts/verify_credentials', null, $headers);
 
-		if(isset($response->id)){
-				$this->setStatic($response->id);
+		if( isset($response->id )){
+			$this->setStatic( $response->id );
 		}
 
 		return $response;
@@ -132,9 +111,7 @@ class FediClient
 			'limit' => $limit,
 			'exclude_reblogs' => $reblogs
 		));
-
-		$response = $this->_get("/api/v1/accounts/{$account_id}/statuses?{$query}", null, null);
-
+		$response = $this->_get("/api/v1/accounts/{$account_id}/statuses?{$query}", null, $headers);
 		return $response;
 	}
 
@@ -174,7 +151,6 @@ class FediClient
 		$account_id = self::$acct_id;
 
 		$response = $this->_get("/api/v1/accounts/{$account_id}/lists", null, $headers);
-		//$response = $this->_get("/api/v1/timelines/home?limit=20", null, $headers);
 
 		return $response;
 	}
@@ -225,9 +201,9 @@ class FediClient
 		    $error_message = $response->get_error_message();
 
 		} else {
-		$responseBody = wp_remote_retrieve_body($response);
-		return json_decode($responseBody);
-	}
+			$responseBody = wp_remote_retrieve_body($response);
+			return json_decode($responseBody);
+		}
 
 		return $response;
 	}
@@ -256,12 +232,11 @@ class FediClient
 	}
 
 	private function getValidURL($url){
-		 if  ( $ret = parse_url($url) ) {
+		if ( $ret = parse_url($url) ) {
  			if ( !isset($ret["scheme"]) ){
-				$url = "http://{$url}";
+				$url = "https://{$url}";
 			}
 		}
 		return $url;
-
 	}
 }
