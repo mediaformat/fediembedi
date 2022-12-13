@@ -1,6 +1,6 @@
 <?php
 
-class FediEmbedi_Pixelfed extends WP_Widget {
+class FediEmbedi_Mastodon extends WP_Widget {
 
 	/**
 	 * Sets up a new FediEmbedi widget instance.
@@ -9,31 +9,29 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	 */
 	public function __construct() {
 		$widget_ops = array(
-			'classname' => 'pixelfed_widget',
+			'classname' => 'mastodon_widget',
 			'description' => __( 'Display a profile timeline', 'fediembedi' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'pixelfed', _x( 'Pixelfed', 'fediembedi' ), $widget_ops );
+		parent::__construct( 'mastodon', _x( 'Mastodon', 'fediembedi' ), $widget_ops );
 	}
 
 	/**
-	 * Outputs the content for the current Pixelfed widget instance.
+	 * Outputs the content for the current Mastodon widget instance.
 	 *
 	 * @since 2.8.0
 	 *
 	 * @param array $args     Display arguments including 'before_title', 'after_title',
 	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance Settings for the current Pixelfed widget instance.
+	 * @param array $instance Settings for the current Mastodon widget instance.
 	 */
 	public function widget( $args, $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
 		//fedi instance
-		$instance_url = get_option('fediembedi-pixelfed-instance');
-		$access_token = get_option('fediembedi-pixelfed-token');
-		$client = new \FediClient($instance_url, $access_token);
-		$cred = $client->verify_credentials($access_token);
-		if (!$cred){
+		$mastodon_instance = get_option('fediembedi-mastodon-instance');
+		$client = \FediEmbedi\FediConfig::fedi_client( 'mastodon', $mastodon_instance );
+		if ( !$client ) {
 			return;
 		}
 
@@ -43,25 +41,24 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : '';
 		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : '';
 		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : '';
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$limit    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
-
-		//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>'. $instance_type .'</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
 
 		echo $args['before_widget'];
 		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		};
 
-			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+			//getStatus from remote instance
+			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $limit, $exclude_reblogs);
 			$account = $status[0]->account;
-      include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
+			include( plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
 
 		echo $args['after_widget'];
 	}
 
 	/**
-	 * Outputs the settings form for the Pixelfed widget.
+	 * Outputs the settings form for the Mastodon widget.
 	 *
 	 * @since 2.8.0
 	 *
@@ -69,20 +66,13 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
-        //Radio inputs : https://wordpress.stackexchange.com/a/276659/87622
-		$show_header = (!empty( $instance['show_header'])) ? $instance['show_header'] : NULL;
-		$only_media = (!empty( $instance['only_media'])) ? $instance['only_media'] : NULL;
-		$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : NULL;
-		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : NULL;
-		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : NULL;
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '';
-
+		$limit    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
 		?>
 	<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'fediembedi'); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']); ?>" />
-			</label>
+		<label for="<?php echo $this->get_field_id('title'); ?>"><?php esc_html_e('Title:', 'fediembedi'); ?>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php esc_attr_e($instance['title']); ?>" />
+		</label>
 	</p>
 	<p>
       <label>
@@ -141,13 +131,13 @@ class FediEmbedi_Pixelfed extends WP_Widget {
     </p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to display:' ); ?><br>
-				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo intval($limit); ?>" size="3" />
 				<small>Max: 20</small>
 			</label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:' ); ?><br>
-				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo $height; ?>" placeholder="500px" size="5" />
+				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo esc_attr($height); ?>" placeholder="500px" size="5" />
 				<small><?php _e( 'Default: 100%', 'fediembedi' ); ?></small>
 			</label>
 		</p>
@@ -155,7 +145,7 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	}
 
 	/**
-	 * Handles updating settings for the current Pixelfed widget instance.
+	 * Handles updating settings for the current Mastodon widget instance.
 	 *
 	 * @since 2.8.0
 	 *
@@ -168,12 +158,12 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		$instance          = $old_instance;
 		$new_instance      = wp_parse_args( (array) $new_instance, array( 'title' => '' ) );
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
-		$instance['show_header'] = $new_instance['show_header'];
-		$instance['only_media'] = $new_instance['only_media'];
-		$instance['pinned'] = $new_instance['pinned'];
-		$instance['exclude_replies'] = $new_instance['exclude_replies'];
-		$instance['exclude_reblogs'] = $new_instance['exclude_reblogs'];
-		$instance['number']    = (int) $new_instance['number'];
+		$instance['show_header'] = boolval( $new_instance['show_header'] );
+		$instance['only_media'] = boolval( $new_instance['only_media'] );
+		$instance['pinned'] = boolval( $new_instance['pinned'] );
+		$instance['exclude_replies'] = boolval( $new_instance['exclude_replies'] );
+		$instance['exclude_reblogs'] = boolval( $new_instance['exclude_reblogs'] );
+		$instance['number']    = intval( $new_instance['number'] );
 		$instance['height']     = sanitize_text_field( $new_instance['height'] );
 		return $instance;
 	}

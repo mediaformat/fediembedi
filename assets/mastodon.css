@@ -327,7 +327,7 @@ video.media-gallery__item{
   max-width: 100%;
 }
 i.fa-retweet {
-    background-image: url('../img/retoot.svg');
+    background-image: url('img/retoot.svg');
     background-position: 0 0;
     height: 19px;
     vertical-align: middle;

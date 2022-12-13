@@ -48,14 +48,13 @@ class FediEmbedi_PeerTube extends WP_Widget {
 
 		//getVideos from remote instance
 		$status = $client->getVideos($actor, $is_channel, $count, $nsfw);
-		//if(WP_DEBUG_DISPLAY === true): echo '<details><summary>PeerTube</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
 		if(!is_null($is_channel)){
 			$account = $status->data[0]->channel;
 		} else {
 			$account = $status->data[0]->account;
 		}
 
-    include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
+    	include(plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
 
 		echo $args['after_widget'];
 	}
@@ -164,14 +163,14 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
 		$instance['peertube'] = esc_url($new_instance['peertube']);
 		$instance['actor'] = sanitize_key($new_instance['actor']);
-		$instance['channel'] = $new_instance['channel'];
-		$instance['show_header'] = $new_instance['show_header'];
-		$instance['only_media'] = $new_instance['only_media'];
-		$instance['pinned'] = $new_instance['pinned'];
-		$instance['exclude_replies'] = $new_instance['exclude_replies'];
-		$instance['exclude_reblogs'] = $new_instance['exclude_reblogs'];
+		$instance['channel'] = boolval( $new_instance['channel'] );
+		$instance['show_header'] = boolval( $new_instance['show_header'] );
+		$instance['only_media'] = boolval( $new_instance['only_media'] );
+		$instance['pinned'] = boolval( $new_instance['pinned'] );
+		$instance['exclude_replies'] = boolval( $new_instance['exclude_replies'] );
+		$instance['exclude_reblogs'] = boolval( $new_instance['exclude_reblogs'] );
 		$instance['number']    = (int) $new_instance['number'];
-		$instance['nsfw']    = $new_instance['nsfw'];
+		$instance['nsfw']    = boolval( $new_instance['nsfw'] );
 		$instance['height']     = sanitize_text_field( $new_instance['height'] );
 		return $instance;
 	}
