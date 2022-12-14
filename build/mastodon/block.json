@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "fediembedi/mastodon",
+  "version": "0.1.0",
+  "title": "Mastodon",
+  "category": "widgets",
+  "description": "Display your Mastodon timeline in a block",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "fediembedi",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

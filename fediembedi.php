@@ -41,6 +41,8 @@ class FediConfig {
      * @return void
      */
     public function init() {
+      register_block_type( __DIR__ . '/build/mastodon' );
+
         $plugin_dir = basename(dirname(__FILE__));
         //load_plugin_textdomain('fediembedi', false, $plugin_dir . '/languages');
 
@@ -218,6 +220,14 @@ class FediConfig {
         //if( is_active_widget( false, false, 'peertube')  || ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'peertube') ) ) {
             wp_enqueue_style( 'peertube', plugin_dir_url( __FILE__ ) . 'assets/peertube.css', array(), filemtime(plugin_dir_path( __FILE__ ) . 'assets/mastodon.css') );
         //}
+        $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
+
+        wp_register_script(
+            'fediembedi-mastodon',
+            plugins_url( 'build/mastodon/index.js', __FILE__ ),
+            $asset_file['dependencies'],
+            $asset_file['version']
+        );
     }
 
     public function admin_enqueue_scripts( $hook ) {
@@ -227,6 +237,14 @@ class FediConfig {
           $plugin_url = plugin_dir_url(__FILE__);
           wp_enqueue_script('settings_page', $plugin_url . 'assets/admin.js', array( 'jquery' ), $infos['Version'], true );
       //}
+      $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
+
+      wp_register_script(
+          'fediembedi-mastodon',
+          plugins_url( 'build/mastodon/index.js', __FILE__ ),
+          $asset_file['dependencies'],
+          $asset_file['version']
+      );
     }
 
     /**
