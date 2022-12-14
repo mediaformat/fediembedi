@@ -155,27 +155,34 @@ class FediConfig
 
     public function mastodon_shortcode($atts){
       //fedi instance
-  		$fedi_instance = get_option('fediembedi-mastodon-instance');
-  		$access_token = get_option('fediembedi-mastodon-token');
-  		$client = new \FediClient($fedi_instance, $access_token);
-  		$cred = $client->verify_credentials($access_token);
+      // create unique transient name from shortcode options 
+      $shortcode_atts = md5( serialize( $atts ) );
+      if ( false === ( $status = get_transient( "mastodon_$shortcode_atts" ) ) ) {
+        $fedi_instance = get_option( 'fediembedi-mastodon-instance' );
+        $access_token = get_option( 'fediembedi-mastodon-token' );
+        $client = \FediEmbedi\FediConfig::fedi_client( 'mastodon', $fedi_instance );
+        if ( !$client ){
+          return;
+        }
 
-      $atts = shortcode_atts( array(
-        'only_media' => false,
-        'pinned' => false,
-        'exclude_replies' => false,
-        'max_id' => null,
-        'since_id' => null,
-        'min_id' => null,
-        'limit' => 5,
-        'exclude_reblogs' => false,
-        'show_header' => true,
-        'height' => '100%',
-      ), $atts, 'mastodon' );
+        $atts = shortcode_atts( array(
+          'only_media' => false,
+          'pinned' => false,
+          'exclude_replies' => false,
+          'max_id' => null,
+          'since_id' => null,
+          'min_id' => null,
+          'limit' => 5,
+          'exclude_reblogs' => false,
+          'show_header' => true,
+          'height' => '100%',
+          'cache' => 2 * HOURS_IN_SECONDS,
+        ), $atts, 'mastodon' );
 
-      //getStatus from remote instance
-      $status = $client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs']);
-      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Mastodon</summary><pre>'; var_dump($status); echo '</pre></details>'; endif;
+        //getStatus from remote instance
+        $status = $client->getStatus( $atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs'] );
+        set_transient( "mastodon_$shortcode_atts", $status, $atts['cache'] );
+		  }
       $show_header = $atts['show_header'];
       $account = $status[0]->account;
       ob_start();
@@ -183,29 +190,36 @@ class FediConfig
       return ob_get_clean();
     }
 
-    public function pixelfed_shortcode($atts){
+      // create unique transient name from shortcode options 
+      $shortcode_atts = md5( serialize( $atts ) );
+      if ( false === ( $status = get_transient( "pixelfed_$shortcode_atts" ) ) ) {
       //fedi instance
-      $fedi_instance = get_option('fediembedi-pixelfed-instance');
-      $access_token = get_option('fediembedi-pixelfed-token');
-      $client = new \FediClient($fedi_instance, $access_token);
-      $cred = $client->verify_credentials($access_token);
+        $fedi_instance = get_option( 'fediembedi-pixelfed-instance' );
+        $access_token = get_option( 'fediembedi-pixelfed-token' );
+        $client = \FediEmbedi\FediConfig::fedi_client( 'pixelfed', $fedi_instance );
+        if ( !$client ){
+          return;
+        }
 
-      $atts = shortcode_atts( array(
-        'only_media' => false,
-        'pinned' => false,
-        'exclude_replies' => false,
-        'max_id' => null,
-        'since_id' => null,
-        'min_id' => null,
-        'limit' => 9,
-        'exclude_reblogs' => false,
-        'show_header' => true,
-        'height' => '100%',
-      ), $atts, 'pixelfed' );
+        $atts = shortcode_atts( array(
+          'only_media' => false,
+          'pinned' => false,
+          'exclude_replies' => false,
+          'max_id' => null,
+          'since_id' => null,
+          'min_id' => null,
+          'limit' => 9,
+          'exclude_reblogs' => false,
+          'show_header' => true,
+          'height' => '100%',
+          'cache' => 2 * HOURS_IN_SECONDS,
+        ), $atts, 'pixelfed' );
 
-      //getStatus from remote instance
-      $status = $client->getStatus($atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs']);
-      //if(WP_DEBUG_DISPLAY === true): echo '<details><summary>Pixelfed</summary><pre>'; var_dump($client->getStatus($atts)); echo '</pre></details>'; endif;
+        //getStatus from remote instance
+        $status = $client->getStatus( $atts['only_media'], $atts['pinned'], $atts['exclude_replies'], null, null, null, $atts['limit'], $atts['exclude_reblogs'] );
+        set_transient( "pixelfed_$shortcode_atts", $status, $atts['cache'] );
+		  }
+      
       $show_header = $atts['show_header'];
       if($account = $status[0]->account){
         ob_start();
@@ -216,25 +230,26 @@ class FediConfig
       }
     }
 
-    public function peertube_shortcode($atts){
+      $shortcode_atts = md5( serialize( $atts ) );
+      if ( false === ( $status = get_transient( "peertube_$shortcode_atts" ) ) ) {
+        $atts = shortcode_atts( array(
+          'instance' => null,
+          'actor' => null,
+          'is_channel' => null,
+          'limit' => 9,
+          'nsfw' => null,
+          'show_header' => true,
+          'height' => '100%',
+          'cache' => 2 * HOURS_IN_SECONDS,
+        ), $atts, 'peertube' );
 
-      $atts = shortcode_atts( array(
-        'instance' => null,
-        'actor' => null,
-        'is_channel' => null,
-        'limit' => 9,
-        'nsfw' => null,
-        'show_header' => true,
-        'height' => '100%',
-      ), $atts, 'peertube' );
+        $atts['instance'] = \esc_url_raw( $atts['instance'], 'https' );
+        $client = new \FediEmbedi\FediClient( $atts['instance'] );
 
-
-      $atts['instance'] = \esc_attr( $atts['instance'], 'https' );
-
-      $client = new \FediClient($atts['instance']);
-
-      //getVideos from remote instance
-      $status = $client->getVideos($atts['actor'], $atts['is_channel'], $atts['limit'], $atts['nsfw'] );
+        //getVideos from remote instance
+        $status = $client->getVideos( $atts['actor'], $atts['is_channel'], $atts['limit'], $atts['nsfw'] );
+        set_transient( "peertube_$shortcode_atts", $status, $atts['cache'] );
+      }
       if(!is_null($atts['is_channel'])){
         $account = $status->data[0]->channel;
       } else {
