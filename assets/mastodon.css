@@ -84,15 +84,7 @@
 .account__header__tabs .spacer {
     flex: 1 1 auto;
 }
-.account__header__tabs__buttons .button {
-    margin: 0 8px;
-    border: 1px solid;
-    border-radius: 4px;
-    color: #fff;
-    padding: 0px 16px;
-    height: 36px;
-    line-height: 36px;
-}
+
 .account__header__tabs__name {
     padding: 5px;
 }

@@ -62,13 +62,6 @@ a.card{
     background-size: cover;
     background-position: 50%;
 }
-.embed-card .pixelfed-follow {
-  font-size: 14px;
-  color: #fff;
-}
-.pixelfed[max-width~="400px"] .pixelfed-meta .text-center{
-  display: none;
-}
 .pixelfed[max-width~="350px"] .pixelfed-header{
   display: block!important;
 }

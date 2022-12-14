@@ -13,10 +13,6 @@
             <a href="<?php echo $account->url; ?>" class="avatar" rel="noreferrer noopener" target="_blank">
               <div class="account__avatar" style="width:90px; height: 90px; background-image: url('<?php echo $account->avatar; ?>'); background-size: cover;"></div>
             </a>
-            <div class="spacer"></div>
-            <div class="account__header__tabs__buttons">
-              <a href="<?php echo $account->url; ?>" rel="noreferrer noopener" class="button logo-button"><?php _e('Follow', 'fediembedi'); ?></a>
-            </div>
           </div>
           <div class="account__header__tabs__name">
             <h1>
