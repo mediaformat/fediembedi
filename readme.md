@@ -15,15 +15,9 @@ FediEmbedi will display your Mastodon, Pleroma, Pixelfed, PeerTube timeline with
 * [Pixelfed](https://pixelfed.org/)
 * [PeerTube](https://joinpeertube.org/)
 
-
-### Planned supported software
-* See the [board](https://git.feneas.org/mediaformat/fediembedi/-/boards)
-* [Suggestions](https://git.feneas.org/mediaformat/fediembedi/issues)?
-
-
 ### Development
 
-For the time being development will happen on [git.feneas.org](https://git.feneas.org/mediaformat/fediembedi).
+For the time being development will happen on [codeberg.org](https://codeberg.org/mediaformat/fediembedi).
 
 
 ### Updates
@@ -52,6 +46,13 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 
 ## Changelog
+
+### 0.12.0
+* Add: Caching with transients.
+* Document: Shortcodes on options page.
+* Fix: Cleanup template escapes.
+* Fix: Sanitize user inputs.
+* Fix: Pixelfed API
 
 ### 0.11.1
 * Bug fix: Shortcode limit attribute.
