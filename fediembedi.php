@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: FediEmbedi
- * Plugin URI: https://git.feneas.org/mediaformat/fediembedi
- * GitLab Plugin URI: https://git.feneas.org/mediaformat/fediembedi
+* Plugin URI: https://codeberg.org/mediaformat/fediembedi
+ * Gitea Plugin URI: https://codeberg.org/mediaformat/fediembedi
  * Description: Widgets and shortcodes to show your Fediverse profile timeline
- * Version: 0.11.1
+ * Version: 0.12.0
  * Author: mediaformat
  * Author URI: https://mediaformat.org
  * License: GPLv3
