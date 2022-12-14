@@ -5,3 +5,4 @@
 assets/bootstrap/*
 !assets/bootstrap/css/bootstrap.min.css
 !assets/bootstrap/css/bootstrap.min.css.map
+node_modules
