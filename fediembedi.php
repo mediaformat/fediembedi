@@ -173,7 +173,8 @@ class FediConfig {
         $fedi_instance = get_option( 'fediembedi-mastodon-instance' );
         $access_token = get_option( 'fediembedi-mastodon-token' );
         $client = \FediEmbedi\FediConfig::fedi_client( $fedi_instance, 'mastodon' );
-        if ( !$client ){
+        $verify = $client->verify_credentials( $access_token );
+        if ( is_wp_error( $verify ) ){
           return;
         }
 
@@ -206,12 +207,14 @@ class FediConfig {
 
       // create unique transient name from shortcode options 
       $shortcode_atts = md5( serialize( $atts ) );
+      delete_transient( "pixelfed_$shortcode_atts" );
       if ( false === ( $status = get_transient( "pixelfed_$shortcode_atts" ) ) ) {
       //fedi instance
         $fedi_instance = get_option( 'fediembedi-pixelfed-instance' );
         $access_token = get_option( 'fediembedi-pixelfed-token' );
         $client = \FediEmbedi\FediConfig::fedi_client( $fedi_instance, 'pixelfed' );
-        if ( !$client ){
+        $verify = $client->verify_credentials( $access_token );
+        if ( is_wp_error( $verify ) ){
           return;
         }
 
@@ -221,6 +224,7 @@ class FediConfig {
 		  }
       
       $show_header = $atts['show_header'];
+      $account = $status[0]->account;
       ob_start();
       include(plugin_dir_path(__FILE__) . 'templates/pixelfed.tpl.php' );
       return ob_get_clean();
@@ -242,6 +246,10 @@ class FediConfig {
       if ( false === ( $status = get_transient( "peertube_$shortcode_atts" ) ) ) {
         $atts['instance'] = \esc_url_raw( $atts['instance'], 'https' );
         $client = \FediEmbedi\FediConfig::fedi_client( $atts['instance'] );
+        $verify = $client->verify_credentials( $access_token );
+        if ( is_wp_error( $verify ) ){
+          return;
+        }
 
         //getVideos from remote instance
         $status = $client->getVideos( $atts['actor'], $atts['is_channel'], $atts['limit'], $atts['nsfw'] );
