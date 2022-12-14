@@ -13,7 +13,7 @@
  * Domain Path: /languages
  */
 namespace FediEmbedi;
-require_once 'fediembedi-client.php';
+require_once 'includes/class-client.php';
 
 class FediConfig {
     public function __construct() {
@@ -134,21 +134,21 @@ class FediConfig {
      */
     public function fediembedi_widget() {
       //Mastodon
-      include( plugin_dir_path( __FILE__ ) . 'includes/fediembedi-mastodon-widget.php' );
+      include( plugin_dir_path( __FILE__ ) . 'includes/class-mastodon-widget.php' );
       register_widget( 'FediEmbedi_Mastodon' );
       if( empty( get_option( 'fediembedi-mastodon-token' ) ) ) {
         unregister_widget( 'FediEmbedi_Mastodon' );
       }
 
       //Pixelfed
-      include( plugin_dir_path( __FILE__ ) . 'includes/fediembedi-pixelfed-widget.php' );
+      include( plugin_dir_path( __FILE__ ) . 'includes/class-pixelfed-widget.php' );
       register_widget( 'FediEmbedi_Pixelfed' );
       if( empty( get_option( 'fediembedi-pixelfed-token' ) ) ) {
         unregister_widget( 'FediEmbedi_Pixelfed' );
       }
 
       //PeerTube
-      include( plugin_dir_path( __FILE__ ) . 'includes/fediembedi-peertube-widget.php' );
+      include( plugin_dir_path( __FILE__ ) . 'includes/class-peertube-widget.php' );
     	register_widget( 'FediEmbedi_PeerTube' );
     }
 

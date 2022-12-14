@@ -76,7 +76,8 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 				</div><div class="clear"></div>
 		</div>
 		<div>
-			<p><span class="peertube"></span><?php _e('Widget ready!', 'fediembedi');
+			<p><span class="peertube"></span><?php _e('Widget ready! ', 'fediembedi'); ?></p>
+			<p><?php
 						printf( 
 							/* translators: https://joinpeertube.org */
 							wp_kses( 
@@ -88,6 +89,7 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 		</div>
 		<div class="clear"></div>
 	</form>
+	<hr>
 	<div>
 		<p><?php
 				printf( 
