@@ -44,86 +44,6 @@ class FediConfig {
         $plugin_dir = basename(dirname(__FILE__));
         //load_plugin_textdomain('fediembedi', false, $plugin_dir . '/languages');
 
-        if (isset($_GET['code'])) {
-        //if (isset($_GET['code']) && isset($GET['instance_type'])) {
-
-            $instance_type = $_REQUEST['instance_type'];
-            $code = $_GET['code'];
-
-            switch ($instance_type) {
-              case 'mastodon':
-                $client_id = get_option('fediembedi-mastodon-client-id');
-                $client_secret = get_option('fediembedi-mastodon-client-secret');
-                break;
-              case 'pixelfed':
-                $client_id = get_option('fediembedi-pixelfed-client-id');
-                $client_secret = get_option('fediembedi-pixelfed-client-secret');
-                break;
-            }
-
-            if (!empty($code) && !empty($client_id) && !empty($client_secret)) {
-                //echo __('Authentication, please wait', 'fediembedi') . '...';
-
-                switch ($instance_type) {
-                  case 'mastodon':
-                    update_option('fediembedi-mastodon-token', 'nada');
-                    $instance = get_option('fediembedi-mastodon-instance');
-                    $client = new \FediClient($instance);
-                    $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url() . '?instance_type=' . $instance_type);
-                    break;
-                  case 'pixelfed':
-                    update_option('fediembedi-pixelfed-token', 'nada');
-                    $instance = get_option('fediembedi-pixelfed-instance');
-                    $client = new \FediClient($instance);
-                    $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url() . '?instance_type=' . $instance_type);
-                    break;
-                }
-
-                if ( isset($token->error ) ) {
-                    //TODO: Proper error message
-                    update_option(
-                        'fediembedi-notice',
-                        serialize(
-                            array(
-                                'message' => '<strong>FediEmbedi</strong> : ' . __("Can't log you in.", 'fediembedi') .
-                                '<p><strong>' . __('Instance message', 'fediembedi') . '</strong> : ' . $token->error_description . '</p>',
-                                'class' => 'error',
-                            )
-                        )
-                    );
-                    unset($token);
-                    switch ($instance_type) {
-                      case 'mastodon':
-                        update_option('fediembedi-mastodon-token', '');
-                        break;
-                      case 'pixelfed':
-                        update_option('fediembedi-pixelfed-token', '');
-                        break;
-                    }
-                } else {
-                    switch ($instance_type) {
-                      case 'mastodon':
-                        update_option('fediembedi-mastodon-client-id', $client_id);//
-                        update_option('fediembedi-mastodon-client-secret', $client_secret);//
-                        update_option('fediembedi-mastodon-token', $token->access_token);
-                        break;
-                      case 'pixelfed':
-                        update_option('fediembedi-pixelfed-client-id', $client_id);//
-                        update_option('fediembedi-pixelfed-client-secret', $client_secret);//
-                        update_option('fediembedi-pixelfed-token', $token->access_token);
-                        break;
-                    }
-
-                }
-                $redirect_url = get_admin_url() . 'options-general.php?page=fediembedi';
-            } else {
-                //Probably hack or bad refresh, redirect to homepage
-                $redirect_url = home_url();
-            }
-
-            wp_redirect($redirect_url);
-            exit;
-        }
 
         $mastodon_token = get_option('fediembedi-mastodon-token');
         $pixelfed_token = get_option('fediembedi-pixelfed-token');
@@ -337,6 +257,87 @@ class FediConfig {
     public function show_configuration_page() {
 
         wp_enqueue_style( 'fediembedi-configuration', plugin_dir_url( __FILE__ ) . 'style.css' );
+        
+        if (isset($_GET['code'])) {
+          //if (isset($_GET['code']) && isset($GET['instance_type'])) {
+  
+              $instance_type = $_REQUEST['instance_type'];
+              $code = $_GET['code'];
+  
+              switch ($instance_type) {
+                case 'mastodon':
+                  $client_id = get_option('fediembedi-mastodon-client-id');
+                  $client_secret = get_option('fediembedi-mastodon-client-secret');
+                  break;
+                case 'pixelfed':
+                  $client_id = get_option('fediembedi-pixelfed-client-id');
+                  $client_secret = get_option('fediembedi-pixelfed-client-secret');
+                  break;
+              }
+  
+              if (!empty($code) && !empty($client_id) && !empty($client_secret)) {
+                  //echo __('Authentication, please wait', 'fediembedi') . '...';
+  
+                  switch ($instance_type) {
+                    case 'mastodon':
+                      update_option('fediembedi-mastodon-token', 'nada');
+                      $instance = get_option('fediembedi-mastodon-instance');
+                      $client = new \FediClient($instance);
+                      $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url() . '?instance_type=' . $instance_type);
+                      break;
+                    case 'pixelfed':
+                      update_option('fediembedi-pixelfed-token', 'nada');
+                      $instance = get_option('fediembedi-pixelfed-instance');
+                      $client = new \FediClient($instance);
+                      $token = $client->get_bearer_token($client_id, $client_secret, $code, get_admin_url() . '?instance_type=' . $instance_type);
+                      break;
+                  }
+  
+                  if ( isset($token->error ) ) {
+                      //TODO: Proper error message
+                      update_option(
+                          'fediembedi-notice',
+                          serialize(
+                              array(
+                                  'message' => '<strong>FediEmbedi</strong> : ' . __("Can't log you in.", 'fediembedi') .
+                                  '<p><strong>' . __('Instance message', 'fediembedi') . '</strong> : ' . $token->error_description . '</p>',
+                                  'class' => 'error',
+                              )
+                          )
+                      );
+                      unset($token);
+                      switch ($instance_type) {
+                        case 'mastodon':
+                          update_option('fediembedi-mastodon-token', '');
+                          break;
+                        case 'pixelfed':
+                          update_option('fediembedi-pixelfed-token', '');
+                          break;
+                      }
+                  } else {
+                      switch ($instance_type) {
+                        case 'mastodon':
+                          update_option('fediembedi-mastodon-client-id', $client_id);//
+                          update_option('fediembedi-mastodon-client-secret', $client_secret);//
+                          update_option('fediembedi-mastodon-token', $token->access_token);
+                          break;
+                        case 'pixelfed':
+                          update_option('fediembedi-pixelfed-client-id', $client_id);//
+                          update_option('fediembedi-pixelfed-client-secret', $client_secret);//
+                          update_option('fediembedi-pixelfed-token', $token->access_token);
+                          break;
+                      }
+  
+                  }
+                  $redirect_url = get_admin_url() . 'options-general.php?page=fediembedi';
+              } else {
+                  //Probably hack or bad refresh, redirect to homepage
+                  $redirect_url = home_url();
+              }
+  
+              wp_redirect($redirect_url);
+              exit;
+          }
 
         if ( isset($_GET['fediembedi-disconnect'] ) ) {
           switch ( $_GET['fediembedi-disconnect'] ) {
