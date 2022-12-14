@@ -43,7 +43,7 @@ label{
 }
 
 .pixelfed {
-	background: url('img/pixelfed.svg') no-repeat 0 0;
+	background: url('assets/img/pixelfed.svg') no-repeat 0 0;
 	background-size: 30px;
 	border: none;
 	border-radius: 50%;
@@ -62,7 +62,7 @@ label{
 }
 
 .mastodon {
-	background: url('img/mastodon.svg') no-repeat 1px 4px;
+	background: url('assets/img/mastodon.svg') no-repeat 1px 4px;
 	background-size: 28px;
 	border: none;
 	color: transparent;
@@ -80,7 +80,7 @@ label{
 }
 
 .peertube {
-	background: url('img/peertube.svg') no-repeat 7px 4px;
+	background: url('assets/img/peertube.svg') no-repeat 7px 4px;
 	background-size: 24px;
 	border: none;
 	color: transparent;
