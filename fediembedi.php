@@ -160,7 +160,7 @@ class FediConfig
       if ( false === ( $status = get_transient( "mastodon_$shortcode_atts" ) ) ) {
         $fedi_instance = get_option( 'fediembedi-mastodon-instance' );
         $access_token = get_option( 'fediembedi-mastodon-token' );
-        $client = \FediEmbedi\FediConfig::fedi_client( 'mastodon', $fedi_instance );
+        $client = \FediEmbedi\FediConfig::fedi_client( $fedi_instance, 'mastodon' );
         if ( !$client ){
           return;
         }
@@ -196,7 +196,7 @@ class FediConfig
       //fedi instance
         $fedi_instance = get_option( 'fediembedi-pixelfed-instance' );
         $access_token = get_option( 'fediembedi-pixelfed-token' );
-        $client = \FediEmbedi\FediConfig::fedi_client( 'pixelfed', $fedi_instance );
+        $client = \FediEmbedi\FediConfig::fedi_client( $fedi_instance, 'pixelfed' );
         if ( !$client ){
           return;
         }
@@ -244,7 +244,7 @@ class FediConfig
         ), $atts, 'peertube' );
 
         $atts['instance'] = \esc_url_raw( $atts['instance'], 'https' );
-        $client = new \FediEmbedi\FediClient( $atts['instance'] );
+        $client = \FediEmbedi\FediConfig::fedi_client( $atts['instance'] );
 
         //getVideos from remote instance
         $status = $client->getVideos( $atts['actor'], $atts['is_channel'], $atts['limit'], $atts['nsfw'] );

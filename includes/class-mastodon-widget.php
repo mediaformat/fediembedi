@@ -34,7 +34,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		
 			//fedi instance
 			$mastodon_instance = get_option('fediembedi-mastodon-instance');
-			$client = \FediEmbedi\FediConfig::fedi_client( 'mastodon', $mastodon_instance );
+			$client = \FediEmbedi\FediConfig::fedi_client( $mastodon_instance, 'mastodon' );
 			if ( !$client ) {
 				return;
 			}

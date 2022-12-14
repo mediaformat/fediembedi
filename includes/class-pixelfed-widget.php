@@ -34,7 +34,7 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 			//fedi instance
 			$instance_url = get_option( 'fediembedi-pixelfed-instance' );
 			$access_token = get_option( 'fediembedi-pixelfed-token' );
-			$client = \FediEmbedi\FediConfig::fedi_client( 'pixelfed', $instance_url );
+			$client = \FediEmbedi\FediConfig::fedi_client( $instance_url, 'pixelfed' );
 			if (!$client){
 				return;
 			}
