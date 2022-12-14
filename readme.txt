@@ -1,13 +1,12 @@
-=== Plugin Name ===
-Contributors: dj_angola
+=== FediEmbedi ===
+Contributors: mediaformat
 Donate link: https://paypal.me/MediaFormat
 Tags: mastodon, pixelfed, fediverse, activitypub, widget, shortcode
 Requires at least: 5.1
 Tested up to: 5.3.2
 Requires PHP: 7.2
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Display your Fediverse timeline in a widget
 
@@ -28,13 +27,9 @@ FediEmbedi will display your Mastodon, Pleroma, Pixelfed, PeerTube timeline with
 * [Pixelfed](https://pixelfed.org/)
 * [PeerTube](https://joinpeertube.org/)
 
-= Planned supported software =
-* See the [board](https://git.feneas.org/mediaformat/fediembedi/-/boards)
-* [Suggestions](https://git.feneas.org/mediaformat/fediembedi/issues)?
-
 = Development =
 
-For the time being development will happen on [git.feneas.org](https://git.feneas.org/mediaformat/fediembedi "FediEmbedi").
+For the time being development happens on [codeberg.org](https://codeberg.org/mediaformat/fediembedi "FediEmbedi") and is mirrored to Github.
 
 = Updates =
 
@@ -63,6 +58,13 @@ No, this plugin uses [OAuth 2.0](https://oauth.net/). You will be sent to login 
 and redirected to your site with a secure token. Similar to how you would connect a mobile app to your account.
 
 == Changelog ==
+
+= draft =
+* Add: Caching widgets and shortcodes with transients.
+* Document: Shortcodes on options page.
+* Fix: Cleanup template escapes.
+* Fix: Sanitize user inputs.
+* Fix: Pixelfed API
 
 = 0.11.1 =
 * Bug fix: Shortcode limit attribute.
@@ -112,7 +114,7 @@ and redirected to your site with a secure token. Similar to how you would connec
 * Renamed some classes and constants, and reorganized file structure
 
 = 0.7.1 =
-* Fix version info
+* Fix version info preventing auto-updates
 
 = 0.7.0 =
 * Added Pixelfed /embed styles
@@ -124,6 +126,9 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 = 0.5.0 =
 * Mirror plugin on Github for use with [Github Updater](https://github.com/afragen/github-updater)
+
+= 0.4.1 =
+* Readme updates
 
 = 0.4.0 =
 * Fix for Github updates
@@ -141,9 +146,6 @@ and redirected to your site with a secure token. Similar to how you would connec
 * Initial commit.
 
 == Credits ==
-
-* Mastodon Autopost
-The client connection code is based on [Mastodon Autopost](https://wordpress.org/plugins/autopost-to-mastodon/).
 
 * FediEmbedi
 The name FediEmbedi was contributed by [wake.st](https://wake.st/).
