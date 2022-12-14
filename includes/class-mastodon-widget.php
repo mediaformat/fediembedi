@@ -13,7 +13,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 			'description' => __( 'Display a profile timeline', 'fediembedi' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'mastodon', _x( 'Mastodon', 'fediembedi' ), $widget_ops );
+		parent::__construct( 'mastodon', _x( 'Mastodon', 'title', 'fediembedi' ), $widget_ops );
 	}
 
 	/**
@@ -78,7 +78,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id('title'); ?>"><?php esc_html_e('Title:', 'fediembedi'); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php esc_attr_e($instance['title']); ?>" />
+				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php esc_attr_e( $instance['title'], 'fediembedi' ); ?>" />
 			</label>
 		</p>
 		<p>
@@ -137,19 +137,19 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		</label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to display:' ); ?><br>
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to display:', 'fediembedi' ); ?><br>
 				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo intval($limit); ?>" size="3" />
 				<small>Max: 20</small>
 			</label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:' ); ?><br>
+			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:', 'fediembedi' ); ?><br>
 				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo esc_attr($height); ?>" placeholder="500px" size="5" />
 				<small><?php _e( 'Default: 100%', 'fediembedi' ); ?></small>
 			</label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'cache' ); ?>"><?php _e( 'Cache duration:' ); ?><br>
+			<label for="<?php echo $this->get_field_id( 'cache' ); ?>"><?php _e( 'Cache duration:', 'fediembedi' ); ?><br>
 				<input class="" id="<?php echo $this->get_field_id( 'cache' ); ?>" name="<?php echo $this->get_field_name( 'cache' ); ?>" type="text" value="<?php echo esc_attr($cache_time); ?>" placeholder="2 * HOUR_IN_SECONDS" size="5" />
 				<small><?php _e( 'Default: 2 * HOUR_IN_SECONDS', 'fediembedi' ); ?></small>
 				<details><summary><?php _e( 'Time constants', 'fediembedi' ); ?></summary>
