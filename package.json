@@ -4,6 +4,7 @@
   "description": "Display your Fediverse timeline in WordPress",
   "main": "build/index.js",
   "scripts": {
+    "wp-env": "wp-env",
     "build": "wp-scripts build",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
@@ -25,6 +26,7 @@
   "author": "Django Doucet",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
+    "@wordpress/env": "^5.8.0",
     "@wordpress/scripts": "^24.6.0",
     "grunt": "^1.5.3",
     "grunt-checktextdomain": "^1.0.1",
