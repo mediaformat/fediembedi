@@ -451,6 +451,34 @@ class FediConfig
     }
 
     /**
+     * get FediClient and verify_credentials
+     */
+    public static function fedi_client( $instance, $type = null ) {
+      if ( $type ) {
+        $token = get_option( "fediembedi-$type-token" );
+        $client = new \FediClient( $instance, $token );
+        $credentials = $client->verify_credentials($token);
+        if ( isset( $credentials->error ) ) {
+          update_option(
+            'fediembedi-notice',
+            serialize(
+              array(
+                'message' => '<strong>FediEmbedi</strong> : ' . __( "$credentials->error.", 'fediembedi') .
+                '<p>' . sprintf( wp_kses( __( "Please <a href='%s'>re-authorize</a> your " . ucfirst($type) . " account.", 'fediembedi' ), array(  'a' => array( 'href' => array() ) ) ), admin_url( 'options-general.php?page=fediembedi' ) ) . '</p>',
+                'class' => 'error',
+              )
+            )
+          );
+          delete_option( "fediembedi-$type-token" );
+          return null;
+        } 
+      } else {
+        $client = new \FediClient( $instance );
+      }
+      return $client;
+    }
+
+    /**
      * Admin_notices
      * Show the notice (error or info)
      *
