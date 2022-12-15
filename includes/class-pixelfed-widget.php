@@ -45,13 +45,13 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 			};
 
 			//widget options
-			$show_header = (!empty($instance['show_header'])) ? $instance['show_header'] : '';
-			$only_media = (!empty($instance['only_media'])) ? $instance['only_media'] : '';
-			$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : '';
-			$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : '';
-			$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : '';
+			$show_header = !empty($instance['show_header'] ) ? $instance['show_header'] : '';
+			$only_media = !empty($instance['only_media'] ) ? $instance['only_media'] : '';
+			$pinned = !empty($instance['pinned'] ) ? $instance['pinned'] : '';
+			$exclude_replies = !empty($instance['exclude_replies'] ) ? $instance['exclude_replies'] : '';
+			$exclude_reblogs = !empty($instance['exclude_reblogs'] ) ? $instance['exclude_reblogs'] : '';
 			$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-			$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
+			$height    = isset( $instance['height'] ) ? $instance['height'] : '100%';
 			$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
 			
 			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);

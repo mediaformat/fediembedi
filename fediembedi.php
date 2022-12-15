@@ -349,10 +349,6 @@ class FediConfig {
               break;
           }
         }
-        $mastodon_instance = null;
-        $mastodon_token = get_option('fediembedi-mastodon-token');
-        $pixelfed_instance = null;
-        $pixelfed_token = get_option('fediembedi-pixelfed-token');
 
         if ( isset( $_POST['save'] ) ) {
 
@@ -360,8 +356,8 @@ class FediConfig {
 
             if ( $is_valid_nonce ) {
 
-                $instance = esc_url( $_POST['instance'] );
-                $instance_type = esc_attr( $_POST['instance_type'] );
+                $instance = esc_url_raw( $_POST['instance'] );
+                $instance_type = sanitize_text_field( $_POST['instance_type'] );
 
                 $client = new \FediClient( $instance );
                 //$redirect_url = get_admin_url() . '?instance_type=' . $instance_type;
@@ -370,7 +366,7 @@ class FediConfig {
                 $auth_url = $client->register_app( $redirect_url );
 
                 //if ( $auth_url == "ERROR" ) { // TODO convert to wp_error
-                if ( is_wp_error( $auth_url ) ) { // TODO convert to wp_error
+                if ( is_wp_error( $auth_url ) ) {
                     update_option(
                       'fediembedi-notice',
                       serialize(
@@ -433,11 +429,12 @@ class FediConfig {
             }
         }
 
+        $mastodon_token = get_option('fediembedi-mastodon-token');
         if ( !empty( $mastodon_token ) ) {
-            $mastodon_instance = get_option( 'fediembedi-mastodon-instance' );
-            $client = new \FediClient( $mastodon_instance );
+            $client = self::fedi_client( get_option( 'fediembedi-mastodon-instance' ), 'mastodon' );
             $mastodon_account = $client->verify_credentials( $mastodon_token );
         }
+        $pixelfed_token = get_option('fediembedi-pixelfed-token');
         if ( !empty( $pixelfed_token ) ) {
             $pixelfed_instance = get_option( 'fediembedi-pixelfed-instance' );
             $client = new \FediClient( $pixelfed_instance );

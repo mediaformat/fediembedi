@@ -1,42 +1,42 @@
-.spacer{
+.spacer {
 	margin-top: 20px;
 }
 
-.m-avatar{
+.m-avatar {
 	float:left;
 	border-radius: 100px;
 	margin-right: 20px;
 	width: 60px;
 }
 
-.details{
+.details {
 	float:left;
 }
 
-.connected{
+.connected {
 	color: #000;
 	font-size: 16px;
 	font-weight:bold;
 	margin-bottom: 10px;
 }
 
-.disconnected{
+.disconnected {
 	color: #FF0000;
 	font-size: 16px;
 	text-align: center;
 	width: 100%;
 }
 
-.account{
+.account {
 	border: 1px solid #000;
 	padding: 15px;
 	border-radius:4px;
 	float:left;
-  margin: 0 0 1em;
+  	margin: 0 0 1em;
 	min-width: 300px;
 }
 
-label{
+label {
 	display:inline-block;
 	vertical-align: bottom;
 	text-align:center;
@@ -97,4 +97,22 @@ label{
 .instance_type.widefat {
 	max-width: 160px;
 	vertical-align: baseline;
+}
+
+.settings_page_fediembedi details {
+	margin: 1em 0;
+}
+.settings_page_fediembedi details > summary {
+	background: #ccc;
+	display: inline-block;
+	padding: 0.25em;
+	border-radius: 0.25em;
+	cursor: pointer;
+}
+.settings_page_fediembedi details > summary::before {
+	content: '\25B6';
+	margin-right: 0.25em;
+}
+.settings_page_fediembedi details[open] > summary::before {
+	content: '\25BC';
 }

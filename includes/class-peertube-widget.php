@@ -32,11 +32,19 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$widget_instance = md5( serialize( $instance ) );
 		if ( false === ( $status = get_transient( "peertube_$widget_instance" ) ) ) {
 		
-			//fedi instance
-			$fedi_instance = (!empty($instance['peertube'])) ? $instance['peertube'] : '';
-			$actor = (!empty($instance['actor'])) ? $instance['actor'] : '';
-			$is_channel = (!empty($instance['channel'])) ? $instance['channel'] : null;//radio channel or account
-			$client = new \FediClient($fedi_instance);
+			$fedi_instance = !empty($instance['peertube'] ) ? esc_url_raw( $instance['peertube'] ) : '';
+			$actor =  !empty( $instance['actor'] ) ? $instance['actor'] : '';
+			$is_channel = !empty( $instance['channel'] ) ? boolval( $instance['channel'] ) : null;//radio channel or account
+			$show_header = !empty( $instance['show_header'] ) ? boolval( $instance['show_header'] ) : null;
+			$count    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+			$nsfw    = isset( $instance['nsfw'] ) ? boolval( $instance['nsfw'] ) : null;
+			$height    = isset( $instance['height'] ) ? sanitize_text_field( $instance['height'] ) : '100%';
+			$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
+
+			if ( !$fedi_instance || !$actor ) {
+				return;
+			}
+			$client = new \FediClient( $fedi_instance );
 			if ( !$client ) {
 				return;
 			}
@@ -44,13 +52,6 @@ class FediEmbedi_PeerTube extends WP_Widget {
 			if ( $title ) {
 				echo $args['before_title'] . $title . $args['after_title'];
 			};
-
-			//widget options
-			$show_header = (!empty($instance['show_header'])) ? $instance['show_header'] : null;
-			$count    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-			$nsfw    = isset( $instance['nsfw'] ) ? $instance['nsfw'] : null;
-			$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
-			$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
 
 			//getVideos from remote instance
 			$status = $client->getVideos( $actor, $is_channel, $count, $nsfw );
@@ -78,25 +79,24 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
         //Radio inputs : https://wordpress.stackexchange.com/a/276659/87622
 
-		$peertube = (!empty($instance['peertube'])) ? $instance['peertube'] : NULL;
-		$actor = (!empty($instance['actor'])) ? $instance['actor'] : NULL;
-		$is_channel = (!empty($instance['channel'])) ? $instance['channel'] : NULL;
-
-		$show_header = (!empty( $instance['show_header'])) ? $instance['show_header'] : NULL;
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$peertube =  !empty( $instance['peertube'] ) ? esc_url_raw( $instance['peertube'] ) : NULL;
+		$actor = !empty( $instance['actor'] ) ? $instance['actor'] : NULL;
+		$is_channel = !empty( $instance['channel'] ) ? $instance['channel'] : NULL;
+		$show_header = !empty( $instance['show_header'] ) ? $instance['show_header'] : NULL;
+		$number    = isset( $instance['number'] ) ? $instance['number'] : 5;
 		$nsfw    = isset( $instance['nsfw'] ) ? $instance['nsfw'] : false;
-		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '';
-		$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
+		$height    = isset( $instance['height'] ) ? $instance['height'] : '';
+		$cache_time    = isset( $instance['cache'] ) ? $instance['cache'] : 2 * HOUR_IN_SECONDS;
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'fediembedi'); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']); ?>" />
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'fediembedi' ); ?>
+				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']); ?>" />
 			</label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('peertube'); ?>"><?php _e('PeerTube instance:', 'fediembedi'); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('peertube'); ?>" name="<?php echo $this->get_field_name('peertube'); ?>" type="text" value="<?php echo esc_url($peertube, 'https'); ?>" />
+			<label for="<?php echo $this->get_field_id( 'peertube' ); ?>"><?php _e('PeerTube instance:', 'fediembedi'); ?>
+				<input class="widefat" id="<?php echo $this->get_field_id('peertube'); ?>" name="<?php echo $this->get_field_name('peertube'); ?>" type="text" value="<?php echo esc_url_raw( $peertube, 'https' ); ?>" />
 			</label>
 		</p>
 		<p>
@@ -151,7 +151,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'cache' ); ?>"><?php _e( 'Cache duration:', 'fediembedi' ); ?><br>
-				<input class="" id="<?php echo $this->get_field_id( 'cache' ); ?>" name="<?php echo $this->get_field_name( 'cache' ); ?>" type="text" value="<?php echo esc_attr($cache_time); ?>" placeholder="2 * HOUR_IN_SECONDS" size="5" />
+				<input class="" id="<?php echo $this->get_field_id( 'cache' ); ?>" name="<?php echo $this->get_field_name( 'cache' ); ?>" type="text" value="<?php echo esc_attr( $cache_time ); ?>" placeholder="2 * HOUR_IN_SECONDS" size="5" />
 				<small><?php _e( 'Default: 2 * HOUR_IN_SECONDS', 'fediembedi' ); ?></small>
 				<details><summary><?php _e( 'Time constants', 'fediembedi' ); ?></summary>
 					MINUTE_IN_SECONDS
@@ -177,7 +177,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$instance          = $old_instance;
 		$new_instance      = wp_parse_args( (array) $new_instance, array( 'title' => '' ) );
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
-		$instance['peertube'] = esc_url($new_instance['peertube']);
+		$instance['peertube'] = esc_url_raw($new_instance['peertube']);
 		$instance['actor'] = sanitize_key($new_instance['actor']);
 		$instance['channel'] = boolval( $new_instance['channel'] );
 		$instance['number']    = (int) $new_instance['number'];

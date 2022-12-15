@@ -44,21 +44,21 @@ class FediEmbedi_Mastodon extends WP_Widget {
 			};
 
 			//widget options
-			$show_header = (!empty($instance['show_header'])) ? $instance['show_header'] : '';
-			$only_media = (!empty($instance['only_media'])) ? $instance['only_media'] : '';
-			$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : '';
-			$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : '';
-			$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : '';
-			$limit    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-			$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
-			$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
+			$show_header = !empty( $instance['show_header'] ) ? $instance['show_header'] : '';
+			$only_media = !empty( $instance['only_media'] ) ? $instance['only_media'] : '';
+			$pinned = !empty( $instance['pinned'] ) ? $instance['pinned'] : '';
+			$exclude_replies = !empty( $instance['exclude_replies'] ) ? $instance['exclude_replies'] : '';
+			$exclude_reblogs = !empty( $instance['exclude_reblogs'] ) ? $instance['exclude_reblogs'] : '';
+			$limit    = isset( $instance['number'] ) ? $instance['number'] : 5;
+			$height    = isset( $instance['height'] ) ? $instance['height'] : '100%';
+			$cache_time    = isset( $instance['cache'] ) ? $instance['cache'] : 2 * HOUR_IN_SECONDS;// TODO test
 
 			//getStatus from remote instance
-			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $limit, $exclude_reblogs);
+			$status = $client->getStatus( $only_media, $pinned, $exclude_replies, null, null, null, $limit, $exclude_reblogs );
 			set_transient( "mastodon_$widget_instance", $status, $cache_time );
 		}
 		$account = $status[0]->account;
-		include( plugin_dir_path(__FILE__) . 'templates/mastodon.tpl.php' );
+		include( plugin_dir_path( __FILE__ ) . 'templates/mastodon.tpl.php' );
 
 		echo $args['after_widget'];
 	}
@@ -73,7 +73,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 	public function form( $instance ) {
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
 		$limit    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '100%';
+		$height    = isset( $instance['height'] ) ? sanitize_text_field( $instance['height'] ) : '100%';
 		$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
 		?>
 		<p>

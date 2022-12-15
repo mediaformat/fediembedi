@@ -121,11 +121,17 @@ class FediClient {
 
 		$query = http_build_query( array(
 			//'categoryOneOf' => $categoryID,
-			'count' => $count,
-			//'filter' => $filter,
+			'count' => $count, //default 15
+			//'filter' => $filter, // deprecated?
+			//'hasHLSFiles' => $hasHLSFiles, // PeerTube >= 4.0
+			//'hasWebtorrentFiles' => $hasWebtorrentFiles, // PeerTube >= 4.0
+			//'include' => $include, // PeerTube >= 4.0
+			//'isLive' => $isLive, 
+			//'isLocal' => $isLocal, // // PeerTube >= 4.0
 			//'languageOneOf' => $lang,
 			//'licenceOneOf' => $licence,
 			'nsfw' => $nsfw,
+			//'privacyOneOf' => $privacyOneOf, // PeerTube >= 4.0
 			//'skipCount' => $skipCount,
 			//'sort' => $sort,
 			//'start' => $offset,
