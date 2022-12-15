@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FediEmbedi 0.12.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fediembedi\n"
-"POT-Creation-Date: 2022-12-14 06:54:29+00:00\n"
+"POT-Creation-Date: 2022-12-15 05:07:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,31 +13,31 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: fediembedi.php:88
+#: fediembedi.php:302
 msgid "Can't log you in."
 msgstr ""
 
-#: fediembedi.php:89
+#: fediembedi.php:303
 msgid "Instance message"
 msgstr ""
 
-#: fediembedi.php:368
+#: fediembedi.php:378
 msgid "The given instance url belongs to an unrecognized service!"
 msgstr ""
 
-#: fediembedi.php:380
+#: fediembedi.php:389
 msgid "Please set your instance before you connect !"
 msgstr ""
 
-#: fediembedi.php:408
-msgid "Redirect to "
+#: fediembedi.php:416
+msgid "Redirect to login: "
 msgstr ""
 
-#: fediembedi.php:417
+#: fediembedi.php:425
 msgid "Configuration successfully saved!"
 msgstr ""
 
-#: fediembedi.php:505
+#: fediembedi.php:511
 msgid "Configuration"
 msgstr ""
 
@@ -166,40 +166,24 @@ msgid ""
 msgstr ""
 
 #: includes/class-settings-form.tpl.php:79
-msgid "Widget ready!"
+msgid "Widget ready! "
 msgstr ""
 
-#: includes/class-settings-form.tpl.php:83
+#: includes/class-settings-form.tpl.php:84
 #. translators: https:joinpeertube.org
 msgid ""
 "Don't have an account? Visit <a href='%s' target='_blank' rel='noreferrer "
 "noopener'>joinpeertube.org</a> to find an instance."
 msgstr ""
 
-#: includes/class-settings-form.tpl.php:96
+#: includes/class-settings-form.tpl.php:98
 #. translators: https:indieweb.social/@MediaFormat
 msgid ""
 "For news and updates follow <a href='%s' target='_blank' rel='noreferrer "
 "noopener'>indieweb.social/@MediaFormat</a> on the fediverse."
 msgstr ""
 
-#: templates/mastodon.tpl.php:18 templates/pixelfed.tpl.php:33
-msgid "Follow"
-msgstr ""
-
-#: templates/pixelfed.tpl.php:21
-msgid "Posts"
-msgstr ""
-
-#: templates/pixelfed.tpl.php:25
-msgid "Followers"
-msgstr ""
-
-#: templates/pixelfed.tpl.php:29
-msgid "Following"
-msgstr ""
-
-#: templates/pixelfed.tpl.php:57
+#: templates/pixelfed.tpl.php:38
 msgid "View More Posts"
 msgstr ""
 
@@ -238,7 +222,7 @@ msgctxt "Title"
 msgid "PeerTube"
 msgstr ""
 
-#: templates/mastodon.tpl.php:54 templates/peertube.tpl.php:37
+#: templates/mastodon.tpl.php:50 templates/peertube.tpl.php:37
 msgctxt "%2$s = human-readable time difference"
 msgid "%1$s ago"
 msgstr ""
