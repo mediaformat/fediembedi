@@ -459,7 +459,7 @@ class FediConfig {
             'fediembedi-notice',
             serialize(
               array( // TODO fix error translation handling, and clean up strings
-                'message' => '<strong>FediEmbedi</strong> : ' . _x( "$credentials->error.", 'fediembedi' ) .
+                'message' => '<strong>FediEmbedi</strong> : ' . __( "$credentials->error.", 'fediembedi' ) .
                 '<p>' . sprintf( wp_kses( __( "Please <a href='%s'>re-authorize</a> your " . ucfirst($type) . " account.", 'fediembedi' ), 
                   array(  'a' => array( 'href' => array() ) ) ), admin_url( 'options-general.php?page=fediembedi' ) ) . '</p>',
                 'class' => 'error',
