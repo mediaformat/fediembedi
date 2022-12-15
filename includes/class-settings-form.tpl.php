@@ -11,7 +11,7 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 		<div style="display:<?php echo !FEDI_MSTDN_CONNECTED ? "block":"none"?>">
 				<p><span class="mastodon"></span>
 					<input type="hidden" name="instance_type" value="mastodon">
-					<input type="text" class="widefat instance_url" id="mastodon_instance" name="instance" size="60" value="<?php !isset($mastodon_instance)?: esc_url_raw( $mastodon_instance, 'https' ); ?>" placeholder="example.social">
+					<input type="text" class="widefat instance_url" id="mastodon_instance" name="instance" size="60" value="<?php !isset( $mastodon_instance ) ?: esc_url_raw( $mastodon_instance, 'https' ); ?>" placeholder="example.social">
 					<input class="button button-primary" type="submit" value="<?php _e( 'Connect to your instance to enable the widget', 'fediembedi' ); ?>" name="save" id="save_mastodon"><br></p>
 					<p><?php 
 						printf( 
@@ -78,17 +78,69 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 		<div>
 			<p><span class="peertube"></span><?php _e('Widget ready! ', 'fediembedi'); ?></p>
 			<p><?php
-						printf( 
-							/* translators: https://joinpeertube.org */
-							wp_kses( 
-								__( "Don't have an account? Visit <a href='%s' target='_blank' rel='noreferrer noopener'>joinpeertube.org</a> to find an instance.", 'fediembedi' ), 
-								array(  'a' => array( 'href' => array(), 'target' => array(), 'rel' => array() ) ) 
-							), 
-							'https://joinpeertube.org'
-						); ?></p>
+					printf( 
+						/* translators: https://joinpeertube.org */
+						wp_kses( 
+							__( "Don't have an account? Visit <a href='%s' target='_blank' rel='noreferrer noopener'>joinpeertube.org</a> to find an instance.", 'fediembedi' ), 
+							array(  'a' => array( 'href' => array(), 'target' => array(), 'rel' => array() ) ) 
+						), 
+						'https://joinpeertube.org'
+					); ?></p>
 		</div>
 		<div class="clear"></div>
 	</form>
+	<hr>
+	<div>
+		<h2>Shortcode usage</h2>
+		<details>
+			<summary>[mastodon exclude_replies="1" show_header="0"]</summary>
+			<div>options & defaults:</div>
+			<pre>
+	'only_media' => false, // Show only statuses with media attached
+	'pinned' => false, // Show only show pinned posts.
+	'exclude_replies' => false, // Show only Top level posts
+	'max_id' => null, // Return results older than ID.
+	'since_id' => null, // Return results newer than ID.
+	'min_id' => null, // Return results immediately newer than ID.
+	'limit' => 5, // number of posts to show, max 40.
+	'exclude_reblogs' => false, // Skip statuses that reply to other statuses
+	'show_header' => true, // Show profile header above feed
+	'height' => '100%', // Height of Feed (CSS values)
+	'cache' => 2 * HOUR_IN_SECONDS, // see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+			</pre>
+		</details>
+		<details>
+			<summary>[pixelfed cache="30 * MINUTE_IN_SECONDS" exclude_reblogs="0"]</summary>
+			<div>options & defaults:</div>
+			<pre>
+	'only_media' => false, // Show only statuses with media attached
+	'pinned' => false, // Show only show pinned posts.
+	'exclude_replies' => false, // Show only Top level posts
+	'max_id' => null, // Return results older than ID.
+	'since_id' => null, // Return results newer than ID.
+	'min_id' => null, // Return results immediately newer than ID.
+	'limit' => 5, // number of posts to show, max 40.
+	'exclude_reblogs' => false, // Skip statuses that reply to other statuses
+	'show_header' => true, // Show profile header above feed
+	'height' => '100%', // Height of Feed (CSS values)
+	'cache' => 2 * HOUR_IN_SECONDS, // see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+			</pre>
+		</details>
+		<details>
+			<summary>[peertube instance="example.video" actor="username" is_channel="1"]</summary>
+			<div>options & defaults:</div>
+			<pre>
+	'instance' => null, // Required: "example.video"
+	'actor' => null, // Required: "username" or handle "username@example.video"
+	'is_channel' => null, // Whether the actor is an account or is_channel="1"
+	'limit' => 9, // max. 100
+	'nsfw' => null, // Show nsfw (Not safe for work) videos
+	'show_header' => true, // Show profile header above feed
+	'height' => '100%', // Height of Feed (CSS values: 300px)
+	'cache' => 2 * HOUR_IN_SECONDS, // see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+			</pre>
+		</details>
+	</div>
 	<hr>
 	<div>
 		<p><?php
