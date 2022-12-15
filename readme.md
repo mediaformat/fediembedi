@@ -33,8 +33,7 @@ For the time being development happens on [codeberg.org](https://codeberg.org/me
 
 ### Updates ###
 
-The plugin is under active development, to keep FediEmbedi updated install [Github Updater](https://github.com/afragen/github-updater)
-as a companion plugin, and it will manage updates from within your Wordpress installation.
+The plugin is under active development, and aims to release to the WordPress Plugins directory in the short term.
 
 ## Installation ##
 
@@ -45,10 +44,6 @@ e.g.
 1. Upload `fediembedi` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Connect to your fediverse instance by visiting the configuration page in Settings -> FediEmbedi
-
-or using Github Updater
-1. Settings -> Github Updater
-1. Install plugin tab -> Plugin URI = `https://github.com/mediaformat/fediembedi`
 
 ## Frequently Asked Questions ##
 
