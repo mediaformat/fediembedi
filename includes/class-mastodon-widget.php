@@ -28,14 +28,14 @@ class FediEmbedi_Mastodon extends WP_Widget {
 	public function widget( $args, $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
-		 // create unique transient name from widget options 
+		// create unique transient name from widget options
 		 $widget_instance = md5( serialize( $instance ) );
-		 if ( false === ( $status = get_transient( "mastodon_$widget_instance" ) ) ) {
-		
+		if ( false === ( $status = get_transient( "mastodon_$widget_instance" ) ) ) {
+
 			//fedi instance
-			$mastodon_instance = get_option('fediembedi-mastodon-instance');
+			$mastodon_instance = get_option( 'fediembedi-mastodon-instance' );
 			$client = \FediEmbedi\FediConfig::fedi_client( $mastodon_instance, 'mastodon' );
-			if ( !$client ) {
+			if ( ! $client ) {
 				return;
 			}
 			echo $args['before_widget'];
@@ -44,11 +44,11 @@ class FediEmbedi_Mastodon extends WP_Widget {
 			};
 
 			//widget options
-			$show_header = !empty( $instance['show_header'] ) ? $instance['show_header'] : '';
-			$only_media = !empty( $instance['only_media'] ) ? $instance['only_media'] : '';
-			$pinned = !empty( $instance['pinned'] ) ? $instance['pinned'] : '';
-			$exclude_replies = !empty( $instance['exclude_replies'] ) ? $instance['exclude_replies'] : '';
-			$exclude_reblogs = !empty( $instance['exclude_reblogs'] ) ? $instance['exclude_reblogs'] : '';
+			$show_header = ! empty( $instance['show_header'] ) ? $instance['show_header'] : '';
+			$only_media = ! empty( $instance['only_media'] ) ? $instance['only_media'] : '';
+			$pinned = ! empty( $instance['pinned'] ) ? $instance['pinned'] : '';
+			$exclude_replies = ! empty( $instance['exclude_replies'] ) ? $instance['exclude_replies'] : '';
+			$exclude_reblogs = ! empty( $instance['exclude_reblogs'] ) ? $instance['exclude_reblogs'] : '';
 			$limit    = isset( $instance['number'] ) ? $instance['number'] : 5;
 			$height    = isset( $instance['height'] ) ? $instance['height'] : '100%';
 			$cache_time    = isset( $instance['cache'] ) ? $instance['cache'] : 2 * HOUR_IN_SECONDS;// TODO test
@@ -58,7 +58,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 			set_transient( "mastodon_$widget_instance", $status, $cache_time );
 		}
 		$account = $status[0]->account;
-		include( plugin_dir_path( __FILE__ ) . 'templates/mastodon.tpl.php' );
+		include plugin_dir_path( __FILE__ ) . 'templates/mastodon.tpl.php';
 
 		echo $args['after_widget'];
 	}
@@ -71,23 +71,23 @@ class FediEmbedi_Mastodon extends WP_Widget {
 	 * @param array $instance Current settings.
 	 */
 	public function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
 		$limit    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$height    = isset( $instance['height'] ) ? sanitize_text_field( $instance['height'] ) : '100%';
 		$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php esc_html_e('Title:', 'fediembedi'); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php esc_attr_e( $instance['title'], 'fediembedi' ); ?>" />
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'fediembedi' ); ?>
+				<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php esc_attr_e( $instance['title'], 'fediembedi' ); ?>" />
 			</label>
 		</p>
 		<p>
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'show_header' ], '1' ); ?>
+				<?php checked( $instance['show_header'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('show_header'); ?>"
+				name="<?php echo $this->get_field_name( 'show_header' ); ?>"
 				value="1"
 			/><?php _e( 'Show header', 'fediembedi' ); ?>
 		</label>
@@ -96,9 +96,9 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'only_media' ], '1' ); ?>
+				<?php checked( $instance['only_media'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('only_media'); ?>"
+				name="<?php echo $this->get_field_name( 'only_media' ); ?>"
 				value="1"
 			/><?php _e( 'Only show media', 'fediembedi' ); ?>
 		</label>
@@ -107,9 +107,9 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'pinned' ], '1' ); ?>
+				<?php checked( $instance['pinned'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('pinned'); ?>"
+				name="<?php echo $this->get_field_name( 'pinned' ); ?>"
 				value="1"
 			/><?php _e( 'Only show pinned statuses', 'fediembedi' ); ?>
 		</label>
@@ -118,9 +118,9 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'exclude_replies' ], '1' ); ?>
+				<?php checked( $instance['exclude_replies'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('exclude_replies'); ?>"
+				name="<?php echo $this->get_field_name( 'exclude_replies' ); ?>"
 				value="1"
 			/><?php _e( 'Hide replies', 'fediembedi' ); ?>
 		</label>
@@ -129,28 +129,28 @@ class FediEmbedi_Mastodon extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'exclude_reblogs' ], '1' ); ?>
+				<?php checked( $instance['exclude_reblogs'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('exclude_reblogs'); ?>"
+				name="<?php echo $this->get_field_name( 'exclude_reblogs' ); ?>"
 				value="1"
 			/><?php _e( 'Hide reblogs', 'fediembedi' ); ?>
 		</label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to display:', 'fediembedi' ); ?><br>
-				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo intval($limit); ?>" size="3" />
+				<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo intval( $limit ); ?>" size="3" />
 				<small>Max: 20</small>
 			</label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'height' ); ?>"><?php _e( 'Widget height:', 'fediembedi' ); ?><br>
-				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo esc_attr($height); ?>" placeholder="500px" size="5" />
+				<input class="" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo esc_attr( $height ); ?>" placeholder="500px" size="5" />
 				<small><?php _e( 'Default: 100%', 'fediembedi' ); ?></small>
 			</label>
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'cache' ); ?>"><?php _e( 'Cache duration:', 'fediembedi' ); ?><br>
-				<input class="" id="<?php echo $this->get_field_id( 'cache' ); ?>" name="<?php echo $this->get_field_name( 'cache' ); ?>" type="text" value="<?php echo esc_attr($cache_time); ?>" placeholder="2 * HOUR_IN_SECONDS" size="5" />
+				<input class="" id="<?php echo $this->get_field_id( 'cache' ); ?>" name="<?php echo $this->get_field_name( 'cache' ); ?>" type="text" value="<?php echo esc_attr( $cache_time ); ?>" placeholder="2 * HOUR_IN_SECONDS" size="5" />
 				<small><?php _e( 'Default: 2 * HOUR_IN_SECONDS', 'fediembedi' ); ?></small>
 				<details><summary><?php _e( 'Time constants', 'fediembedi' ); ?></summary>
 					MINUTE_IN_SECONDS
@@ -159,7 +159,7 @@ class FediEmbedi_Mastodon extends WP_Widget {
 				</details>
 			</label>
 		</p>
-	<?php
+		<?php
 	}
 
 	/**

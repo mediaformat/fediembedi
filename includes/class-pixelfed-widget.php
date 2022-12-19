@@ -1,6 +1,8 @@
 <?php
 
-class FediEmbedi_Pixelfed extends WP_Widget {
+namespace FediEmbedi;
+
+class FediEmbedi_Pixelfed extends \WP_Widget {
 
 	/**
 	 * Sets up a new FediEmbedi widget instance.
@@ -28,37 +30,37 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	public function widget( $args, $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
-		// create unique transient name from widget options 
+		// create unique transient name from widget options
 		$widget_instance = md5( serialize( $instance ) );
-		if ( false === ( $status = get_transient( "pixelfed_$widget_instance" ) ) ) {
+		if ( false === ( $status = \get_transient( "pixelfed_$widget_instance" ) ) ) {
 			//fedi instance
-			$instance_url = get_option( 'fediembedi-pixelfed-instance' );
-			$access_token = get_option( 'fediembedi-pixelfed-token' );
+			$instance_url = \get_option( 'fediembedi-pixelfed-instance' );
+			$access_token = \get_option( 'fediembedi-pixelfed-token' );
 			$client = \FediEmbedi\FediConfig::fedi_client( $instance_url, 'pixelfed' );
-			if (!$client){
+			if ( ! $client ) {
 				return;
 			}
-			
+
 			echo $args['before_widget'];
 			if ( $title ) {
 				echo $args['before_title'] . $title . $args['after_title'];
 			};
 
 			//widget options
-			$show_header = !empty($instance['show_header'] ) ? $instance['show_header'] : '';
-			$only_media = !empty($instance['only_media'] ) ? $instance['only_media'] : '';
-			$pinned = !empty($instance['pinned'] ) ? $instance['pinned'] : '';
-			$exclude_replies = !empty($instance['exclude_replies'] ) ? $instance['exclude_replies'] : '';
-			$exclude_reblogs = !empty($instance['exclude_reblogs'] ) ? $instance['exclude_reblogs'] : '';
+			$show_header = ! empty( $instance['show_header'] ) ? $instance['show_header'] : '';
+			$only_media = ! empty( $instance['only_media'] ) ? $instance['only_media'] : '';
+			$pinned = ! empty( $instance['pinned'] ) ? $instance['pinned'] : '';
+			$exclude_replies = ! empty( $instance['exclude_replies'] ) ? $instance['exclude_replies'] : '';
+			$exclude_reblogs = ! empty( $instance['exclude_reblogs'] ) ? $instance['exclude_reblogs'] : '';
 			$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 			$height    = isset( $instance['height'] ) ? $instance['height'] : '100%';
 			$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
-			
-			$status = $client->getStatus($only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs);
+
+			$status = $client->getStatus( $only_media, $pinned, $exclude_replies, null, null, null, $number, $exclude_reblogs );
 			set_transient( "pixelfed_$widget_instance", $status, $cache_time );
 		}
 		$account = $status[0]->account;
-      	include( plugin_dir_path( __FILE__ ) . 'templates/pixelfed.tpl.php' );
+		include plugin_dir_path( __FILE__ ) . 'templates/pixelfed.tpl.php';
 
 		echo $args['after_widget'];
 	}
@@ -71,29 +73,29 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 	 * @param array $instance Current settings.
 	 */
 	public function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
-        //Radio inputs : https://wordpress.stackexchange.com/a/276659/87622
-		$show_header = (!empty( $instance['show_header'])) ? $instance['show_header'] : NULL;
-		$only_media = (!empty( $instance['only_media'])) ? $instance['only_media'] : NULL;
-		$pinned = (!empty($instance['pinned'])) ? $instance['pinned'] : NULL;
-		$exclude_replies = (!empty($instance['exclude_replies'])) ? $instance['exclude_replies'] : NULL;
-		$exclude_reblogs = (!empty($instance['exclude_reblogs'])) ? $instance['exclude_reblogs'] : NULL;
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+		//Radio inputs : https://wordpress.stackexchange.com/a/276659/87622
+		$show_header = ( ! empty( $instance['show_header'] ) ) ? $instance['show_header'] : null;
+		$only_media = ( ! empty( $instance['only_media'] ) ) ? $instance['only_media'] : null;
+		$pinned = ( ! empty( $instance['pinned'] ) ) ? $instance['pinned'] : null;
+		$exclude_replies = ( ! empty( $instance['exclude_replies'] ) ) ? $instance['exclude_replies'] : null;
+		$exclude_reblogs = ( ! empty( $instance['exclude_reblogs'] ) ) ? $instance['exclude_reblogs'] : null;
 		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$height    = isset( $instance['height'] ) ? esc_attr( $instance['height'] ) : '';
 		$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
 		?>
 		<p>
-				<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'fediembedi'); ?>
-					<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']); ?>" />
+				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'fediembedi' ); ?>
+					<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 				</label>
 		</p>
 		<p>
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'show_header' ], '1' ); ?>
+				<?php checked( $instance['show_header'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('show_header'); ?>"
+				name="<?php echo $this->get_field_name( 'show_header' ); ?>"
 				value="1"
 			/><?php _e( 'Show header', 'fediembedi' ); ?>
 		</label>
@@ -102,9 +104,9 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'only_media' ], '1' ); ?>
+				<?php checked( $instance['only_media'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('only_media'); ?>"
+				name="<?php echo $this->get_field_name( 'only_media' ); ?>"
 				value="1"
 			/><?php _e( 'Only show media', 'fediembedi' ); ?>
 		</label>
@@ -113,9 +115,9 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'pinned' ], '1' ); ?>
+				<?php checked( $instance['pinned'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('pinned'); ?>"
+				name="<?php echo $this->get_field_name( 'pinned' ); ?>"
 				value="1"
 			/><?php _e( 'Only show pinned statuses', 'fediembedi' ); ?>
 		</label>
@@ -124,9 +126,9 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'exclude_replies' ], '1' ); ?>
+				<?php checked( $instance['exclude_replies'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('exclude_replies'); ?>"
+				name="<?php echo $this->get_field_name( 'exclude_replies' ); ?>"
 				value="1"
 			/><?php _e( 'Hide replies', 'fediembedi' ); ?>
 		</label>
@@ -135,9 +137,9 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		<label>
 			<input
 				type="checkbox"
-				<?php checked( $instance[ 'exclude_reblogs' ], '1' ); ?>
+				<?php checked( $instance['exclude_reblogs'], '1' ); ?>
 				id="<?php echo $this->get_field_id( '1' ); ?>"
-				name="<?php echo $this->get_field_name('exclude_reblogs'); ?>"
+				name="<?php echo $this->get_field_name( 'exclude_reblogs' ); ?>"
 				value="1"
 			/><?php _e( 'Hide reblogs', 'fediembedi' ); ?>
 		</label>
@@ -156,7 +158,7 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'cache' ); ?>"><?php _e( 'Cache duration:', 'fediembedi' ); ?><br>
-				<input class="" id="<?php echo $this->get_field_id( 'cache' ); ?>" name="<?php echo $this->get_field_name( 'cache' ); ?>" type="text" value="<?php echo esc_attr($cache_time); ?>" placeholder="2 * HOUR_IN_SECONDS" size="5" />
+				<input class="" id="<?php echo $this->get_field_id( 'cache' ); ?>" name="<?php echo $this->get_field_name( 'cache' ); ?>" type="text" value="<?php echo esc_attr( $cache_time ); ?>" placeholder="2 * HOUR_IN_SECONDS" size="5" />
 				<small><?php _e( 'Default: 2 * HOUR_IN_SECONDS', 'fediembedi' ); ?></small>
 				<details><summary><?php _e( 'Time constants', 'fediembedi' ); ?></summary>
 					MINUTE_IN_SECONDS
@@ -182,7 +184,7 @@ class FediEmbedi_Pixelfed extends WP_Widget {
 		$instance          = $old_instance;
 		$new_instance      = wp_parse_args( (array) $new_instance, array( 'title' => '' ) );
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
-		$instance['show_header'] = boolval( $new_instance['show_header']);
+		$instance['show_header'] = boolval( $new_instance['show_header'] );
 		$instance['only_media'] = boolval( $new_instance['only_media'] );
 		$instance['pinned'] = boolval( $new_instance['pinned'] );
 		$instance['exclude_replies'] = boolval( $new_instance['exclude_replies'] );

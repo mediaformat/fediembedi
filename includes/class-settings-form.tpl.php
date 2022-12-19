@@ -1,6 +1,6 @@
 <?php
-define("FEDI_MSTDN_CONNECTED", isset( $mastodon_account ) && $mastodon_account !== null );
-define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !== null );
+define( "FEDI_MSTDN_CONNECTED", isset( $mastodon_account ) && $mastodon_account !== null );
+define( "FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !== null );
 ?>
 <div class="wrap">
 	<h1><?php _e( 'FediEmbedi Configuration', 'fediembedi' ); ?></h1>
@@ -27,7 +27,7 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 				<div class="account">
 						<a href="<?php echo $mastodon_account->url ?>" target="_blank"><img class="m-avatar" src="<?php echo $mastodon_account->avatar ?>"><span class="mastodon"></span></a>
 					<div class="details">
-						<?php if(FEDI_MSTDN_CONNECTED): ?>
+						<?php if ( FEDI_MSTDN_CONNECTED ): ?>
 							<div class="connected"><?php echo $mastodon_account->username ?></div>
 							<a class="link" href="<?php echo $mastodon_account->url ?>" target="_blank"><?php echo $mastodon_account->url ?></a>
 
@@ -62,7 +62,7 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 				<div class="account">
 						<a href="<?php echo $pixelfed_account->url; ?>" target="_blank"><img class="m-avatar" src="<?php echo $pixelfed_account->avatar; ?>"><span class="pixelfed"></span></a>
 					<div class="details">
-						<?php if(FEDI_PXLFD_CONNECTED): ?>
+						<?php if ( FEDI_PXLFD_CONNECTED ): ?>
 							<div class="connected"><?php echo $pixelfed_account->username; ?></div>
 							<a class="link" href="<?php echo $pixelfed_account->url; ?>" target="_blank"><?php echo $pixelfed_account->url; ?></a>
 
@@ -76,7 +76,7 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 				</div><div class="clear"></div>
 		</div>
 		<div>
-			<p><span class="peertube"></span><?php _e('Widget ready! ', 'fediembedi'); ?></p>
+			<p><span class="peertube"></span><?php _e( 'Widget ready! ', 'fediembedi' ); ?></p>
 			<p><?php
 					printf( 
 						/* translators: https://joinpeertube.org */
@@ -91,53 +91,53 @@ define("FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account !
 	</form>
 	<hr>
 	<div>
-		<h2>Shortcode usage</h2>
+		<h2><?php _e( 'Shortcode usage', 'fediembedi' ); ?></h2>
 		<details>
 			<summary>[mastodon exclude_replies="1" show_header="0"]</summary>
-			<div>options & defaults:</div>
+			<div><?php _e( 'options & defaults:' ); ?></div>
 			<pre>
-	'only_media' => false, // Show only statuses with media attached
-	'pinned' => false, // Show only show pinned posts.
-	'exclude_replies' => false, // Show only Top level posts
-	'max_id' => null, // Return results older than ID.
-	'since_id' => null, // Return results newer than ID.
-	'min_id' => null, // Return results immediately newer than ID.
-	'limit' => 5, // number of posts to show, max 40.
-	'exclude_reblogs' => false, // Skip statuses that reply to other statuses
-	'show_header' => true, // Show profile header above feed
-	'height' => '100%', // Height of Feed (CSS values)
-	'cache' => 2 * HOUR_IN_SECONDS, // see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+	'only_media' => false, // <?php _e( 'Show only statuses with media attached', 'fediembedi' ); ?>
+	'pinned' => false, // <?php _e( 'Show only show pinned posts.', 'fediembedi' ); ?>
+	'exclude_replies' => false, // <?php _e( 'Show only Top level posts', 'fediembedi' ); ?>
+	'max_id' => null, // <?php _e( 'Return results older than ID.', 'fediembedi' ); ?>
+	'since_id' => null, // <?php _e( 'Return results newer than ID.', 'fediembedi' ); ?>
+	'min_id' => null, // <?php _e( 'Return results immediately newer than ID.', 'fediembedi' ); ?>
+	'limit' => 5, // <?php _e( 'number of posts to show, max 40.', 'fediembedi' ); ?>
+	'exclude_reblogs' => false, // <?php _e( 'Skip statuses that reply to other statuses', 'fediembedi' ); ?>
+	'show_header' => true, // <?php _e( 'Show profile header above feed', 'fediembedi' ); ?>
+	'height' => '100%', // <?php _e( 'Height of Feed (CSS values)', 'fediembedi' ); ?>
+	'cache' => 2 * HOUR_IN_SECONDS, // <?php _e( 'see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants', 'fediembedi' ); ?>
 			</pre>
 		</details>
 		<details>
 			<summary>[pixelfed cache="30 * MINUTE_IN_SECONDS" exclude_reblogs="0"]</summary>
-			<div>options & defaults:</div>
+			<div><?php _e( 'options & defaults:' ); ?></div>
 			<pre>
-	'only_media' => false, // Show only statuses with media attached
-	'pinned' => false, // Show only show pinned posts.
-	'exclude_replies' => false, // Show only Top level posts
-	'max_id' => null, // Return results older than ID.
-	'since_id' => null, // Return results newer than ID.
-	'min_id' => null, // Return results immediately newer than ID.
-	'limit' => 5, // number of posts to show, max 40.
-	'exclude_reblogs' => false, // Skip statuses that reply to other statuses
-	'show_header' => true, // Show profile header above feed
-	'height' => '100%', // Height of Feed (CSS values)
-	'cache' => 2 * HOUR_IN_SECONDS, // see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+	'only_media' => false, // <?php _e( 'Show only statuses with media attached', 'fediembedi' ); ?>
+	'pinned' => false, // <?php _e( 'Show only show pinned posts.', 'fediembedi' ); ?>
+	'exclude_replies' => false, // <?php _e( 'Show only Top level posts', 'fediembedi' ); ?>
+	'max_id' => null, // <?php _e( 'Return results older than ID.', 'fediembedi' ); ?>
+	'since_id' => null, // <?php _e( 'Return results newer than ID.', 'fediembedi' ); ?>
+	'min_id' => null, // <?php _e( 'Return results immediately newer than ID.', 'fediembedi' ); ?>
+	'limit' => 5, // <?php _e( 'number of posts to show, max 40.', 'fediembedi' ); ?>
+	'exclude_reblogs' => false, // <?php _e( 'Skip statuses that reply to other statuses', 'fediembedi' ); ?>
+	'show_header' => true, // <?php _e( 'Show profile header above feed', 'fediembedi' ); ?>
+	'height' => '100%', // <?php _e( 'Height of Feed (CSS values)', 'fediembedi' ); ?>
+	'cache' => 2 * HOUR_IN_SECONDS, // <?php _e( 'see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants', 'fediembedi' ); ?>
 			</pre>
 		</details>
 		<details>
 			<summary>[peertube instance="example.video" actor="username" is_channel="1"]</summary>
-			<div>options & defaults:</div>
+			<div><?php _e( 'options & defaults:' ); ?></div>
 			<pre>
-	'instance' => null, // Required: "example.video"
-	'actor' => null, // Required: "username" or handle "username@example.video"
-	'is_channel' => null, // Whether the actor is an account or is_channel="1"
-	'limit' => 9, // max. 100
-	'nsfw' => null, // Show nsfw (Not safe for work) videos
-	'show_header' => true, // Show profile header above feed
-	'height' => '100%', // Height of Feed (CSS values: 300px)
-	'cache' => 2 * HOUR_IN_SECONDS, // see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants
+	'instance' => null, // <?php _e( 'Required: "example.video"',  'fediembedi' ); ?>
+	'actor' => null, // <?php _e( 'Required: "username" or handle "username@example.video"', 'fediembedi' ); ?>
+	'is_channel' => null, // <?php _e( 'Whether the actor is an account or is_channel="1"', 'fediembedi' ); ?>
+	'limit' => 9, // <?php _e( 'max. 100', 'fediembedi' ); ?>
+	'nsfw' => null, // <?php _e( 'Show nsfw (Not safe for work) videos', 'fediembedi' ); ?>
+	'show_header' => true, // <?php _e( 'Show profile header above feed', 'fediembedi' ); ?>
+	'height' => '100%', // <?php _e( 'Height of Feed (CSS values: 300px)', 'fediembedi' ); ?>
+	'cache' => 2 * HOUR_IN_SECONDS, // <?php _e( 'see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants', 'fediembedi' ); ?>
 			</pre>
 		</details>
 	</div>

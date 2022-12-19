@@ -13,7 +13,7 @@ class FediEmbedi_PeerTube extends WP_Widget {
 			'description' => __( 'Display a profile timeline', 'fediembedi' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'peertube', _x( 'PeerTube', 'Title','fediembedi' ), $widget_ops );
+		parent::__construct( 'peertube', _x( 'PeerTube', 'Title', 'fediembedi' ), $widget_ops );
 	}
 
 	/**
@@ -28,24 +28,24 @@ class FediEmbedi_PeerTube extends WP_Widget {
 	public function widget( $args, $instance ) {
 		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
 
-		// create unique transient name from widget options 
+		// create unique transient name from widget options
 		$widget_instance = md5( serialize( $instance ) );
 		if ( false === ( $status = get_transient( "peertube_$widget_instance" ) ) ) {
-		
-			$fedi_instance = !empty($instance['peertube'] ) ? esc_url_raw( $instance['peertube'] ) : '';
-			$actor =  !empty( $instance['actor'] ) ? $instance['actor'] : '';
-			$is_channel = !empty( $instance['channel'] ) ? boolval( $instance['channel'] ) : null;//radio channel or account
-			$show_header = !empty( $instance['show_header'] ) ? boolval( $instance['show_header'] ) : null;
+
+			$fedi_instance = ! empty( $instance['peertube'] ) ? esc_url_raw( $instance['peertube'] ) : '';
+			$actor = ! empty( $instance['actor'] ) ? $instance['actor'] : '';
+			$is_channel = ! empty( $instance['channel'] ) ? boolval( $instance['channel'] ) : null;//radio channel or account
+			$show_header = ! empty( $instance['show_header'] ) ? boolval( $instance['show_header'] ) : null;
 			$count    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 			$nsfw    = isset( $instance['nsfw'] ) ? boolval( $instance['nsfw'] ) : null;
 			$height    = isset( $instance['height'] ) ? sanitize_text_field( $instance['height'] ) : '100%';
 			$cache_time    = isset( $instance['cache'] ) ? sanitize_text_field( $instance['cache'] ) : 2 * HOUR_IN_SECONDS;
 
-			if ( !$fedi_instance || !$actor ) {
+			if ( ! $fedi_instance || ! $actor ) {
 				return;
 			}
 			$client = new \FediClient( $fedi_instance );
-			if ( !$client ) {
+			if ( ! $client ) {
 				return;
 			}
 			echo $args['before_widget'];
@@ -58,12 +58,12 @@ class FediEmbedi_PeerTube extends WP_Widget {
 			set_transient( "peertube_$widget_instance", $status, $cache_time );
 		}
 
-		if( !is_null( $is_channel ) ) {
+		if ( ! is_null( $is_channel ) ) {
 			$account = $status->data[0]->channel;
 		} else {
 			$account = $status->data[0]->account;
 		}
-    	include( plugin_dir_path(__FILE__) . 'templates/peertube.tpl.php' );
+		include plugin_dir_path( __FILE__ ) . 'templates/peertube.tpl.php';
 
 		echo $args['after_widget'];
 	}
@@ -76,13 +76,13 @@ class FediEmbedi_PeerTube extends WP_Widget {
 	 * @param array $instance Current settings.
 	 */
 	public function form( $instance ) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
-        //Radio inputs : https://wordpress.stackexchange.com/a/276659/87622
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+		//Radio inputs : https://wordpress.stackexchange.com/a/276659/87622
 
-		$peertube =  !empty( $instance['peertube'] ) ? esc_url_raw( $instance['peertube'] ) : NULL;
-		$actor = !empty( $instance['actor'] ) ? $instance['actor'] : NULL;
-		$is_channel = !empty( $instance['channel'] ) ? $instance['channel'] : NULL;
-		$show_header = !empty( $instance['show_header'] ) ? $instance['show_header'] : NULL;
+		$peertube = ! empty( $instance['peertube'] ) ? esc_url_raw( $instance['peertube'] ) : null;
+		$actor = ! empty( $instance['actor'] ) ? $instance['actor'] : null;
+		$is_channel = ! empty( $instance['channel'] ) ? $instance['channel'] : null;
+		$show_header = ! empty( $instance['show_header'] ) ? $instance['show_header'] : null;
 		$number    = isset( $instance['number'] ) ? $instance['number'] : 5;
 		$nsfw    = isset( $instance['nsfw'] ) ? $instance['nsfw'] : false;
 		$height    = isset( $instance['height'] ) ? $instance['height'] : '';
@@ -91,26 +91,26 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'fediembedi' ); ?>
-				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id('title') ); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($instance['title']); ?>" />
+				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>" />
 			</label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'peertube' ); ?>"><?php _e('PeerTube instance:', 'fediembedi'); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('peertube'); ?>" name="<?php echo $this->get_field_name('peertube'); ?>" type="text" value="<?php echo esc_url_raw( $peertube, 'https' ); ?>" />
+			<label for="<?php echo $this->get_field_id( 'peertube' ); ?>"><?php _e( 'PeerTube instance:', 'fediembedi' ); ?>
+				<input class="widefat" id="<?php echo $this->get_field_id( 'peertube' ); ?>" name="<?php echo $this->get_field_name( 'peertube' ); ?>" type="text" value="<?php echo esc_url_raw( $peertube, 'https' ); ?>" />
 			</label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('actor'); ?>"><?php _e('User or Channel name:', 'fediembedi'); ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('actor'); ?>" name="<?php echo $this->get_field_name('actor'); ?>" type="text" value="<?php echo $actor; ?>" />
+			<label for="<?php echo $this->get_field_id( 'actor' ); ?>"><?php _e( 'User or Channel name:', 'fediembedi' ); ?>
+				<input class="widefat" id="<?php echo $this->get_field_id( 'actor' ); ?>" name="<?php echo $this->get_field_name( 'actor' ); ?>" type="text" value="<?php echo $actor; ?>" />
 			</label>
 		</p>
 		<p>
 			<label>
 				<input
 					type="checkbox"
-					<?php checked( $instance[ 'channel' ], '1' ); ?>
+					<?php checked( $instance['channel'], '1' ); ?>
 					id="<?php echo $this->get_field_id( 'channel' ); ?>"
-					name="<?php echo $this->get_field_name('channel'); ?>"
+					name="<?php echo $this->get_field_name( 'channel' ); ?>"
 					value="1"
 				/><?php _e( 'This account is a Channel (not a user)', 'fediembedi' ); ?>
 			</label>
@@ -119,9 +119,9 @@ class FediEmbedi_PeerTube extends WP_Widget {
 			<label>
 				<input
 					type="checkbox"
-					<?php checked( $instance[ 'show_header' ], '1' ); ?>
+					<?php checked( $instance['show_header'], '1' ); ?>
 					id="<?php echo $this->get_field_id( 'show_header' ); ?>"
-					name="<?php echo $this->get_field_name('show_header'); ?>"
+					name="<?php echo $this->get_field_name( 'show_header' ); ?>"
 					value="1"
 				/><?php _e( 'Show header', 'fediembedi' ); ?>
 			</label>
@@ -136,9 +136,9 @@ class FediEmbedi_PeerTube extends WP_Widget {
 			<label>
 				<input
 					type="checkbox"
-					<?php checked( $instance[ 'nsfw' ], '0' ); ?>
+					<?php checked( $instance['nsfw'], '0' ); ?>
 					id="<?php echo $this->get_field_id( 'nsfw' ); ?>"
-					name="<?php echo $this->get_field_name('nsfw'); ?>"
+					name="<?php echo $this->get_field_name( 'nsfw' ); ?>"
 					value="0"
 				/><?php _e( 'Show NSFW videos?', 'fediembedi' ); ?>
 			</label>
@@ -177,8 +177,8 @@ class FediEmbedi_PeerTube extends WP_Widget {
 		$instance          = $old_instance;
 		$new_instance      = wp_parse_args( (array) $new_instance, array( 'title' => '' ) );
 		$instance['title'] = sanitize_text_field( $new_instance['title'] );
-		$instance['peertube'] = esc_url_raw($new_instance['peertube']);
-		$instance['actor'] = sanitize_key($new_instance['actor']);
+		$instance['peertube'] = esc_url_raw( $new_instance['peertube'] );
+		$instance['actor'] = sanitize_key( $new_instance['actor'] );
 		$instance['channel'] = boolval( $new_instance['channel'] );
 		$instance['number']    = (int) $new_instance['number'];
 		$instance['nsfw']    = boolval( $new_instance['nsfw'] );
