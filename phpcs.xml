@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress FediEmbedi">
+	<description>WordPress FediEmbedi Standards</description>
+	<file>./fediembedi.php</file>
+	<file>./includes/</file>
+	<file>./templates/</file>
+	<config name="minimum_supported_wp_version" value="5.8"/>
+	<exclude-pattern>*\.(inc|css|js|svg)</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/vendor/wpcs/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<rule ref="WordPress-Core">
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned" />
+	</rule>
+	<rule ref="WordPress.Files.FileName">
+		<properties>
+			<property name="strict_class_file_names" value="false" />
+		</properties>
+	</rule>
+	<rule ref="WordPress.WP.DeprecatedFunctions" />
+	<rule ref="WordPress-Extra" />
+	<rule ref="WordPress.WP.I18n"/>
+	<config name="text_domain" value="activitypub,default"/>
+	<!--
+	Prevent errors caused by WordPress Coding Standards not supporting PHP 8.0+.
+	See https://github.com/WordPress/WordPress-Coding-Standards/issues/2035
+	-->
+	<ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
+</ruleset>
