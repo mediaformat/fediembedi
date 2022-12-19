@@ -94,7 +94,7 @@ define( "FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account 
 		<h2><?php _e( 'Shortcode usage', 'fediembedi' ); ?></h2>
 		<details>
 			<summary>[mastodon exclude_replies="1" show_header="0"]</summary>
-			<div><?php _e( 'options & defaults:' ); ?></div>
+			<div><?php _e( 'options & defaults:', 'fediembedi' ); ?></div>
 			<pre>
 	'only_media' => false, // <?php _e( 'Show only statuses with media attached', 'fediembedi' ); ?>
 	'pinned' => false, // <?php _e( 'Show only show pinned posts.', 'fediembedi' ); ?>
@@ -111,7 +111,7 @@ define( "FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account 
 		</details>
 		<details>
 			<summary>[pixelfed cache="30 * MINUTE_IN_SECONDS" exclude_reblogs="0"]</summary>
-			<div><?php _e( 'options & defaults:' ); ?></div>
+			<div><?php _e( 'options & defaults:', 'fediembedi' ); ?></div>
 			<pre>
 	'only_media' => false, // <?php _e( 'Show only statuses with media attached', 'fediembedi' ); ?>
 	'pinned' => false, // <?php _e( 'Show only show pinned posts.', 'fediembedi' ); ?>
@@ -128,7 +128,7 @@ define( "FEDI_PXLFD_CONNECTED", isset( $pixelfed_account ) && $pixelfed_account 
 		</details>
 		<details>
 			<summary>[peertube instance="example.video" actor="username" is_channel="1"]</summary>
-			<div><?php _e( 'options & defaults:' ); ?></div>
+			<div><?php _e( 'options & defaults:', 'fediembedi' ); ?></div>
 			<pre>
 	'instance' => null, // <?php _e( 'Required: "example.video"',  'fediembedi' ); ?>
 	'actor' => null, // <?php _e( 'Required: "username" or handle "username@example.video"', 'fediembedi' ); ?>

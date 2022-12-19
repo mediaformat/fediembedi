@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FediEmbedi 0.12.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/fediembedi\n"
-"POT-Creation-Date: 2022-12-15 05:07:41+00:00\n"
+"POT-Creation-Date: 2022-12-19 06:19:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,102 +13,102 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: fediembedi.php:302
+#: fediembedi.php:314
 msgid "Can't log you in."
 msgstr ""
 
-#: fediembedi.php:303
+#: fediembedi.php:315
 msgid "Instance message"
 msgstr ""
 
-#: fediembedi.php:378
+#: fediembedi.php:385
 msgid "The given instance url belongs to an unrecognized service!"
 msgstr ""
 
-#: fediembedi.php:389
+#: fediembedi.php:396
 msgid "Please set your instance before you connect !"
 msgstr ""
 
-#: fediembedi.php:416
+#: fediembedi.php:421
 msgid "Redirect to login: "
 msgstr ""
 
-#: fediembedi.php:425
+#: fediembedi.php:430
 msgid "Configuration successfully saved!"
 msgstr ""
 
-#: fediembedi.php:511
+#: fediembedi.php:523
 msgid "Configuration"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:13 includes/class-peertube-widget.php:13
-#: includes/class-pixelfed-widget.php:13
+#: includes/class-pixelfed-widget.php:15
 msgid "Display a profile timeline"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:80 includes/class-peertube-widget.php:93
-#: includes/class-pixelfed-widget.php:86
+#: includes/class-pixelfed-widget.php:88
 msgid "Title:"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:92 includes/class-peertube-widget.php:126
-#: includes/class-pixelfed-widget.php:98
+#: includes/class-pixelfed-widget.php:100
 msgid "Show header"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:103
-#: includes/class-pixelfed-widget.php:109
+#: includes/class-pixelfed-widget.php:111
 msgid "Only show media"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:114
-#: includes/class-pixelfed-widget.php:120
+#: includes/class-pixelfed-widget.php:122
 msgid "Only show pinned statuses"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:125
-#: includes/class-pixelfed-widget.php:131
+#: includes/class-pixelfed-widget.php:133
 msgid "Hide replies"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:136
-#: includes/class-pixelfed-widget.php:142
+#: includes/class-pixelfed-widget.php:144
 msgid "Hide reblogs"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:140
 #: includes/class-peertube-widget.php:130
-#: includes/class-pixelfed-widget.php:146
+#: includes/class-pixelfed-widget.php:148
 msgid "Number of posts to display:"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:146
 #: includes/class-peertube-widget.php:147
-#: includes/class-pixelfed-widget.php:152
+#: includes/class-pixelfed-widget.php:154
 msgid "Widget height:"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:148
 #: includes/class-peertube-widget.php:149
-#: includes/class-pixelfed-widget.php:154
+#: includes/class-pixelfed-widget.php:156
 msgid "Default: 100%"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:152
 #: includes/class-peertube-widget.php:153
-#: includes/class-pixelfed-widget.php:158
+#: includes/class-pixelfed-widget.php:160
 msgid "Cache duration:"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:154
 #: includes/class-peertube-widget.php:155
-#: includes/class-pixelfed-widget.php:160
+#: includes/class-pixelfed-widget.php:162
 msgid "Default: 2 * HOUR_IN_SECONDS"
 msgstr ""
 
 #: includes/class-mastodon-widget.php:155
 #: includes/class-peertube-widget.php:156
-#: includes/class-pixelfed-widget.php:161
+#: includes/class-pixelfed-widget.php:163
 msgid "Time constants"
 msgstr ""
 
@@ -176,14 +176,105 @@ msgid ""
 "noopener'>joinpeertube.org</a> to find an instance."
 msgstr ""
 
-#: includes/class-settings-form.tpl.php:98
+#: includes/class-settings-form.tpl.php:94
+msgid "Shortcode usage"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:97
+#: includes/class-settings-form.tpl.php:114
+#: includes/class-settings-form.tpl.php:131
+msgid "options & defaults:"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:99
+#: includes/class-settings-form.tpl.php:116
+msgid "Show only statuses with media attached"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:100
+#: includes/class-settings-form.tpl.php:117
+msgid "Show only show pinned posts."
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:101
+#: includes/class-settings-form.tpl.php:118
+msgid "Show only Top level posts"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:102
+#: includes/class-settings-form.tpl.php:119
+msgid "Return results older than ID."
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:103
+#: includes/class-settings-form.tpl.php:120
+msgid "Return results newer than ID."
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:104
+#: includes/class-settings-form.tpl.php:121
+msgid "Return results immediately newer than ID."
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:105
+#: includes/class-settings-form.tpl.php:122
+msgid "number of posts to show, max 40."
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:106
+#: includes/class-settings-form.tpl.php:123
+msgid "Skip statuses that reply to other statuses"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:107
+#: includes/class-settings-form.tpl.php:124
+#: includes/class-settings-form.tpl.php:138
+msgid "Show profile header above feed"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:108
+#: includes/class-settings-form.tpl.php:125
+msgid "Height of Feed (CSS values)"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:109
+#: includes/class-settings-form.tpl.php:126
+#: includes/class-settings-form.tpl.php:140
+msgid "see: https://codex.wordpress.org/Easier_Expression_of_Time_Constants"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:133
+msgid "Required: \"example.video\""
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:134
+msgid "Required: \"username\" or handle \"username@example.video\""
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:135
+msgid "Whether the actor is an account or is_channel=\"1\""
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:136
+msgid "max. 100"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:137
+msgid "Show nsfw (Not safe for work) videos"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:139
+msgid "Height of Feed (CSS values: 300px)"
+msgstr ""
+
+#: includes/class-settings-form.tpl.php:150
 #. translators: https:indieweb.social/@MediaFormat
 msgid ""
 "For news and updates follow <a href='%s' target='_blank' rel='noreferrer "
 "noopener'>indieweb.social/@MediaFormat</a> on the fediverse."
 msgstr ""
 
-#: templates/pixelfed.tpl.php:38
+#: templates/pixelfed.tpl.php:44
 msgid "View More Posts"
 msgstr ""
 
@@ -212,7 +303,7 @@ msgctxt "title"
 msgid "Mastodon"
 msgstr ""
 
-#: includes/class-pixelfed-widget.php:16
+#: includes/class-pixelfed-widget.php:18
 msgctxt "title"
 msgid "Pixelfed"
 msgstr ""
@@ -222,12 +313,12 @@ msgctxt "Title"
 msgid "PeerTube"
 msgstr ""
 
-#: templates/mastodon.tpl.php:50 templates/peertube.tpl.php:37
+#: templates/mastodon.tpl.php:70 templates/peertube.tpl.php:41
 msgctxt "%2$s = human-readable time difference"
 msgid "%1$s ago"
 msgstr ""
 
-#: templates/peertube.tpl.php:43
+#: templates/peertube.tpl.php:48
 msgctxt "%2$s = number of views"
 msgid "%1$s views"
 msgstr ""
