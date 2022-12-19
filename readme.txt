@@ -54,7 +54,7 @@ and redirected to your site with a secure token. Similar to how you would connec
 
 == Changelog ==
 
-= draft =
+= 0.12.0 =
 * Add: Caching widgets and shortcodes with transients.
 * Document: Shortcodes on options page.
 * Fix: Cleanup template escapes.
